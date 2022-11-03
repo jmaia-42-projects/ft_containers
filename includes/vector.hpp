@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/03 20:28:30 by jmaia            ###   ###               */
+/*   Updated: 2022/11/03 20:42:46 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ namespace ft
 		using const_iterator = vectorIterator<const value_type>; // A bit weird
 		using reverse_iterator = std::reverse_iterator<iterator>;
 		using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+
+		private:
+			T	*_array;
+
 		public:
 			vector(void);
 			vector(const vector &obj);
