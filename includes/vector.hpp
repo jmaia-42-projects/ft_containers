@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/03 20:46:12 by jmaia            ###   ###               */
+/*   Updated: 2022/11/03 20:52:34 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ namespace ft
 		private:
 			T			*_array;
 			size_type	_size;
+			size_type	_capacity;
 
 		public:
 			vector(void);
