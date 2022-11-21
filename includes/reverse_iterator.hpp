@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:11:43 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 10:01:12 by jmaia            ###   ###               */
+/*   Updated: 2022/11/21 10:09:23 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,15 @@ namespace ft
 			pointer operator->(void) const;
 
 			reference operator[](difference_type n) const;
+
+			reverse_iterator &operator++(void);
+			reverse_iterator operator++(int _);
+			reverse_iterator &operator--(void);
+			reverse_iterator operator--(int _);
+			reverse_iterator operator+(difference_type n) const;
+			reverse_iterator operator-(difference_type n) const;
+			reverse_iterator &operator+=(difference_type n);
+			reverse_iterator &operator-=(difference_type n);
 	};
 
 # include "reverse_iterator.tpp"

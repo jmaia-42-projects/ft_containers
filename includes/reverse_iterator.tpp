@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:35:28 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 10:03:03 by jmaia            ###   ###               */
+/*   Updated: 2022/11/21 10:46:23 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,60 @@ template<typename I>
 typename reverse_iterator<I>::reference reverse_iterator<I>::operator[](difference_type n) const
 {
 	return (this->base[-n - 1]);
+}
+
+template<typename I>
+reverse_iterator<I> &reverse_iterator<I>::operator++(void)
+{
+	--this->current;
+	return (*this);
+}
+
+template<typename I>
+reverse_iterator<I> reverse_iterator<I>::operator++(int _)
+{
+	reverse_iterator tmp = *this;
+	++(*this);
+	return (tmp);
+}
+
+template<typename I>
+reverse_iterator<I> &reverse_iterator<I>::operator--(void)
+{
+	++this->current;
+	return (*this);
+}
+
+template<typename I>
+reverse_iterator<I> reverse_iterator<I>::operator--(int _)
+{
+	reverse_iterator tmp = *this;
+	--(*this);
+	return (tmp);
+}
+
+template<typename I>
+reverse_iterator<I> reverse_iterator<I>::operator+(difference_type n) const
+{
+	return (reverse_iterator(base() - n));
+}
+
+template<typename I>
+reverse_iterator<I> reverse_iterator<I>::operator-(difference_type n) const
+{
+	return (reverse_iterator(base() + n));
+}
+
+template<typename I>
+reverse_iterator<I> &reverse_iterator<I>::operator+=(difference_type n)
+{
+	this->current -= n;
+	return (*this);
+}
+
+template<typename I>
+reverse_iterator<I> &reverse_iterator<I>::operator-=(difference_type n)
+{
+	this->current += n;
+	return (*this);
 }
