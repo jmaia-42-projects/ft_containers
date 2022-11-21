@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:30:57 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 12:37:03 by jmaia            ###   ###               */
+/*   Updated: 2022/11/21 12:38:50 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,10 @@ pair<T1, T2> &pair<T1, T2>::operator=(const pair<T1, T2>& other)
 	this->first = other.first;
 	this->second = other.second;
 	return (*this);
+}
+
+template<class T1, class T2>
+pair<T1, T2> make_pair(T1 t, T2 u)
+{
+	return (pair<T1, T2>(t, u));
 }
