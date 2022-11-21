@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:11:43 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 10:09:23 by jmaia            ###   ###               */
+/*   Updated: 2022/11/21 10:50:35 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,25 @@ namespace ft
 			reverse_iterator &operator+=(difference_type n);
 			reverse_iterator &operator-=(difference_type n);
 	};
+
+	template<class It1, class It2>
+	bool operator==(const reverse_iterator<It1>& lhs,
+					const reverse_iterator<It2>& rhs);
+	template<class It1, class It2>
+	bool operator!=(const reverse_iterator<It1>& lhs,
+					const reverse_iterator<It2>& rhs);
+	template<class It1, class It2>
+	bool operator<(const reverse_iterator<It1>& lhs,
+					const reverse_iterator<It2>& rhs);
+	template<class It1, class It2>
+	bool operator<=(const reverse_iterator<It1>& lhs,
+					const reverse_iterator<It2>& rhs);
+	template<class It1, class It2>
+	bool operator>(const reverse_iterator<It1>& lhs,
+					const reverse_iterator<It2>& rhs);
+	template<class It1, class It2>
+	bool operator>=(const reverse_iterator<It1>& lhs,
+					const reverse_iterator<It2>& rhs);
 
 # include "reverse_iterator.tpp"
 }

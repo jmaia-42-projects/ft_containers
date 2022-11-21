@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:35:28 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 10:46:23 by jmaia            ###   ###               */
+/*   Updated: 2022/11/21 10:52:26 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,46 @@ reverse_iterator<I> &reverse_iterator<I>::operator-=(difference_type n)
 {
 	this->current += n;
 	return (*this);
+}
+
+template<class It1, class It2>
+bool operator==(const reverse_iterator<It1>& lhs,
+				const reverse_iterator<It2>& rhs)
+{
+	return (lhs.base() == rhs.base());
+}
+
+template<class It1, class It2>
+bool operator!=(const reverse_iterator<It1>& lhs,
+				const reverse_iterator<It2>& rhs)
+{
+	return (lhs.base() != rhs.base());
+}
+
+template<class It1, class It2>
+bool operator<(const reverse_iterator<It1>& lhs,
+				const reverse_iterator<It2>& rhs)
+{
+	return (lhs.base() > rhs.base());
+}
+
+template<class It1, class It2>
+bool operator<=(const reverse_iterator<It1>& lhs,
+				const reverse_iterator<It2>& rhs)
+{
+	return (lhs.base() >= rhs.base());
+}
+
+template<class It1, class It2>
+bool operator>(const reverse_iterator<It1>& lhs,
+				const reverse_iterator<It2>& rhs)
+{
+	return (lhs.base() < rhs.base());
+}
+
+template<class It1, class It2>
+bool operator>=(const reverse_iterator<It1>& lhs,
+				const reverse_iterator<It2>& rhs)
+{
+	return (lhs.base() <= rhs.base());
 }
