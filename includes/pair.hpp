@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:25:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 12:32:34 by jmaia            ###   ###               */
+/*   Updated: 2022/11/21 12:36:33 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ namespace ft
 		pair(const T1 &x, const T2 &y);
 		template<typename U1, typename U2>
 		pair(const pair<U1, U2> &p);
+
+		pair &operator=(const pair& other);
 	};
 # include "pair.tpp"
 }
