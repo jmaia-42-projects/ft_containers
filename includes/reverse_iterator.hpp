@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:11:43 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 09:36:19 by jmaia            ###   ###               */
+/*   Updated: 2022/11/21 09:45:19 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ namespace ft
 			explicit reverse_iterator(iterator_type x);
 			template<class U>
 			reverse_iterator(const reverse_iterator<U> &other);
+
+			template<class U>
+			reverse_iterator &operator=(const reverse_iterator<U> &other);
 	};
 
 # include "reverse_iterator.tpp"
