@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:30:57 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 12:38:50 by jmaia            ###   ###               */
+/*   Updated: 2022/11/21 12:55:05 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,43 @@ template<class T1, class T2>
 pair<T1, T2> make_pair(T1 t, T2 u)
 {
 	return (pair<T1, T2>(t, u));
+}
+
+template<class T1, class T2>
+pair<T1, T2> make_pair(T1 t, T2 u);
+
+template<class T1, class T2>
+bool operator==(const pair<T1,T2> &lhs, const pair<T1,T2> &rhs)
+{
+	return (lhs.first == rhs.first && lhs.second == rhs.second);
+}
+
+template<class T1, class T2>
+bool operator!=(const pair<T1,T2> &lhs, const pair<T1,T2> &rhs)
+{
+	return (!(lhs == rhs));
+}
+
+template<class T1, class T2>
+bool operator<(const pair<T1,T2> &lhs, const pair<T1,T2> &rhs)
+{
+	return (lhs.first < rhs.first || (lhs.first == rhs.first && lhs.second < rhs.second));
+}
+
+template<class T1, class T2>
+bool operator<=(const pair<T1,T2> &lhs, const pair<T1,T2> &rhs)
+{
+	return (lhs == rhs || lhs < rhs);
+}
+
+template<class T1, class T2>
+bool operator>(const pair<T1,T2> &lhs, const pair<T1,T2> &rhs)
+{
+	return (lhs != rhs && !(lhs < rhs));
+}
+
+template<class T1, class T2>
+bool operator>=(const pair<T1,T2> &lhs, const pair<T1,T2> &rhs)
+{
+	return (!(lhs < rhs));
 }
