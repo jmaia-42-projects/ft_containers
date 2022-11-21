@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:11:43 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 09:48:25 by jmaia            ###   ###               */
+/*   Updated: 2022/11/21 09:54:18 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ namespace ft
 			reverse_iterator &operator=(const reverse_iterator<U> &other);
 
 			iterator_type base(void) const;
+
+			reference operator*(void) const;
+			pointer operator->(void) const;
 	};
 
 # include "reverse_iterator.tpp"
