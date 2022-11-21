@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:11:43 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 09:17:17 by jmaia            ###   ###               */
+/*   Updated: 2022/11/21 09:36:19 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ namespace ft
 	template<typename I>
 	class reverse_iterator
 	{
+		protected:
+			I current;
 		public:
 			typedef I iterator_type;
 			typedef typename iterator_traits<I>::iterator_category iterator_category;
@@ -27,7 +29,14 @@ namespace ft
 			typedef typename iterator_traits<I>::difference_type difference_type;
 			typedef typename iterator_traits<I>::pointer pointer;
 			typedef typename iterator_traits<I>::reference reference;
+
+			reverse_iterator(void);
+			explicit reverse_iterator(iterator_type x);
+			template<class U>
+			reverse_iterator(const reverse_iterator<U> &other);
 	};
+
+# include "reverse_iterator.tpp"
 }
 
 #endif
