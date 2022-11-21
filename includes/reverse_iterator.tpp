@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:35:28 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 09:47:19 by jmaia            ###   ###               */
+/*   Updated: 2022/11/21 09:53:00 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,10 @@ reverse_iterator<I> &reverse_iterator<I>::operator=(const reverse_iterator<U> &o
 {
 	this->current = other.base();
 	return (*this);
+}
+
+template<typename I>
+typename reverse_iterator<I>::iterator_type reverse_iterator<I>::base(void) const
+{
+	return (this->current);
 }
