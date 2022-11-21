@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:35:28 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 10:52:26 by jmaia            ###   ###               */
+/*   Updated: 2022/11/21 11:04:33 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,4 +151,18 @@ bool operator>=(const reverse_iterator<It1>& lhs,
 				const reverse_iterator<It2>& rhs)
 {
 	return (lhs.base() <= rhs.base());
+}
+
+template<class It>
+reverse_iterator<It> operator+(typename reverse_iterator<It>::difference_type n,
+								const reverse_iterator<It>& it)
+{
+	return (reverse_iterator<It>(it.base() - n));
+}
+
+template<class It1, class It2>
+typename reverse_iterator<It1>::difference_type operator-(const reverse_iterator<It1>& lhs,
+														const reverse_iterator<It2>& rhs)
+{
+	return (rhs.base() - lhs.base());
 }
