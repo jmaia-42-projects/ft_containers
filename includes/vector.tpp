@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 14:22:45 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 14:32:21 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,4 +214,23 @@ template<class T, class Allocator>
 typename vector<T, Allocator>::size_type	vector<T, Allocator>::max_size(void) const
 {
 	return (this->_allocator.max_size());
+}
+
+template<class T, class Allocator>
+void	vector<T, Allocator>::reserve(typename vector<T, Allocator>::size_type new_cap)
+{
+	T											*newArray;
+	T											*oldArray;
+	typename vector<T, Allocator>::size_type	oldSize;
+
+	if (new_cap <= this->_capacity)
+		return ;
+	if (new_cap > this->max_size())
+		throw std::length_error("New capacity is too large");
+	newArray = this->_allocator(new_cap);
+	oldArray = this->_array;
+	this->_array = newArray;
+	this->_capacity = new_cap;
+	this->_size = 0;
+	this->insert(this->end(), oldArray, oldArray + oldSize);
 }
