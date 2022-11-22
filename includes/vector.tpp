@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 13:29:41 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 13:40:30 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,20 @@ template<class T, class Allocator>
 typename vector<T, Allocator>::allocator_type	vector<T, Allocator>::get_allocator(void) const
 {
 	return (this->_allocator);
+}
+
+template<class T, class Allocator>
+T	&vector<T, Allocator>::at(size_type pos)
+{
+	if (pos >= this->_size)
+		throw std::out_of_range("Index out of range !");
+	return (this->_array[pos]);
+}
+
+template<class T, class Allocator>
+const T	&vector<T, Allocator>::at(size_type pos) const
+{
+	if (pos >= this->_size)
+		throw std::out_of_range("Index out of range !");
+	return (this->_array[pos]);
 }
