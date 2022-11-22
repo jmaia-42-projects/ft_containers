@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 19:46:26 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 19:52:06 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,4 +327,17 @@ void	vector<T, Allocator>::resize(size_type count, T value)
 		this->_size = count;
 	else
 		this->insert(this->end(), count - this->_size, value);
+}
+
+template<class T>
+bool operator==(const vector<T> &lhs, const vector<T> &rhs)
+{
+	if (lhs.size() != rhs.size())
+		return (false);
+	for (typename vector<T>::iterator it = lhs.begin(), it2 = rhs.begin(); it != lhs.end(); it++, it2++)
+	{
+		if (*it != *it2)
+			return (false);
+	}
+	return (true);
 }
