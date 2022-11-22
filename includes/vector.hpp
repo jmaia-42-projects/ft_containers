@@ -6,30 +6,34 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/03 20:52:34 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 11:14:05 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
+# include <memory>
+
+# include "reverse_iterator.hpp"
+
 namespace ft
 {
-	template<class T>
+	template<class T, class Allocator = std::allocator<T>>
 	class vector
 	{
 		using value_type = T;
-		using allocator_type = std::allocator<value_type>;
+		using allocator_type = Allocator;
 		using size_type = std::size_t;
 		using difference_type = std::ptrdiff_t;
 		using reference = value_type&;
 		using const_reference = const value_type&;
-		using pointer = std::allocator<value_type>::pointer;
-		using const_pointer = std::allocator<value_type>::const_pointer;
-		using iterator = vectorIterator<value_type>;
-		using const_iterator = vectorIterator<const value_type>; // A bit weird
-		using reverse_iterator = std::reverse_iterator<iterator>;
-		using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+		using pointer = typename Allocator::pointer;
+		using const_pointer = typename Allocator::const_pointer;
+		using iterator = T*;
+		using const_iterator = T const *;
+		using const_reverse_iterator = reverse_iterator<const_iterator>;
+		using reverse_iterator = reverse_iterator<iterator>;
 
 		private:
 			T			*_array;
@@ -47,7 +51,7 @@ namespace ft
 			template<class InputIt>
 			void	assign(InputIt first, InputIt last);
 
-			std::allocator<T>	get_allocator(void) const;
+			allocator_type	get_allocator(void) const;
 
 			/* Element access */
 			T		&at(size_type pos);

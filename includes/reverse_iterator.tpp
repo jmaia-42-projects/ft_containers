@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:35:28 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 11:04:33 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 11:12:18 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ reverse_iterator<I> &reverse_iterator<I>::operator++(void)
 template<typename I>
 reverse_iterator<I> reverse_iterator<I>::operator++(int _)
 {
+	(void) _;
 	reverse_iterator tmp = *this;
 	++(*this);
 	return (tmp);
@@ -80,6 +81,7 @@ reverse_iterator<I> &reverse_iterator<I>::operator--(void)
 template<typename I>
 reverse_iterator<I> reverse_iterator<I>::operator--(int _)
 {
+	(void) _;
 	reverse_iterator tmp = *this;
 	--(*this);
 	return (tmp);
