@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:25:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 12:41:42 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 16:34:40 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ namespace ft
 	template<typename T1, typename T2>
 	struct pair
 	{
-		using first_type = T1;
-		using second_type = T2;
+		typedef T1 first_type;
+		typedef T2 second_type;
 
 		T1	first;
 		T2	second;

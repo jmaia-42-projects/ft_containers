@@ -6,14 +6,11 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 11:24:28 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 12:08:11 by jmaia            ###   ###               */
-/*                                                                            */
-/* ************************************************************************** */
+/*   Updated: 2022/11/22 16:32:36 by jmaia            ###   ###               */
+/*                                                                            */ /* ************************************************************************** */
 
 #ifndef IS_INTEGRAL_HPP
 # define IS_INTEGRAL_HPP
-
-# include <cstdint>
 
 # include "integral_constant.hpp"
 
@@ -24,8 +21,6 @@ namespace ft
 
 	template<> struct is_integral<bool>: true_type {};
 	template<> struct is_integral<char>: true_type {};
-	template<> struct is_integral<char16_t>: true_type {};
-	template<> struct is_integral<char32_t>: true_type {};
 	template<> struct is_integral<wchar_t>: true_type {};
 	template<> struct is_integral<signed char>: true_type {};
 	template<> struct is_integral<short>: true_type {};
@@ -40,8 +35,6 @@ namespace ft
 
 	template<> struct is_integral<bool const>: true_type {};
 	template<> struct is_integral<char const>: true_type {};
-	template<> struct is_integral<char16_t const>: true_type {};
-	template<> struct is_integral<char32_t const>: true_type {};
 	template<> struct is_integral<wchar_t const>: true_type {};
 	template<> struct is_integral<signed char const>: true_type {};
 	template<> struct is_integral<short const>: true_type {};
@@ -56,8 +49,6 @@ namespace ft
 
 	template<> struct is_integral<bool volatile>: true_type {};
 	template<> struct is_integral<char volatile>: true_type {};
-	template<> struct is_integral<char16_t volatile>: true_type {};
-	template<> struct is_integral<char32_t volatile>: true_type {};
 	template<> struct is_integral<wchar_t volatile>: true_type {};
 	template<> struct is_integral<signed char volatile>: true_type {};
 	template<> struct is_integral<short volatile>: true_type {};
@@ -72,8 +63,6 @@ namespace ft
 
 	template<> struct is_integral<bool const volatile>: true_type {};
 	template<> struct is_integral<char const volatile>: true_type {};
-	template<> struct is_integral<char16_t const volatile>: true_type {};
-	template<> struct is_integral<char32_t const volatile>: true_type {};
 	template<> struct is_integral<wchar_t const volatile>: true_type {};
 	template<> struct is_integral<signed char const volatile>: true_type {};
 	template<> struct is_integral<short const volatile>: true_type {};

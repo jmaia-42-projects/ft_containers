@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 16:05:43 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 16:33:56 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@
 
 namespace ft
 {
-	template<class T, class Allocator = std::allocator<T>>
+	template<class T, class Allocator = std::allocator<T> >
 	class vector
 	{
-		using value_type = T;
-		using allocator_type = Allocator;
-		using size_type = std::size_t;
-		using difference_type = std::ptrdiff_t;
-		using reference = value_type&;
-		using const_reference = const value_type&;
-		using pointer = typename Allocator::pointer;
-		using const_pointer = typename Allocator::const_pointer;
-		using iterator = T*;
-		using const_iterator = T const *;
-		using const_reverse_iterator = reverse_iterator<const_iterator>;
-		using reverse_iterator = reverse_iterator<iterator>;
+		typedef T value_type;
+		typedef Allocator allocator_type;
+		typedef std::size_t size_type;
+		typedef std::ptrdiff_t difference_type;
+		typedef value_type& reference;
+		typedef const value_type& const_reference;
+		typedef typename Allocator::pointer pointer;
+		typedef typename Allocator::const_pointer const_pointer;
+		typedef T* iterator;
+		typedef T const * const_iterator;
+		typedef reverse_iterator<const_iterator> const_reverse_iterator;
+		typedef reverse_iterator<iterator> reverse_iterator;
 
 		private:
 			Allocator	_allocator;
@@ -97,7 +97,7 @@ namespace ft
 			/* Modifiers */
 			void	clear(void);
 			iterator insert(const_iterator pos, const T &value);
-			constexpr iterator insert(const_iterator pos, size_type count, const T &value);
+			iterator insert(const_iterator pos, size_type count, const T &value);
 			template<class InputIt>
 			iterator insert(const_iterator pos, InputIt first, InputIt last);
 			iterator erase(iterator pos);
