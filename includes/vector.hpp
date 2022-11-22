@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 12:22:42 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 12:55:57 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ namespace ft
 			vector(InputIt first, InputIt last, const Allocator& alloc = Allocator());
 			~vector(void);
 
-			vector	&operator=(const vector *obj);
+			vector	&operator=(const vector &obj);
 			void	assign(size_type count, const T &value);
 			template<class InputIt>
 			void	assign(InputIt first, InputIt last);
