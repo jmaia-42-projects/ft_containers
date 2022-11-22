@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 13:25:31 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 13:27:57 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,15 @@ void	vector<T, Allocator>::assign(size_type count, const T &value)
 	this->_size = count;
 	this->_array = this->_alocator.allocate(this->_capacity);
 	std::fill(this->begin(), this->begin() + this->_size, value);
+}
+
+template<class T, class Allocator>
+template<class InputIt>
+void	vector<T, Allocator>::assign(InputIt first, InputIt last)
+{
+	this->_allocator.deallocate(this->_array, this->_capacity);
+	this->_size = std::distance(first, last);
+	this->_capacity = this->_size;
+	this->_array = this->_allocator.allocate(this->_capacity);
+	this->insert(this->end(), first, last);
 }
