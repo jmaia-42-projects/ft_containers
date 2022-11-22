@@ -248,6 +248,14 @@ void	vector<T, Allocator>::clear(void)
 }
 
 template<class T, class Allocator>
+typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(const_iterator pos, const T &value)
+{
+	this->shift(pos, 1);
+	*pos = value;
+	return (pos);
+}
+
+template<class T, class Allocator>
 void	vector<T, Allocator>::shift(const_iterator pos, typename vector<T, Allocator>::size_type n)
 {
 	if (this->_size == this->_capacity)
