@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 19:52:06 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 19:53:01 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,4 +340,10 @@ bool operator==(const vector<T> &lhs, const vector<T> &rhs)
 			return (false);
 	}
 	return (true);
+}
+
+template<class T>
+bool operator!=(const vector<T> &lhs, const vector<T> &rhs)
+{
+	return (!(lhs == rhs));
 }
