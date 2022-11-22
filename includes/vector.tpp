@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 12:50:17 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 12:59:11 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ template<class InputIt>
 vector<T, Allocator>::vector(InputIt first, InputIt last, const Allocator& alloc): _allocator(alloc)
 {
 	this->_capacity = std::distance(first, last);
-	this->_size = this->_capacity;
+	this->_size = 0;
 	this->_array = this->_allocator.allocate(this->_capacity);
 	this->insert(this->end(), first, last);
 }
