@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 18:23:50 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 18:46:53 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,7 @@ void	vector<T, Allocator>::shiftRight(const_iterator pos, typename vector<T, All
 {
 	if (this->_size == this->_capacity)
 		this->reserve(this->_capacity + (n / VEC_EXPAND_SIZE + 1) * VEC_EXPAND_SIZE);
-	for (const_iterator it = this->rbegin(); it != pos; it++)
+	for (const_iterator it = this->end() - 1; it != pos; it++)
 		*(it + n) = *it;
 }
 
@@ -306,4 +306,10 @@ typename vector<T, Allocator>::iterator vector<T, Allocator>::erase(iterator fir
 {
 	this->shiftLeft(first, std::distance(first, last));
 	return (first);
+}
+
+template<class T, class Allocator>
+void	vector<T, Allocator>::push_back(const T &value)
+{
+	this->insert(this->end(), );
 }
