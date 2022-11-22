@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 14:01:09 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 14:04:12 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,18 @@ T	*vector<T, Allocator>::data(void)
 
 template<class T, class Allocator>
 const T	*vector<T, Allocator>::data(void) const
+{
+	return (this->_array);
+}
+
+template<class T, class Allocator>
+typename vector<T, Allocator>::iterator vector<T, Allocator>::begin()
+{
+	return (this->_array);
+}
+
+template<class T, class Allocator>
+typename vector<T, Allocator>::const_iterator vector<T, Allocator>::begin() const
 {
 	return (this->_array);
 }
