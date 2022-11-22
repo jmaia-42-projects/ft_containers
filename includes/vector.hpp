@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 11:18:45 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 11:27:47 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,15 @@ namespace ft
 
 		public:
 			vector(void);
+			explicit vector(const Allocator &alloc);
+			explicit vector(size_type count, const T &value = T(), const Allocator& alloc = Allocator());
 			vector(const vector &obj);
+			template<class InputIt>
+			vector(InputIt first, InputIt last, const Allocator& alloc = Allocator());
 			~vector(void);
 
 			vector	&operator=(const vector *obj);
 			void	assign(size_type count, const T &value);
-
 			template<class InputIt>
 			void	assign(InputIt first, InputIt last);
 
