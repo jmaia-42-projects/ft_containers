@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 13:01:32 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 13:22:42 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ vector<T, Allocator>::vector(size_type count, const T &value, const Allocator& a
 			_capacity(count)
 {
 	this->_array = this->_allocator.allocate(this->_capacity);
-	std::fill(this->begin(), this->begin + this->_capacity, value);
+	std::fill(this->begin(), this->begin() + this->_capacity, value);
 }
 
 template<class T, class Allocator>
