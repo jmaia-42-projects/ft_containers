@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 16:39:12 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 18:06:36 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,5 +269,19 @@ typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(const_itera
 {
 	this->shift(pos, count);
 	std::fill(pos, pos + count, value);
+	return (pos);
+}
+
+template<class T, class Allocator>
+template<class InputIt>
+typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(typename vector<T, Allocator>::const_iterator pos, InputIt first, InputIt last)
+{
+	this->shift(pos, std::distance(first, last));
+	while (first != last)
+	{
+		*pos = *first;
+		pos++;
+		first++;
+	}
 	return (pos);
 }
