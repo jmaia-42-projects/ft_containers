@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 18:46:53 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 18:52:10 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,5 +311,5 @@ typename vector<T, Allocator>::iterator vector<T, Allocator>::erase(iterator fir
 template<class T, class Allocator>
 void	vector<T, Allocator>::push_back(const T &value)
 {
-	this->insert(this->end(), );
+	this->insert(this->end(), value);
 }
