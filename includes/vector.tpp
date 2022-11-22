@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 13:40:30 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 13:46:38 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ typename vector<T, Allocator>::allocator_type	vector<T, Allocator>::get_allocato
 }
 
 template<class T, class Allocator>
-T	&vector<T, Allocator>::at(size_type pos)
+typename vector<T, Allocator>::reference	vector<T, Allocator>::at(size_type pos)
 {
 	if (pos >= this->_size)
 		throw std::out_of_range("Index out of range !");
@@ -101,7 +101,7 @@ T	&vector<T, Allocator>::at(size_type pos)
 }
 
 template<class T, class Allocator>
-const T	&vector<T, Allocator>::at(size_type pos) const
+typename vector<T, Allocator>::const_reference	vector<T, Allocator>::at(size_type pos) const
 {
 	if (pos >= this->_size)
 		throw std::out_of_range("Index out of range !");

@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 13:39:38 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 13:44:17 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,16 @@ namespace ft
 			allocator_type	get_allocator(void) const;
 
 			/* Element access */
-			T		&at(size_type pos);
-			const T	&at(size_type pos) const;
-			T		&operator[](size_type pos);
-			const T	&operator[](size_type pos) const;
-			T		&front(void);
-			const T	&front(void) const;
-			T		&back(void);
-			const T &back(void) const;
-			T		*data(void);
-			const T	*data(void) const;
+			reference		at(size_type pos);
+			const_reference	at(size_type pos) const;
+			reference		operator[](size_type pos);
+			const_reference	operator[](size_type pos) const;
+			reference		front(void);
+			const_reference	front(void) const;
+			reference		back(void);
+			const_reference	back(void) const;
+			T				*data(void);
+			const T			*data(void) const;
 
 			/* Iterators */
 			iterator begin();
