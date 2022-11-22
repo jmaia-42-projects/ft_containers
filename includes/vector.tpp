@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 18:21:46 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 18:23:50 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,4 +299,11 @@ void	vector<T, Allocator>::shiftLeft(const_iterator pos, typename vector<T, Allo
 	for (const_iterator it = pos; it != this->end() - n; it++)
 		*it = *(it + n);
 	this->_size -= n;
+}
+
+template<class T, class Allocator>
+typename vector<T, Allocator>::iterator vector<T, Allocator>::erase(iterator first, iterator last)
+{
+	this->shiftLeft(first, std::distance(first, last));
+	return (first);
 }
