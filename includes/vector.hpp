@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 11:14:05 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 11:15:58 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,14 @@ namespace ft
 			const T	*data(void) const;
 
 			/* Iterators */
-			// TODO
+			iterator begin();
+			const_iterator begin() const;
+			iterator end();
+			const_iterator end() const;
+			reverse_iterator rbegin();
+			const_reverse_iterator rbegin() const;
+			reverse_iterator rend();
+			const_reverse_iterator rend() const;
 
 			/* Capacity */
 			bool	empty(void) const;
