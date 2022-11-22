@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 14:35:18 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 14:37:31 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,4 +239,10 @@ template<class T, class Allocator>
 typename vector<T, Allocator>::size_type	vector<T, Allocator>::capacity(void) const
 {
 	return (this->_capacity);
+}
+
+template<class T, class Allocator>
+void	vector<T, Allocator>::clear(void)
+{
+	this->_size = 0;
 }
