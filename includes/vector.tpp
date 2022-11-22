@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 13:22:42 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 13:25:31 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,14 @@ vector<T, Allocator> &vector<T, Allocator>::operator=(const vector &obj)
 	this->_array = this->_allocator.allocate(this->_capacity);
 	this->insert(this->end(), obj.begin(), obj.end());
 	return (*this);
+}
+
+template<class T, class Allocator>
+void	vector<T, Allocator>::assign(size_type count, const T &value)
+{
+	this->_allocator.deallocate(this->_array, this->_capacity);
+	this->_capacity = count;
+	this->_size = count;
+	this->_array = this->_alocator.allocate(this->_capacity);
+	std::fill(this->begin(), this->begin() + this->_size, value);
 }
