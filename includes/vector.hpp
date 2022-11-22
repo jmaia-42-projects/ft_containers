@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 14:23:42 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 16:05:43 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 # include <algorithm>
 # include <stdexcept>
+
+# define VEC_EXPAND_SIZE 50
 
 namespace ft
 {
@@ -44,6 +46,8 @@ namespace ft
 			T			*_array;
 			size_type	_capacity;
 			size_type	_size;
+
+			void	shift(const_iterator it, size_type n);
 
 		public:
 			vector(void);

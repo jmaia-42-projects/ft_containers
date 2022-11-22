@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 14:37:31 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 16:16:56 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,4 +245,13 @@ template<class T, class Allocator>
 void	vector<T, Allocator>::clear(void)
 {
 	this->_size = 0;
+}
+
+template<class T, class Allocator>
+void	vector<T, Allocator>::shift(const_iterator pos, typename vector<T, Allocator>::size_type n)
+{
+	if (this->_size == this->_capacity)
+		this->reserve(this->_capacity + (n / VEC_EXPAND_SIZE + 1) * VEC_EXPAND_SIZE);
+	for (const_iterator it = this->rbegin(); it != pos; it++)
+		*(it + n) = *it;
 }
