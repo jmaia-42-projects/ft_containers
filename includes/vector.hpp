@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 11:52:59 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 12:22:42 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <memory>
 
 # include "reverse_iterator.hpp"
+
+
+# include <algorithm>
 
 namespace ft
 {
