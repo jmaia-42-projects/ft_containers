@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 14:32:21 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 14:35:18 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,4 +233,10 @@ void	vector<T, Allocator>::reserve(typename vector<T, Allocator>::size_type new_
 	this->_capacity = new_cap;
 	this->_size = 0;
 	this->insert(this->end(), oldArray, oldArray + oldSize);
+}
+
+template<class T, class Allocator>
+typename vector<T, Allocator>::size_type	vector<T, Allocator>::capacity(void) const
+{
+	return (this->_capacity);
 }
