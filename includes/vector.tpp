@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 18:52:10 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 18:56:21 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,4 +312,10 @@ template<class T, class Allocator>
 void	vector<T, Allocator>::push_back(const T &value)
 {
 	this->insert(this->end(), value);
+}
+
+template<class T, class Allocator>
+void	vector<T, Allocator>::pop_back(void)
+{
+	this->_size--;
 }
