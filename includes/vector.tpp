@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 18:56:21 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 19:46:26 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,4 +318,13 @@ template<class T, class Allocator>
 void	vector<T, Allocator>::pop_back(void)
 {
 	this->_size--;
+}
+
+template<class T, class Allocator>
+void	vector<T, Allocator>::resize(size_type count, T value)
+{
+	if (count <= this->_size)
+		this->_size = count;
+	else
+		this->insert(this->end(), count - this->_size, value);
 }
