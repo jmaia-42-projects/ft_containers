@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 11:27:47 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 11:52:59 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ namespace ft
 		using reverse_iterator = reverse_iterator<iterator>;
 
 		private:
+			Allocator	_allocator;
 			T			*_array;
-			size_type	_size;
 			size_type	_capacity;
+			size_type	_size;
 
 		public:
 			vector(void);
@@ -121,6 +122,8 @@ namespace ft
 
 	template<class T>
 	void swap(vector<T> &lhs, vector<T> &rhs);
+
+# include "vector.tpp"
 }
 
 #endif
