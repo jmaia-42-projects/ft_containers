@@ -15,3 +15,9 @@ vector<T, Allocator>::vector(void): _size(0),
 					_array(NULL),
 					_allocator(Allocator()),
 					_capacity(0) { }
+
+template<class T, class Allocator>
+vector<T, Allocator>::vector(const Allocator &alloc): _size(0),
+					_array(NULL),
+					_allocator(alloc),
+					_capacity(0) { }
