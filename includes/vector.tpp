@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 19:53:01 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 20:00:49 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -346,4 +346,10 @@ template<class T>
 bool operator!=(const vector<T> &lhs, const vector<T> &rhs)
 {
 	return (!(lhs == rhs));
+}
+
+template<class T>
+bool operator<(const vector<T> &lhs, const vector<T> &rhs)
+{
+	return (lexicographical_compare<vector<T>::iterator, vector<T>::iterator>(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 }
