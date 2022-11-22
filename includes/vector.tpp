@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 16:16:56 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 16:39:12 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,4 +262,12 @@ void	vector<T, Allocator>::shift(const_iterator pos, typename vector<T, Allocato
 		this->reserve(this->_capacity + (n / VEC_EXPAND_SIZE + 1) * VEC_EXPAND_SIZE);
 	for (const_iterator it = this->rbegin(); it != pos; it++)
 		*(it + n) = *it;
+}
+
+template<class T, class Allocator>
+typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(const_iterator pos, size_type count, const T &value)
+{
+	this->shift(pos, count);
+	std::fill(pos, pos + count, value);
+	return (pos);
 }
