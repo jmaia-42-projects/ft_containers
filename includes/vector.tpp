@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 14:18:12 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 14:22:15 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,4 +196,16 @@ template<class T, class Allocator>
 typename vector<T, Allocator>::const_reverse_iterator vector<T, Allocator>::rend() const
 {
 	return (const_reverse_iterator(this->begin()));
+}
+
+template<class T, class Allocator>
+bool	vector<T, Allocator>::empty(void) const
+{
+	return (this->begin() == this->end());
+}
+
+template<class T, class Allocator>
+typename vector<T, Allocator>::size_type	vector<T, Allocator>::size(void) const
+{
+	return (this->_size);
 }
