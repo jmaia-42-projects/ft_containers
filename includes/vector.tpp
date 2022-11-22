@@ -107,3 +107,15 @@ typename vector<T, Allocator>::const_reference	vector<T, Allocator>::at(size_typ
 		throw std::out_of_range("Index out of range !");
 	return (this->_array[pos]);
 }
+
+template<class T, class Allocator>
+typename vector<T, Allocator>::reference	vector<T, Allocator>::operator[](size_type pos)
+{
+	return (this->_array[pos]);
+}
+
+template<class T, class Allocator>
+typename vector<T, Allocator>::const_reference	vector<T, Allocator>::operator[](size_type pos) const
+{
+	return (this->_array[pos]);
+}
