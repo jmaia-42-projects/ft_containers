@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 14:22:15 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 14:22:45 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,4 +208,10 @@ template<class T, class Allocator>
 typename vector<T, Allocator>::size_type	vector<T, Allocator>::size(void) const
 {
 	return (this->_size);
+}
+
+template<class T, class Allocator>
+typename vector<T, Allocator>::size_type	vector<T, Allocator>::max_size(void) const
+{
+	return (this->_allocator.max_size());
 }
