@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 20:02:33 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 20:05:19 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,6 +329,12 @@ void	vector<T, Allocator>::resize(size_type count, T value)
 		this->insert(this->end(), count - this->_size, value);
 }
 
+template<class T, class Allocator>
+void	vector<T, Allocator>::swap(vector &obj)
+{
+	vector<T, Allocator>::swap(*this, obj);
+}
+
 template<class T>
 bool operator==(const vector<T> &lhs, const vector<T> &rhs)
 {
@@ -370,4 +376,14 @@ template<class T>
 bool operator>=(const vector<T> &lhs, const vector<T> &rhs)
 {
 	return (!(lhs < rhs));
+}
+
+template<class T>
+void swap(vector<T> &lhs, vector<T> &rhs)
+{
+	T	*tmp;
+
+	tmp = lhs._array;
+	lhs._array = rhs._array;
+	rhs._array = tmp;
 }
