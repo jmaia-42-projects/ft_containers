@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 16:33:56 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 18:13:36 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ namespace ft
 			size_type	_capacity;
 			size_type	_size;
 
-			void	shift(const_iterator it, size_type n);
+			void	shiftRight(const_iterator it, size_type n);
+			void	shiftLeft(const_iterator it, size_type n);
 
 		public:
 			vector(void);

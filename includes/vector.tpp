@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 18:06:36 by jmaia            ###   ###               */
+/*   Updated: 2022/11/22 18:21:46 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,13 +250,13 @@ void	vector<T, Allocator>::clear(void)
 template<class T, class Allocator>
 typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(const_iterator pos, const T &value)
 {
-	this->shift(pos, 1);
+	this->shiftRight(pos, 1);
 	*pos = value;
 	return (pos);
 }
 
 template<class T, class Allocator>
-void	vector<T, Allocator>::shift(const_iterator pos, typename vector<T, Allocator>::size_type n)
+void	vector<T, Allocator>::shiftRight(const_iterator pos, typename vector<T, Allocator>::size_type n)
 {
 	if (this->_size == this->_capacity)
 		this->reserve(this->_capacity + (n / VEC_EXPAND_SIZE + 1) * VEC_EXPAND_SIZE);
@@ -267,7 +267,7 @@ void	vector<T, Allocator>::shift(const_iterator pos, typename vector<T, Allocato
 template<class T, class Allocator>
 typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(const_iterator pos, size_type count, const T &value)
 {
-	this->shift(pos, count);
+	this->shiftRight(pos, count);
 	std::fill(pos, pos + count, value);
 	return (pos);
 }
@@ -276,7 +276,7 @@ template<class T, class Allocator>
 template<class InputIt>
 typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(typename vector<T, Allocator>::const_iterator pos, InputIt first, InputIt last)
 {
-	this->shift(pos, std::distance(first, last));
+	this->shiftRight(pos, std::distance(first, last));
 	while (first != last)
 	{
 		*pos = *first;
@@ -284,4 +284,19 @@ typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(typename ve
 		first++;
 	}
 	return (pos);
+}
+
+template<class T, class Allocator>
+typename vector<T, Allocator>::iterator vector<T, Allocator>::erase(typename vector<T, Allocator>::iterator pos)
+{
+	this->shiftLeft(pos, 1);
+	return (pos);
+}
+
+template<class T, class Allocator>
+void	vector<T, Allocator>::shiftLeft(const_iterator pos, typename vector<T, Allocator>::size_type n)
+{
+	for (const_iterator it = pos; it != this->end() - n; it++)
+		*it = *(it + n);
+	this->_size -= n;
 }
