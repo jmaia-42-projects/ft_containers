@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/24 13:00:29 by jmaia            ###   ###               */
+/*   Updated: 2022/11/24 14:30:18 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 
 # include <memory>
 
+# include "enable_if.hpp"
+# include "is_integral.hpp"
 # include "reverse_iterator.hpp"
 
 
 # include <algorithm>
+# include <iterator>
 # include <stdexcept>
 
 # include "lexicographical_compare.hpp"
@@ -55,7 +58,7 @@ namespace ft
 			vector	&operator=(const vector &obj);
 			void	assign(size_type count, const T &value);
 			template<class InputIt>
-			void	assign(InputIt first, InputIt last);
+			void	assign(typename enable_if<!is_integral<InputIt>::value, InputIt>::type first, InputIt last);
 
 			allocator_type	get_allocator(void) const;
 
