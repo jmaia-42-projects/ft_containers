@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 20:02:01 by jmaia            ###   ###               */
+/*   Updated: 2022/11/24 13:00:29 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,20 @@ namespace ft
 	template<class T, class Allocator = std::allocator<T> >
 	class vector
 	{
-		typedef T value_type;
-		typedef Allocator allocator_type;
-		typedef std::size_t size_type;
-		typedef std::ptrdiff_t difference_type;
-		typedef value_type& reference;
-		typedef const value_type& const_reference;
-		typedef typename Allocator::pointer pointer;
-		typedef typename Allocator::const_pointer const_pointer;
-		typedef T* iterator;
-		typedef T const * const_iterator;
-		typedef reverse_iterator<const_iterator> const_reverse_iterator;
-		typedef reverse_iterator<iterator> reverse_iterator;
-
-		private:
-			Allocator	_allocator;
-			T			*_array;
-			size_type	_capacity;
-			size_type	_size;
-
-			void	shiftRight(const_iterator it, size_type n);
-			void	shiftLeft(const_iterator it, size_type n);
-
 		public:
+			typedef T value_type;
+			typedef Allocator allocator_type;
+			typedef std::size_t size_type;
+			typedef std::ptrdiff_t difference_type;
+			typedef value_type& reference;
+			typedef const value_type& const_reference;
+			typedef typename Allocator::pointer pointer;
+			typedef typename Allocator::const_pointer const_pointer;
+			typedef T* iterator;
+			typedef T const * const_iterator;
+			typedef reverse_iterator<const_iterator> const_reverse_iterator;
+			typedef reverse_iterator<iterator> reverse_iterator;
+
 			vector(void);
 			explicit vector(const Allocator &alloc);
 			explicit vector(size_type count, const T &value = T(), const Allocator& alloc = Allocator());
@@ -109,6 +100,14 @@ namespace ft
 			void	pop_back(void);
 			void	resize(size_type count, T value = T());
 			void	swap(vector &obj);
+		private:
+			Allocator	_allocator;
+			T			*_array;
+			size_type	_capacity;
+			size_type	_size;
+
+			void	shiftRight(const_iterator it, size_type n);
+			void	shiftLeft(const_iterator it, size_type n);
 	};
 
 	/* Operators */

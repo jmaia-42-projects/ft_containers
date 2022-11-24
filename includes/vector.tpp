@@ -6,15 +6,16 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 20:05:19 by jmaia            ###   ###               */
+/*   Updated: 2022/11/24 13:44:38 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
 template<class T, class Allocator>
-vector<T, Allocator>::vector(void): _size(0),
-					_array(NULL),
+vector<T, Allocator>::vector(void):
 					_allocator(Allocator()),
-					_capacity(0) { }
+					_array(NULL),
+					_capacity(0),
+					_size(0) { }
 
 template<class T, class Allocator>
 vector<T, Allocator>::vector(const Allocator &alloc): _size(0),
@@ -227,8 +228,9 @@ void	vector<T, Allocator>::reserve(typename vector<T, Allocator>::size_type new_
 		return ;
 	if (new_cap > this->max_size())
 		throw std::length_error("New capacity is too large");
-	newArray = this->_allocator(new_cap);
+	newArray = this->_allocator.allocate(new_cap);
 	oldArray = this->_array;
+	oldSize = this->_size;
 	this->_array = newArray;
 	this->_capacity = new_cap;
 	this->_size = 0;
@@ -251,8 +253,12 @@ template<class T, class Allocator>
 typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(const_iterator pos, const T &value)
 {
 	this->shiftRight(pos, 1);
-	*pos = value;
-	return (pos);
+	if (!pos)
+		pos = this->end();
+	iterator it = const_cast<iterator>(pos);
+	*it = value;
+	this->_size++;
+	return (it);
 }
 
 template<class T, class Allocator>
@@ -260,15 +266,20 @@ void	vector<T, Allocator>::shiftRight(const_iterator pos, typename vector<T, All
 {
 	if (this->_size == this->_capacity)
 		this->reserve(this->_capacity + (n / VEC_EXPAND_SIZE + 1) * VEC_EXPAND_SIZE);
-	for (const_iterator it = this->end() - 1; it != pos; it++)
-		*(it + n) = *it;
+	if (this->_size == 0)
+		return ;
+	for (const_iterator it = this->end() - 1; it >= pos; it++)
+		*const_cast<iterator>(it + n) = *it;
 }
 
 template<class T, class Allocator>
 typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(const_iterator pos, size_type count, const T &value)
 {
 	this->shiftRight(pos, count);
+	if (!pos)
+		pos = this->end();
 	std::fill(pos, pos + count, value);
+	this->_size += count;
 	return (pos);
 }
 
@@ -276,14 +287,19 @@ template<class T, class Allocator>
 template<class InputIt>
 typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(typename vector<T, Allocator>::const_iterator pos, InputIt first, InputIt last)
 {
-	this->shiftRight(pos, std::distance(first, last));
+	size_type count = std::distance(first, last);
+	this->shiftRight(pos, count);
+	if (!pos)
+		pos = this->end();
+	iterator it = const_cast<iterator>(pos);
 	while (first != last)
 	{
-		*pos = *first;
-		pos++;
+		*it = *first;
+		it++;
 		first++;
 	}
-	return (pos);
+	this->_size += count;
+	return (it);
 }
 
 template<class T, class Allocator>
@@ -296,6 +312,8 @@ typename vector<T, Allocator>::iterator vector<T, Allocator>::erase(typename vec
 template<class T, class Allocator>
 void	vector<T, Allocator>::shiftLeft(const_iterator pos, typename vector<T, Allocator>::size_type n)
 {
+	if (this->_size == 0)
+		return ;
 	for (const_iterator it = pos; it != this->end() - n; it++)
 		*it = *(it + n);
 	this->_size -= n;
