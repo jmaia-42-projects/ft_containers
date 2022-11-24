@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/24 14:30:18 by jmaia            ###   ###               */
+/*   Updated: 2022/11/24 15:14:01 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ namespace ft
 			explicit vector(size_type count, const T &value = T(), const Allocator& alloc = Allocator());
 			vector(const vector &obj);
 			template<class InputIt>
-			vector(InputIt first, InputIt last, const Allocator& alloc = Allocator());
+			vector(typename enable_if<!is_integral<InputIt>::value, InputIt>::type first, InputIt last, const Allocator& alloc = Allocator());
 			~vector(void);
 
 			vector	&operator=(const vector &obj);
@@ -96,7 +96,7 @@ namespace ft
 			iterator insert(const_iterator pos, const T &value);
 			iterator insert(const_iterator pos, size_type count, const T &value);
 			template<class InputIt>
-			iterator insert(const_iterator pos, InputIt first, InputIt last);
+			iterator insert(const_iterator pos, typename enable_if<!is_integral<InputIt>::value, InputIt>::type first, InputIt last);
 			iterator erase(iterator pos);
 			iterator erase(iterator first, iterator last);
 			void	push_back(const T &value);

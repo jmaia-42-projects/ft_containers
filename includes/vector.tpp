@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/24 14:28:47 by jmaia            ###   ###               */
+/*   Updated: 2022/11/24 15:19:34 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@ vector<T, Allocator>::vector(void):
 					_size(0) { }
 
 template<class T, class Allocator>
-vector<T, Allocator>::vector(const Allocator &alloc): _size(0),
-					_array(NULL),
+vector<T, Allocator>::vector(const Allocator &alloc):
 					_allocator(alloc),
-					_capacity(0) { }
+					_array(NULL),
+					_capacity(0),
+					_size(0) {}
 
 template<class T, class Allocator>
-vector<T, Allocator>::vector(size_type count, const T &value, const Allocator& alloc): _size(count),
+vector<T, Allocator>::vector(size_type count, const T &value, const Allocator& alloc):
 			_allocator(alloc),
-			_capacity(count)
+			_capacity(count),
+			_size(count)
 {
 	this->_array = this->_allocator.allocate(this->_capacity);
 	std::fill(this->begin(), this->begin() + this->_capacity, value);
@@ -40,7 +42,8 @@ vector<T, Allocator>::vector(const vector &obj)
 
 template<class T, class Allocator>
 template<class InputIt>
-vector<T, Allocator>::vector(InputIt first, InputIt last, const Allocator& alloc): _allocator(alloc)
+vector<T, Allocator>::vector(typename enable_if<!is_integral<InputIt>::value, InputIt>::type first, InputIt last, const Allocator& alloc):
+		_allocator(alloc)
 {
 	this->_capacity = std::distance(first, last);
 	this->_size = 0;
@@ -285,7 +288,7 @@ typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(const_itera
 
 template<class T, class Allocator>
 template<class InputIt>
-typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(typename vector<T, Allocator>::const_iterator pos, InputIt first, InputIt last)
+typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(typename vector<T, Allocator>::const_iterator pos, typename enable_if<!is_integral<InputIt>::value, InputIt>::type first, InputIt last)
 {
 	size_type count = std::distance(first, last);
 	this->shiftRight(pos, count);

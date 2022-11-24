@@ -31,7 +31,7 @@ re		:	fclean ${NAME}
 test_vector:
 	$(CC) $(CFLAGS) $(INCLUDE) -fdiagnostics-color=always -D FT tests/test_vector.cpp -o test_vector_ft
 	$(CC) $(CFLAGS) $(INCLUDE) tests/test_vector.cpp -o test_vector_std
-	bash -c "diff <(./test_vector_ft) <(./test_vector_std)"
+	bash -c "diff <(./test_vector_ft 2>&1) <(./test_vector_std 2>&1)"
 
 clean_test:
 	rm -f test_vector_ft test_vector_std
