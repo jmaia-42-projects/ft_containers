@@ -1,39 +1,31 @@
-NAME		=	a.out
-
-SRCS		=
-
-_OBJS		=	${SRCS:.cpp=.o}
-OBJS		=	$(addprefix build/, $(_OBJS))
-
-CC			=	c++
-CFLAGS		=	-Wall -Werror -Wextra -std=c++98 -g3
+CXX			=	clang++
+CXXFLAGS	=	-Wall -Werror -Wextra -std=c++98 -g3
 INCLUDE		=	-I includes/
 
-all		:	$(NAME)
-
-build/%.o	:	%.cpp
-	@if [ ! -d $(dir $@) ]; then\
-		mkdir -p $(dir $@);\
-	fi
-	$(CC) ${CFLAGS} ${INCLUDE} -c $< -o $@
-
-$(NAME)	:	$(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+all		:	tests
 
 clean	:
 	rm -Rf build/
 
-fclean	:	clean
-	rm -f ${NAME}
-
-re		:	fclean ${NAME}
-
-test_vector:
-	$(CC) $(CFLAGS) $(INCLUDE) -fdiagnostics-color=always -D FT tests/test_vector.cpp -o test_vector_ft
-	$(CC) $(CFLAGS) $(INCLUDE) tests/test_vector.cpp -o test_vector_std
-	bash -c "diff <(./test_vector_ft 2>&1) <(./test_vector_std 2>&1)"
-
-clean_test:
+fclean	: clean
 	rm -f test_vector_ft test_vector_std
 
-.PHONY	:	all clean fclean re test_vector
+re		:	fclean all
+
+build/	:
+	mkdir -p build/
+
+test_vector_ft: build/ tests/test_vector.cpp
+	$(CXX) $(CXXFLAGS) -MMD -MF build/test_vector_ft.d $(INCLUDE) -fdiagnostics-color=always -D FT tests/test_vector.cpp -o test_vector_ft
+
+-include build/test_vector_ft.d
+
+test_vector_std: tests/test_vector.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -fdiagnostics-color=always tests/test_vector.cpp -o test_vector_std
+
+test_vector: test_vector_ft test_vector_std
+	bash -c "diff <(./test_vector_ft 2>&1) <(./test_vector_std 2>&1)"
+
+tests: test_vector
+
+.PHONY	:	all clean fclean re test_vector tests
