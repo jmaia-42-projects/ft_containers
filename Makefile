@@ -1,5 +1,5 @@
 CXX			=	clang++
-CXXFLAGS	=	-Wall -Werror -Wextra -std=c++98 -g3
+CXXFLAGS	=	-Wall -Werror -Wextra -fsanitize=address -std=c++98 -g3
 INCLUDE		=	-I includes/
 
 all		:	tests

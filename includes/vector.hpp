@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/25 12:11:52 by jmaia            ###   ###               */
+/*   Updated: 2022/11/25 14:33:46 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ namespace ft
 			vector(void);
 			explicit vector(const Allocator &alloc);
 			explicit vector(size_type count, const T &value = T(), const Allocator& alloc = Allocator());
-			vector(const vector &obj);
+			vector(const vector<T, Allocator> &obj);
 			template<class InputIt>
 			vector(typename enable_if<!is_integral<InputIt>::value, InputIt>::type first, InputIt last, const Allocator& alloc = Allocator());
 			~vector(void);
 
-			vector	&operator=(const vector &obj);
+			vector<T, Allocator>	&operator=(const vector<T, Allocator> &obj);
 			void	assign(size_type count, const T &value);
 			template<class InputIt>
 			void	assign(typename enable_if<!is_integral<InputIt>::value, InputIt>::type first, InputIt last);
@@ -102,39 +102,42 @@ namespace ft
 			void	push_back(const T &value);
 			void	pop_back(void);
 			void	resize(size_type count, T value = T());
-			void	swap(vector &obj);
+			void	swap(vector<T, Allocator> &obj);
 		private:
 			Allocator	_allocator;
 			T			*_array;
 			size_type	_capacity;
 			size_type	_size;
 
-			void	shiftRight(const_iterator it, size_type n);
+			void	shiftRight(const_iterator &it, size_type n);
 			void	shiftLeft(const_iterator it, size_type n);
 	};
 
 	/* Operators */
-	template<class T>
-	bool operator==(const vector<T> &lhs, const vector<T> &rhs);
+	template<class T, class Allocator>
+	bool operator==(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs);
+
+	template<class T, class Allocator>
+	bool operator!=(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs);
+
+	template<class T, class Allocator>
+	bool operator<(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs);
+
+	template<class T, class Allocator>
+	bool operator<=(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs);
+
+	template<class T, class Allocator>
+	bool operator>(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs);
+
+	template<class T, class Allocator>
+	bool operator>=(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs);
+
+
+	template<class T, class Allocator>
+	void swap(vector<T, Allocator> &lhs, vector<T, Allocator> &rhs);
 
 	template<class T>
-	bool operator!=(const vector<T> &lhs, const vector<T> &rhs);
-
-	template<class T>
-	bool operator<(const vector<T> &lhs, const vector<T> &rhs);
-
-	template<class T>
-	bool operator<=(const vector<T> &lhs, const vector<T> &rhs);
-
-	template<class T>
-	bool operator>(const vector<T> &lhs, const vector<T> &rhs);
-
-	template<class T>
-	bool operator>=(const vector<T> &lhs, const vector<T> &rhs);
-
-
-	template<class T>
-	void swap(vector<T> &lhs, vector<T> &rhs);
+	void	swap(T &a, T &b);
 
 # include "vector.tpp"
 }

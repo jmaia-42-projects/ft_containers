@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/25 12:12:25 by jmaia            ###   ###               */
+/*   Updated: 2022/11/25 14:33:55 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,7 @@ void	vector<T, Allocator>::reserve(typename vector<T, Allocator>::size_type new_
 	this->_capacity = new_cap;
 	this->_size = 0;
 	this->insert(this->end(), oldArray, oldArray + oldSize);
+	this->_allocator.deallocate(oldArray, oldSize);
 }
 
 template<class T, class Allocator>
@@ -277,13 +278,17 @@ typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(const_itera
 }
 
 template<class T, class Allocator>
-void	vector<T, Allocator>::shiftRight(const_iterator pos, typename vector<T, Allocator>::size_type n)
+void	vector<T, Allocator>::shiftRight(const_iterator &pos, typename vector<T, Allocator>::size_type n)
 {
-	if (this->_size == this->_capacity)
+	vector<T, Allocator>::difference_type relativePos = std::distance(this->begin(), const_cast<iterator>(pos));
+	if (this->_size + n > this->_capacity)
+	{
 		this->reserve(this->_capacity + (n / VEC_EXPAND_SIZE + 1) * VEC_EXPAND_SIZE);
+		pos = this->begin() + relativePos;
+	}
 	if (this->_size == 0)
 		return ;
-	for (const_iterator it = this->end() - 1; it >= pos; it++)
+	for (const_iterator it = this->end() - 1; it >= pos; it--)
 		*const_cast<iterator>(it + n) = *it;
 }
 
@@ -293,9 +298,10 @@ typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(const_itera
 	this->shiftRight(pos, count);
 	if (!pos)
 		pos = this->end();
-	std::fill(pos, pos + count, value);
+	iterator it = const_cast<iterator>(pos);
+	std::fill(it, it + count, value);
 	this->_size += count;
-	return (pos);
+	return (it);
 }
 
 template<class T, class Allocator>
@@ -310,8 +316,8 @@ typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(typename ve
 	while (first != last)
 	{
 		*it = *first;
-		it++;
-		first++;
+		++it;
+		++first;
 	}
 	this->_size += count;
 	return (it);
@@ -329,7 +335,10 @@ void	vector<T, Allocator>::shiftLeft(const_iterator pos, typename vector<T, Allo
 {
 	if (this->_size == 0)
 		return ;
-	for (const_iterator it = pos; it != this->end() - n; it++)
+	if (!pos || pos == this->end())
+		return ;
+	iterator first = const_cast<iterator>(pos);
+	for (iterator it = first; it != this->end() - n; it++)
 		*it = *(it + n);
 	this->_size -= n;
 }
@@ -363,17 +372,30 @@ void	vector<T, Allocator>::resize(size_type count, T value)
 }
 
 template<class T, class Allocator>
-void	vector<T, Allocator>::swap(vector &obj)
+void	vector<T, Allocator>::swap(vector<T, Allocator> &obj)
 {
-	vector<T, Allocator>::swap(*this, obj);
+	ft::swap(this->_array, obj._array);
+	ft::swap(this->_allocator, obj._allocator);
+	ft::swap(this->_capacity, obj._capacity);
+	ft::swap(this->_size, obj._size);
 }
 
 template<class T>
-bool operator==(const vector<T> &lhs, const vector<T> &rhs)
+void	swap(T &a, T &b)
+{
+	T	tmp;
+
+	tmp = a;
+	a = b;
+	b = tmp;
+}
+
+template<class T, class Allocator>
+bool operator==(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs)
 {
 	if (lhs.size() != rhs.size())
 		return (false);
-	for (typename vector<T>::iterator it = lhs.begin(), it2 = rhs.begin(); it != lhs.end(); it++, it2++)
+	for (typename vector<T, Allocator>::const_iterator it = lhs.begin(), it2 = rhs.begin(); it != lhs.end(); it++, it2++)
 	{
 		if (*it != *it2)
 			return (false);
@@ -381,42 +403,38 @@ bool operator==(const vector<T> &lhs, const vector<T> &rhs)
 	return (true);
 }
 
-template<class T>
-bool operator!=(const vector<T> &lhs, const vector<T> &rhs)
+template<class T, class Allocator>
+bool operator!=(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs)
 {
 	return (!(lhs == rhs));
 }
 
-template<class T>
-bool operator<(const vector<T> &lhs, const vector<T> &rhs)
+template<class T, class Allocator>
+bool operator<(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs)
 {
-	return (lexicographical_compare<vector<T>::iterator, vector<T>::iterator>(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	return (lexicographical_compare<typename vector<T, Allocator>::const_iterator, typename vector<T, Allocator>::const_iterator>(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 }
 
-template<class T>
-bool operator<=(const vector<T> &lhs, const vector<T> &rhs)
+template<class T, class Allocator>
+bool operator<=(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs)
 {
 	return (lhs < rhs || lhs == rhs);
 }
 
-template<class T>
-bool operator>(const vector<T> &lhs, const vector<T> &rhs)
+template<class T, class Allocator>
+bool operator>(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs)
 {
 	return (!(lhs <= rhs));
 }
 
-template<class T>
-bool operator>=(const vector<T> &lhs, const vector<T> &rhs)
+template<class T, class Allocator>
+bool operator>=(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs)
 {
 	return (!(lhs < rhs));
 }
 
-template<class T>
-void swap(vector<T> &lhs, vector<T> &rhs)
+template<class T, class Allocator>
+void swap(vector<T, Allocator> &lhs, vector<T, Allocator> &rhs)
 {
-	T	*tmp;
-
-	tmp = lhs._array;
-	lhs._array = rhs._array;
-	rhs._array = tmp;
+	lhs.swap(rhs);
 }

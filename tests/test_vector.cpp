@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 11:54:56 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/25 12:02:13 by jmaia            ###   ###               */
+/*   Updated: 2022/11/25 14:36:13 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,5 +263,321 @@ int	main(void)
 		filler.push_back(0);
 		ft::vector<int>	v3(filler.begin(), filler.end());
 		std::cout << v.empty() << std::endl;
+	}
+	/* size() tests */
+	{
+		ft::vector<int> v;
+
+		v.push_back(-1);
+		v.push_back(5);
+		v.push_back(3);
+		v.pop_back();
+		v.pop_back();
+		v.push_back(2147483647);
+		v.push_back(-2147483648);
+		v.pop_back();
+		v.push_back(0);
+		std::cout << v.size() << std::endl;
+
+		ft::vector<int> v2;
+		std::cout << v2.size() << std::endl;
+	}
+	/* reserve(0) test */
+	{
+		ft::vector<int> v;
+
+		v.reserve(0);
+		std::cout << v.capacity() << std::endl;
+		v.push_back(-1);
+		v.push_back(5);
+		v.push_back(3);
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+	}
+	/* reserve(3) test */
+	{
+		ft::vector<int> v;
+
+		v.reserve(3);
+		std::cout << v.capacity() << std::endl;
+		v.push_back(-1);
+		v.push_back(5);
+		v.push_back(3);
+		std::cout << v.capacity() << std::endl;
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+	}
+	/* reserve(5) test */
+	{
+		ft::vector<int> v;
+
+		v.reserve(5);
+		std::cout << v.capacity() << std::endl;
+		v.push_back(-1);
+		v.push_back(5);
+		v.push_back(3);
+		std::cout << v.capacity() << std::endl;
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+	}
+	/* Clear on empty vector test */
+	{
+		ft::vector<int> v;
+
+		v.clear();
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		std::cout << v.size() << std::endl;
+		std::cout << v.capacity() << std::endl;
+	}
+	/* Clear on filled vector test */
+	{
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		ft::vector<int>	v(filler.begin(), filler.end());
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		v.clear();
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		std::cout << v.size() << std::endl;
+	}
+	/* Insert one value to vector tests */
+	{
+		ft::vector<int>	v;
+
+		v.insert(v.begin(), 5);
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		v.insert(v.begin(), 3);
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		v.insert(v.begin(), 1);
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		std::cout << v.size() << std::endl;
+	}
+	/* Insert many values on vector tests */
+	{
+		ft::vector<int>	v;
+
+		std::cout << v.size() << std::endl;
+		v.insert(v.begin(), 5, 3);
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		std::cout << v.size() << std::endl;
+		v.insert(v.begin(), 3, 12);
+		std::cout << v.size() << std::endl;
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		v.insert(v.begin(), 1, 15);
+		std::cout << v.size() << std::endl;
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		std::cout << v.size() << std::endl;
+	}
+	/* Insert range on vector tests */
+	{
+		ft::vector<int>	v;
+
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		std::cout << v.size() << std::endl;
+		v.insert(v.begin(), filler.begin(), filler.end());
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		std::cout << v.size() << std::endl;
+		v.insert(v.begin(), filler.begin(), filler.end());
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		std::cout << v.size() << std::endl;
+	}
+	/* Erase pos test */
+	{
+		ft::vector<int>	v;
+
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		v.insert(v.begin(), filler.begin(), filler.end());
+		v.erase(v.begin());
+		v.erase(v.begin() + 2);
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+	}
+	/* Erase range test */
+	{
+		ft::vector<int>	v;
+
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		v.insert(v.begin(), filler.begin(), filler.end());
+
+		v.erase(v.begin() + 1, v.end());
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+	}
+	/* Resize on empty vector test */
+	std::cout << "Resize on empty vector test" << std::endl;
+	{
+		ft::vector<int>	v;
+		
+		v.resize(0, 5);
+		v.resize(5, 5);
+		v.resize(10, 5);
+		v.resize(12, 5);
+		v.resize(50, 5);
+		v.resize(55, 5);
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		v.insert(v.begin(), filler.begin(), filler.end());
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+	}
+	/* Test swap */
+	std::cout << "Swap" << std::endl;
+	{
+		ft::vector<int>	v;
+		ft::vector<int>	v2;
+
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		v.insert(v.begin(), filler.begin(), filler.end());
+
+		std::list<int>	filler2;
+		filler2.push_back(0);
+		filler2.push_back(1);
+		filler2.push_back(23842);
+		filler2.push_back(2);
+		filler2.push_back(3);
+		filler2.push_back(2488723);
+		filler2.push_back(0);
+		v2.insert(v2.begin(), filler2.begin(), filler2.end());
+
+		v.swap(v2);
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		for (ft::vector<int>::iterator it = v2.begin(); it != v2.end(); it++)
+			std::cout << *it << std::endl;
+	}
+	/* Test external swap */
+	std::cout << "External swap" << std::endl;
+	{
+		ft::vector<int>	v;
+		ft::vector<int>	v2;
+
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		v.insert(v.begin(), filler.begin(), filler.end());
+
+		std::list<int>	filler2;
+		filler2.push_back(0);
+		filler2.push_back(1);
+		filler2.push_back(23842);
+		filler2.push_back(2);
+		filler2.push_back(3);
+		filler2.push_back(2488723);
+		filler2.push_back(0);
+		v2.insert(v2.begin(), filler2.begin(), filler2.end());
+
+		swap(v, v2);
+		for (ft::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
+		for (ft::vector<int>::iterator it = v2.begin(); it != v2.end(); it++)
+			std::cout << *it << std::endl;
+	}
+	/* Tests comparisons equals */
+	std::cout << "Comparisons" << std::endl;
+	{
+		ft::vector<int>	v;
+		ft::vector<int>	v2;
+
+		std::cout << (v == v2) << std::endl;
+		std::cout << (v != v2) << std::endl;
+		std::cout << (v <= v2) << std::endl;
+		std::cout << (v >= v2) << std::endl;
+		std::cout << (v < v2) << std::endl;
+		std::cout << (v > v2) << std::endl;
+
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		v.insert(v.begin(), filler.begin(), filler.end());
+		v2.insert(v2.begin(), filler.begin(), filler.end());
+
+		std::cout << (v == v2) << std::endl;
+		std::cout << (v != v2) << std::endl;
+		std::cout << (v <= v2) << std::endl;
+		std::cout << (v >= v2) << std::endl;
+		std::cout << (v < v2) << std::endl;
+		std::cout << (v > v2) << std::endl;
+	}
+	/* Tests comparisons differents */
+	std::cout << "Comparisons" << std::endl;
+	{
+		ft::vector<int>	v;
+		ft::vector<int>	v2;
+
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		v.insert(v.begin(), filler.begin(), filler.end());
+
+		std::list<int>	filler2;
+		filler.push_back(1);
+		filler.push_back(1423);
+		filler.push_back(-1);
+		v2.insert(v2.begin(), filler2.begin(), filler2.end());
+
+		std::cout << (v == v2) << std::endl;
+		std::cout << (v != v2) << std::endl;
+		std::cout << (v <= v2) << std::endl;
+		std::cout << (v >= v2) << std::endl;
+		std::cout << (v < v2) << std::endl;
+		std::cout << (v > v2) << std::endl;
+	}
+	/* Tests comparisons with empty */
+	std::cout << "Comparisons" << std::endl;
+	{
+		ft::vector<int>	v;
+		ft::vector<int>	v2;
+
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		v.insert(v.begin(), filler.begin(), filler.end());
+
+		std::cout << (v == v2) << std::endl;
+		std::cout << (v != v2) << std::endl;
+		std::cout << (v <= v2) << std::endl;
+		std::cout << (v >= v2) << std::endl;
+		std::cout << (v < v2) << std::endl;
+		std::cout << (v > v2) << std::endl;
 	}
 }
