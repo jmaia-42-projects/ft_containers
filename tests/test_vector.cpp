@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 11:54:56 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/24 15:17:57 by jmaia            ###   ###               */
+/*   Updated: 2022/11/25 12:02:13 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,5 +165,103 @@ int	main(void)
 			std::cout << *it << std::endl;
 		for (ft::vector<int>::reverse_iterator it = v9.rbegin(); it != v9.rend(); it++)
 			std::cout << *it << std::endl;
+	}
+	/* Assignment operator tests */
+	{
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		ft::vector<int>	v(filler.begin(), filler.end());
+		ft::vector<int> v2 = v;
+		for (ft::vector<int>::iterator it = v2.begin(); it != v2.end(); it++)
+			std::cout << *it << std::endl;
+		for (ft::vector<int>::reverse_iterator it = v2.rbegin(); it != v2.rend(); it++)
+			std::cout << *it << std::endl;
+	}
+	/* At() tests */
+	{
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		ft::vector<int>	v(filler.begin(), filler.end());
+		std::cout << v.at(0) << std::endl;
+		std::cout << v.at(1) << std::endl;
+		std::cout << v.at(2) << std::endl;
+		std::cout << v.at(3) << std::endl;
+		try
+		{
+			std::cout << v.at(-1) << std::endl;
+		}
+		catch (std::exception e)
+		{
+			std::cout << "Yeah, exception thrown !" << std::endl;
+		}
+		try
+		{
+			std::cout << v.at(4) << std::endl;
+		}
+		catch (std::exception e)
+		{
+			std::cout << "Yeah, exception thrown !" << std::endl;
+		}
+		try
+		{
+			std::cout << v.at(5) << std::endl;
+		}
+		catch (std::exception e)
+		{
+			std::cout << "Yeah, exception thrown !" << std::endl;
+		}
+		try
+		{
+			std::cout << v.at(-1) << std::endl;
+		}
+		catch (std::exception e)
+		{
+			std::cout << "Yeah, exception thrown !" << std::endl;
+		}
+	}
+	/* At() tests on empty list */
+	{
+		ft::vector<int> v;
+		try
+		{
+			v.at(0);
+		}
+		catch (std::exception e)
+		{
+			std::cout << "Yeah, exception thrown !" << std::endl;
+		}
+	}
+	/* operator[] tests */
+	{
+		std::list<int>	filler;
+		filler.push_back(5);
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		ft::vector<int>	v(filler.begin(), filler.end());
+		std::cout << v[0] << std::endl;
+		std::cout << v[1] << std::endl;
+		std::cout << v[2] << std::endl;
+		std::cout << v[3] << std::endl;
+	}
+	/* Empty() tests */
+	{
+		ft::vector<int> v;
+		std::cout << v.empty() << std::endl;
+		std::list<int>	filler;
+		filler.push_back(5);
+		ft::vector<int>	v2(filler.begin(), filler.end());
+		std::cout << v.empty() << std::endl;
+		filler.push_back(3);
+		filler.push_back(1);
+		filler.push_back(0);
+		ft::vector<int>	v3(filler.begin(), filler.end());
+		std::cout << v.empty() << std::endl;
 	}
 }

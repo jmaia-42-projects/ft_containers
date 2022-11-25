@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/24 15:19:34 by jmaia            ###   ###               */
+/*   Updated: 2022/11/25 12:12:25 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ vector<T, Allocator>::vector(size_type count, const T &value, const Allocator& a
 }
 
 template<class T, class Allocator>
-vector<T, Allocator>::vector(const vector &obj)
+vector<T, Allocator>::vector(const vector &obj):
+	_allocator(Allocator()),
+	_array(NULL),
+	_capacity(0),
+	_size(0)
 {
 	*this = obj;
 }
@@ -60,7 +64,9 @@ vector<T, Allocator>::~vector(void)
 template<class T, class Allocator>
 vector<T, Allocator> &vector<T, Allocator>::operator=(const vector &obj)
 {
-	this->_array.deallocate(this->_array, this->_capacity);
+	if (this == &obj)
+		return (*this);
+	this->_allocator.deallocate(this->_array, this->_capacity);
 	this->_allocator = allocator_type(obj._allocator);
 	this->_capacity = obj._capacity;
 	this->_size = 0;
@@ -174,6 +180,12 @@ typename vector<T, Allocator>::const_iterator vector<T, Allocator>::begin() cons
 
 template<class T, class Allocator>
 typename vector<T, Allocator>::iterator vector<T, Allocator>::end()
+{
+	return (this->_array + this->_size);
+}
+
+template<class T, class Allocator>
+typename vector<T, Allocator>::const_iterator vector<T, Allocator>::end() const
 {
 	return (this->_array + this->_size);
 }
