@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 09:35:28 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/22 11:12:18 by jmaia            ###   ###               */
+/*   Updated: 2022/11/25 14:49:02 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typename reverse_iterator<I>::pointer reverse_iterator<I>::operator->(void) cons
 template<typename I>
 typename reverse_iterator<I>::reference reverse_iterator<I>::operator[](difference_type n) const
 {
-	return (this->base[-n - 1]);
+	return (this->current[-n - 1]);
 }
 
 template<typename I>

@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/25 14:33:46 by jmaia            ###   ###               */
+/*   Updated: 2022/11/30 11:15:15 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ namespace ft
 			typedef typename Allocator::const_pointer const_pointer;
 			typedef T* iterator;
 			typedef T const * const_iterator;
-			typedef reverse_iterator<const_iterator> const_reverse_iterator;
-			typedef reverse_iterator<iterator> reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
+			typedef ft::reverse_iterator<iterator> reverse_iterator;
 
 			vector(void);
 			explicit vector(const Allocator &alloc);
@@ -58,7 +58,8 @@ namespace ft
 			vector<T, Allocator>	&operator=(const vector<T, Allocator> &obj);
 			void	assign(size_type count, const T &value);
 			template<class InputIt>
-			void	assign(typename enable_if<!is_integral<InputIt>::value, InputIt>::type first, InputIt last);
+			void	assign(InputIt first, InputIt last,
+				typename ft::enable_if<!ft::is_integral<InputIt>::value, int>::type = 0);
 
 			allocator_type	get_allocator(void) const;
 
@@ -111,6 +112,7 @@ namespace ft
 
 			void	shiftRight(const_iterator &it, size_type n);
 			void	shiftLeft(const_iterator it, size_type n);
+			void	constructObjs(const T &value = T());
 	};
 
 	/* Operators */

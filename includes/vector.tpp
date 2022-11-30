@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:29:50 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/25 14:33:55 by jmaia            ###   ###               */
+/*   Updated: 2022/11/30 11:17:10 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,15 @@ vector<T, Allocator>::vector(size_type count, const T &value, const Allocator& a
 			_size(count)
 {
 	this->_array = this->_allocator.allocate(this->_capacity);
+	this->constructObjs(value);
 	std::fill(this->begin(), this->begin() + this->_capacity, value);
+}
+
+template<class T, class Allocator>
+void	vector<T, Allocator>::constructObjs(const T &value)
+{
+	for (vector<T, Allocator>::iterator it = this->begin(); it != this->begin() + this->_capacity; it++)
+		this->_allocator.construct(it, value);
 }
 
 template<class T, class Allocator>
@@ -52,6 +60,7 @@ vector<T, Allocator>::vector(typename enable_if<!is_integral<InputIt>::value, In
 	this->_capacity = std::distance(first, last);
 	this->_size = 0;
 	this->_array = this->_allocator.allocate(this->_capacity);
+	this->constructObjs();
 	this->insert(this->end(), first, last);
 }
 
@@ -71,6 +80,7 @@ vector<T, Allocator> &vector<T, Allocator>::operator=(const vector &obj)
 	this->_capacity = obj._capacity;
 	this->_size = 0;
 	this->_array = this->_allocator.allocate(this->_capacity);
+	this->constructObjs();
 	this->insert(this->end(), obj.begin(), obj.end());
 	return (*this);
 }
@@ -82,17 +92,20 @@ void	vector<T, Allocator>::assign(size_type count, const T &value)
 	this->_capacity = count;
 	this->_size = count;
 	this->_array = this->_allocator.allocate(this->_capacity);
+	this->constructObjs();
 	std::fill(this->begin(), this->begin() + this->_size, value);
 }
 
 template<class T, class Allocator>
 template<class InputIt>
-void	vector<T, Allocator>::assign(typename enable_if<!is_integral<InputIt>::value, InputIt>::type first, InputIt last)
+void	vector<T, Allocator>::assign(InputIt first, InputIt last,
+	typename ft::enable_if<!ft::is_integral<InputIt>::value, int>::type)
 {
 	this->_allocator.deallocate(this->_array, this->_capacity);
-	this->_size = std::distance(first, last);
-	this->_capacity = this->_size;
+	this->_capacity = std::distance(first, last);
 	this->_array = this->_allocator.allocate(this->_capacity);
+	this->constructObjs();
+	this->_size = 0;
 	this->insert(this->end(), first, last);
 }
 
@@ -249,6 +262,7 @@ void	vector<T, Allocator>::reserve(typename vector<T, Allocator>::size_type new_
 	this->_array = newArray;
 	this->_capacity = new_cap;
 	this->_size = 0;
+	this->constructObjs();
 	this->insert(this->end(), oldArray, oldArray + oldSize);
 	this->_allocator.deallocate(oldArray, oldSize);
 }
@@ -412,7 +426,7 @@ bool operator!=(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs
 template<class T, class Allocator>
 bool operator<(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs)
 {
-	return (lexicographical_compare<typename vector<T, Allocator>::const_iterator, typename vector<T, Allocator>::const_iterator>(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	return (ft::lexicographical_compare<typename vector<T, Allocator>::const_iterator, typename vector<T, Allocator>::const_iterator>(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 }
 
 template<class T, class Allocator>
