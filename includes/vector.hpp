@@ -6,57 +6,84 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:12:48 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/03 20:28:30 by jmaia            ###   ###               */
+/*   Updated: 2022/11/30 11:15:15 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
+# include <memory>
+
+# include "enable_if.hpp"
+# include "is_integral.hpp"
+# include "reverse_iterator.hpp"
+
+
+# include <algorithm>
+# include <iterator>
+# include <stdexcept>
+
+# include "lexicographical_compare.hpp"
+
+# define VEC_EXPAND_SIZE 50
+
 namespace ft
 {
-	template<class T>
+	template<class T, class Allocator = std::allocator<T> >
 	class vector
 	{
-		using value_type = T;
-		using allocator_type = std::allocator<value_type>;
-		using size_type = std::size_t;
-		using difference_type = std::ptrdiff_t;
-		using reference = value_type&;
-		using const_reference = const value_type&;
-		using pointer = std::allocator<value_type>::pointer;
-		using const_pointer = std::allocator<value_type>::const_pointer;
-		using iterator = vectorIterator<value_type>;
-		using const_iterator = vectorIterator<const value_type>; // A bit weird
-		using reverse_iterator = std::reverse_iterator<iterator>;
-		using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 		public:
+			typedef T value_type;
+			typedef Allocator allocator_type;
+			typedef std::size_t size_type;
+			typedef std::ptrdiff_t difference_type;
+			typedef value_type& reference;
+			typedef const value_type& const_reference;
+			typedef typename Allocator::pointer pointer;
+			typedef typename Allocator::const_pointer const_pointer;
+			typedef T* iterator;
+			typedef T const * const_iterator;
+			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
+			typedef ft::reverse_iterator<iterator> reverse_iterator;
+
 			vector(void);
-			vector(const vector &obj);
+			explicit vector(const Allocator &alloc);
+			explicit vector(size_type count, const T &value = T(), const Allocator& alloc = Allocator());
+			vector(const vector<T, Allocator> &obj);
+			template<class InputIt>
+			vector(typename enable_if<!is_integral<InputIt>::value, InputIt>::type first, InputIt last, const Allocator& alloc = Allocator());
 			~vector(void);
 
-			vector	&operator=(const vector *obj);
+			vector<T, Allocator>	&operator=(const vector<T, Allocator> &obj);
 			void	assign(size_type count, const T &value);
-
 			template<class InputIt>
-			void	assign(InputIt first, InputIt last);
+			void	assign(InputIt first, InputIt last,
+				typename ft::enable_if<!ft::is_integral<InputIt>::value, int>::type = 0);
 
-			std::allocator<T>	get_allocator(void) const;
+			allocator_type	get_allocator(void) const;
 
 			/* Element access */
-			T		&at(size_type pos);
-			const T	&at(size_type pos) const;
-			T		&operator[](size_type pos);
-			const T	&operator[](size_type pos) const;
-			T		&front(void);
-			const T	&front(void) const;
-			T		&back(void);
-			const T &back(void) const;
-			T		*data(void);
-			const T	*data(void) const;
+			reference		at(size_type pos);
+			const_reference	at(size_type pos) const;
+			reference		operator[](size_type pos);
+			const_reference	operator[](size_type pos) const;
+			reference		front(void);
+			const_reference	front(void) const;
+			reference		back(void);
+			const_reference	back(void) const;
+			T				*data(void);
+			const T			*data(void) const;
 
 			/* Iterators */
-			// TODO
+			iterator begin();
+			const_iterator begin() const;
+			iterator end();
+			const_iterator end() const;
+			reverse_iterator rbegin();
+			const_reverse_iterator rbegin() const;
+			reverse_iterator rend();
+			const_reverse_iterator rend() const;
 
 			/* Capacity */
 			bool	empty(void) const;
@@ -67,36 +94,54 @@ namespace ft
 
 			/* Modifiers */
 			void	clear(void);
-			// TODO Add insert prototypes function here. Need iterator
-			// TODO Add erase prototypes function here. Need iterator
+			iterator insert(const_iterator pos, const T &value);
+			iterator insert(const_iterator pos, size_type count, const T &value);
+			template<class InputIt>
+			iterator insert(const_iterator pos, typename enable_if<!is_integral<InputIt>::value, InputIt>::type first, InputIt last);
+			iterator erase(iterator pos);
+			iterator erase(iterator first, iterator last);
 			void	push_back(const T &value);
 			void	pop_back(void);
 			void	resize(size_type count, T value = T());
-			void	swap(vector &obj);
+			void	swap(vector<T, Allocator> &obj);
+		private:
+			Allocator	_allocator;
+			T			*_array;
+			size_type	_capacity;
+			size_type	_size;
+
+			void	shiftRight(const_iterator &it, size_type n);
+			void	shiftLeft(const_iterator it, size_type n);
+			void	constructObjs(const T &value = T());
 	};
 
 	/* Operators */
-	template<class T>
-	bool operator==(const vector<T> &lhs, const vector<T> &rhs);
+	template<class T, class Allocator>
+	bool operator==(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs);
+
+	template<class T, class Allocator>
+	bool operator!=(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs);
+
+	template<class T, class Allocator>
+	bool operator<(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs);
+
+	template<class T, class Allocator>
+	bool operator<=(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs);
+
+	template<class T, class Allocator>
+	bool operator>(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs);
+
+	template<class T, class Allocator>
+	bool operator>=(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs);
+
+
+	template<class T, class Allocator>
+	void swap(vector<T, Allocator> &lhs, vector<T, Allocator> &rhs);
 
 	template<class T>
-	bool operator!=(const vector<T> &lhs, const vector<T> &rhs);
+	void	swap(T &a, T &b);
 
-	template<class T>
-	bool operator<(const vector<T> &lhs, const vector<T> &rhs);
-
-	template<class T>
-	bool operator<=(const vector<T> &lhs, const vector<T> &rhs);
-
-	template<class T>
-	bool operator>(const vector<T> &lhs, const vector<T> &rhs);
-
-	template<class T>
-	bool operator>=(const vector<T> &lhs, const vector<T> &rhs);
-
-
-	template<class T>
-	void swap(vector<T> &lhs, vector<T> &rhs);
+# include "vector.tpp"
 }
 
 #endif

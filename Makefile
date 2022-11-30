@@ -1,32 +1,31 @@
-NAME		=	a.out
-
-SRCS		=	\
-				main.cpp
-
-_OBJS		=	${SRCS:.cpp=.o}
-OBJS		=	$(addprefix build/, $(_OBJS))
-
-CC			=	c++
-CFLAGS		=	-Wall -Werror -Wextra -std=c++98
+CXX			=	c++
+CXXFLAGS	=	-Wall -Werror -Wextra -fsanitize=address -std=c++98
 INCLUDE		=	-I includes/
 
-all		:	$(NAME)
-
-build/%.o	:	srcs/%.cpp
-	@if [ ! -d $(dir $@) ]; then\
-		mkdir -p $(dir $@);\
-	fi
-	$(CC) ${CFLAGS} ${INCLUDE} -c $< -o $@
-
-$(NAME)	:	$(OBJS) $(LIBS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
+all		:	tests
 
 clean	:
 	rm -Rf build/
 
-fclean	:	clean
-	rm -f ${NAME}
+fclean	: clean
+	rm -f test_vector_ft test_vector_std
 
-re		:	fclean ${NAME}
+re		:	fclean all
 
-.PHONY	:	all clean fclean re
+build/	:
+	mkdir -p build/
+
+test_vector_ft: build/ tests/test_vector.cpp
+	$(CXX) $(CXXFLAGS) -MMD -MF build/test_vector_ft.d $(INCLUDE) -fdiagnostics-color=always -D FT tests/test_vector.cpp -o test_vector_ft
+
+-include build/test_vector_ft.d
+
+test_vector_std: tests/test_vector.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -fdiagnostics-color=always tests/test_vector.cpp -o test_vector_std
+
+test_vector: test_vector_ft test_vector_std
+	bash -c "diff <(./test_vector_ft 2>&1) <(./test_vector_std 2>&1)"
+
+tests: test_vector
+
+.PHONY	:	all clean fclean re test_vector tests
