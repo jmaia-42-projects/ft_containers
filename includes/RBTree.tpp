@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/09 18:11:43 by jmaia            ###   ###               */
+/*   Updated: 2022/12/09 18:12:58 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -509,8 +509,6 @@ void	RBTree<T>::applyDeleteFix(RBTree<T>::RBTreeNode *node)
 				{
 					if (sibling->left)
 						sibling->left->color = RBTreeNode::BLACK;
-					else
-						std::cout << "HELLO, If this message appears, the if is useful !" << std::endl;
 					sibling->color = RBTreeNode::RED;
 					sibling->rightRotate();
 					sibling = node->parent->right;
@@ -545,8 +543,6 @@ void	RBTree<T>::applyDeleteFix(RBTree<T>::RBTreeNode *node)
 				{
 					if (sibling->right)
 						sibling->right->color = RBTreeNode::BLACK;
-					else
-						std::cout << "HELLO, If this message appears, the if is useful !" << std::endl;
 					sibling->color = RBTreeNode::RED;
 					sibling->leftRotate();
 					sibling = node->parent->left;
