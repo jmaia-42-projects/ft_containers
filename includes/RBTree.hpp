@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   RBTree.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/09 15:42:49 by jmaia             #+#    #+#             */
+/*   Updated: 2022/12/09 18:08:57 by jmaia            ###   ###               */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RB_TREE_HPP
 # define RB_TREE_HPP
 
@@ -40,6 +52,35 @@ class	RBTree
 				void		leftRotate(void);
 				void		rightRotate(void);
 				RBTreeNode	*getMinNode();
+				RBTreeNode	*getMaxNode();
+
+				class iterator
+				{
+					private:
+						RBTreeNode	*ptr;
+					public:
+						typedef std::ptrdiff_t difference_type;
+						typedef RBTreeNode value_type;
+						typedef RBTreeNode* pointer;
+						typedef RBTreeNode& reference;
+						typedef std::bidirectional_iterator_tag iterator_category;
+
+						iterator();
+						iterator(RBTreeNode *node);
+						iterator(iterator const &obj);
+						~iterator();
+
+						iterator &operator=(iterator const &obj);
+
+						reference	operator*();
+						pointer		operator->();
+						iterator	&operator++();
+						iterator	operator++(int);
+						iterator	&operator--();
+						iterator	operator--(int);
+						bool		operator==(iterator const &it);
+						bool		operator!=(iterator const &it);
+				};
 			friend class RBTree<T>;
 		};
 	private:
@@ -66,7 +107,6 @@ class	RBTree
 		RBTreeNode	*get(K key);
 		template<typename K>
 		bool		contains(K key);
-
 };
 
 # include "RBTree.tpp"

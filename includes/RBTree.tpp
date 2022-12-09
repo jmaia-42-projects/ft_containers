@@ -6,9 +6,116 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/09 14:14:22 by jmaia            ###   ###               */
+/*   Updated: 2022/12/09 18:11:43 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
+
+template<typename T>
+RBTree<T>::RBTreeNode::iterator::iterator():
+	ptr(NULL) { }
+
+template<typename T>
+RBTree<T>::RBTreeNode::iterator::iterator(RBTreeNode *node):
+	ptr(node) {}
+
+template<typename T>
+RBTree<T>::RBTreeNode::iterator::iterator(iterator const &obj)
+{
+	*this = obj;
+}
+
+template<typename T>
+RBTree<T>::RBTreeNode::iterator::~iterator() {}
+
+template<typename T>
+typename RBTree<T>::RBTreeNode::iterator &RBTree<T>::RBTreeNode::iterator::operator=(iterator const &obj)
+{
+	this->ptr = obj.ptr;
+}
+
+template<typename T>
+typename RBTree<T>::RBTreeNode::iterator::reference RBTree<T>::RBTreeNode::iterator::operator*()
+{
+	return (*this->ptr);
+}
+
+template<typename T>
+typename RBTree<T>::RBTreeNode::iterator::pointer RBTree<T>::RBTreeNode::iterator::operator->()
+{
+	return (this->ptr);
+}
+
+template<typename T>
+typename RBTree<T>::RBTreeNode::iterator &RBTree<T>::RBTreeNode::iterator::operator++()
+{
+	RBTree<T>::RBTreeNode	*curNode;
+	RBTree<T>::RBTreeNode	*oldVisitedNode;
+
+	oldVisitedNode = NULL;
+	curNode = this->ptr;
+	while (curNode && (!curNode->right || curNode->right == oldVisitedNode))
+	{
+		oldVisitedNode = curNode;
+		curNode = curNode->parent;
+	}
+	if (curNode == this->ptr)
+		this->ptr = curNode->right->getMinNode();
+	else
+		this->ptr = curNode;
+	return (*this);
+}
+
+template <typename T>
+typename RBTree<T>::RBTreeNode::iterator	RBTree<T>::RBTreeNode::iterator::operator++(int)
+{
+	iterator tmp;
+
+	tmp = *this;
+	++*this;
+	return (tmp);
+}
+
+template <typename T>
+typename RBTree<T>::RBTreeNode::iterator	&RBTree<T>::RBTreeNode::iterator::operator--()
+{
+	RBTree<T>::RBTreeNode	*curNode;
+	RBTree<T>::RBTreeNode	*oldVisitedNode;
+
+	oldVisitedNode = NULL;
+	curNode = this->ptr;
+	while (curNode && (!curNode->left || curNode->left == oldVisitedNode))
+	{
+		oldVisitedNode = curNode;
+		curNode = curNode->parent;
+	}
+	if (curNode == this->ptr)
+		this->ptr = curNode->left->getMaxNode();
+	else
+		this->ptr = curNode;
+	return (*this);
+}
+
+template <typename T>
+typename RBTree<T>::RBTreeNode::iterator	RBTree<T>::RBTreeNode::iterator::operator--(int)
+{
+	iterator tmp;
+
+	tmp = *this;
+	--*this;
+	return (tmp);
+}
+
+template <typename T>
+bool		RBTree<T>::RBTreeNode::iterator::operator==(iterator const &it)
+{
+	return (this->ptr = it.ptr);
+}
+
+template <typename T>
+bool		RBTree<T>::RBTreeNode::iterator::operator!=(iterator const &it)
+{
+	return (!(*this == it));
+}
 
 template<typename T>
 RBTree<T>::RBTreeNode::RBTreeNode():
@@ -157,6 +264,17 @@ typename RBTree<T>::RBTreeNode	*RBTree<T>::RBTreeNode::getMinNode()
 	current = this;
 	while (current->left)
 		current = current->left;
+	return (current);
+}
+
+template<typename T>
+typename RBTree<T>::RBTreeNode	*RBTree<T>::RBTreeNode::getMaxNode()
+{
+	RBTree<T>::RBTreeNode	*current;
+
+	current = this;
+	while (current->right)
+		current = current->right;
 	return (current);
 }
 
