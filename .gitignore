@@ -4,3 +4,4 @@ build/
 *.sw?
 *.gch
 test_*
+!test_*.cpp
