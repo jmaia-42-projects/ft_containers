@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:22:17 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/09 18:15:37 by jmaia            ###   ###               */
+/*   Updated: 2022/12/20 13:59:45 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 namespace ft
 {
 	template<class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
-	class map: RBTree<ft::pair<const Key, T> >
+	class map
 	{
 		public:
 			class value_compare;
@@ -39,11 +39,16 @@ namespace ft
 			typedef const value_type& const_reference;
 			typedef typename Allocator::pointer pointer;
 			typedef typename Allocator::const_pointer const_pointer;
-			typedef typename RBTree<ft::pair<const Key, T> >::RBTreeNode::iterator iterator;
-			typedef typename RBTree<ft::pair<const Key, T> >::RBTreeNode::iterator const const_iterator;
+			typedef typename RBTree<value_type, value_compare >::RBTreeNode::iterator iterator;
+			typedef typename RBTree<value_type, value_compare >::RBTreeNode::iterator const const_iterator;
 			typedef ft::reverse_iterator<iterator> reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
-
+		private:
+			Allocator							_allocator;
+			Compare								_compare;
+//			RBTree<value_type, value_compare>	_tree;
+		public:
+			RBTree<value_type, value_compare>	_tree;
 			map();
 			explicit map(const Compare &comp, const Allocator &alloc = Allocator());
 			template<class InputIt>
@@ -65,6 +70,7 @@ namespace ft
 			const_iterator begin() const;
 			iterator end();
 			const_iterator end() const;
+			reverse_iterator rbegin();
 			const_reverse_iterator rbegin() const;
 			reverse_iterator rend();
 			const_reverse_iterator rend() const;
@@ -107,10 +113,10 @@ namespace ft
 					typedef value_type first_argument_type;
 					typedef value_type second_argument_type;
 
+					value_compare(Compare c);
 					bool operator()(const value_type& lhs, const value_type& rhs) const;
 				protected:
 					Compare comp;
-					value_compare(Compare c);
 			};
 	};
 
