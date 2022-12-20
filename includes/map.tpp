@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/20 14:15:47 by jmaia            ###   ###               */
+/*   Updated: 2022/12/20 16:49:09 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,23 @@ map<Key, T, Compare, Allocator>::map():
 template<class Key, class T, class Compare, class Allocator>
 map<Key, T, Compare, Allocator>::map(const Compare &comp, const Allocator &alloc):
 	_allocator(alloc),
-	_compare(comp) {}
+	_compare(comp),
+	_tree(map<Key, T, Compare, Allocator>::value_compare(_compare)) {}
 
 template<class Key, class T, class Compare, class Allocator>
 template<class InputIt>
 map<Key, T, Compare, Allocator>::map(InputIt first, InputIt last, const Compare &comp, const Allocator &alloc):
 	_allocator(alloc),
-	_compare(comp)
+	_compare(comp),
+	_tree(map<Key, T, Compare, Allocator>::value_compare(_compare))
 {
 	for (InputIt it = first; it != last; it++)
 		this->insert(*it);
 }
 
 template<class Key, class T, class Compare, class Allocator>
-map<Key, T, Compare, Allocator>::map(const map &other)
+map<Key, T, Compare, Allocator>::map(const map &other):
+	_tree(map<Key, T, Compare, Allocator>::value_compare(_compare))
 {
 	*this = other;
 }
@@ -45,6 +48,8 @@ map<Key, T, Compare, Allocator> &map<Key, T, Compare, Allocator>::operator=(cons
 {
 	this->_allocator = other._allocator;
 	this->_compare = other._compare;
+	this->_tree = other._tree;
+	return (*this);
 }
 
 template<class Key, class T, class Compare, class Allocator>
@@ -87,27 +92,31 @@ typename map<Key, T, Compare, Allocator>::iterator map<Key, T, Compare, Allocato
 {
 	if (this->_tree._getSize() == 0)
 		return (iterator());
-	return (iterator(this->_tree._getRoot()->getMinNode()));
+	return (iterator(this->_tree._getRoot()->getMinNode(), false));
 }
 
 template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::const_iterator map<Key, T, Compare, Allocator>::begin() const
 {
-	if (!this->_root)
+	if (this->_tree._getSize() == 0)
 		return (iterator());
-	return (iterator(this->_root->getMinNode()));
+	return (iterator(this->_root->getMinNode(), false));
 }
 
 template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::iterator map<Key, T, Compare, Allocator>::end()
 {
-	return (iterator());
+	if (this->_tree._getSize() == 0)
+		return (iterator());
+	return (iterator(this->_tree._getRoot()->getMaxNode(), true));
 }
 
 template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::const_iterator map<Key, T, Compare, Allocator>::end() const
 {
-	return (iterator());
+	if (this->_tree._getSize() == 0)
+		return (iterator());
+	return (iterator(this->_tree._getRoot()->getMaxNode(), true));
 }
 
 template<class Key, class T, class Compare, class Allocator>
@@ -125,13 +134,13 @@ typename map<Key, T, Compare, Allocator>::const_reverse_iterator map<Key, T, Com
 template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::reverse_iterator map<Key, T, Compare, Allocator>::rend()
 {
-	return (iterator());
+	return (reverse_iterator(iterator(this->begin())));
 }
 
 template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::const_reverse_iterator map<Key, T, Compare, Allocator>::rend() const
 {
-	return (iterator());
+	return (reverse_iterator(iterator(this->begin())));
 }
 
 template<class Key, class T, class Compare, class Allocator>
@@ -165,7 +174,7 @@ ft::pair<typename map<Key, T, Compare, Allocator>::iterator, bool> map<Key, T, C
 	ft::pair<map<Key, T, Compare, Allocator>::iterator, bool> ret;
 	
 	ret.second = this->_tree._insert(value);
-	ret.first = this->_tree._get(value);
+	ret.first = iterator(this->_tree._get(value), false);
 	return (ret);
 }
 

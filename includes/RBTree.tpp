@@ -6,17 +6,19 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/20 15:19:35 by jmaia            ###   ###               */
+/*   Updated: 2022/12/20 17:03:52 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
 template<typename T, typename TreeCompare>
-RBTree<T, TreeCompare>::RBTreeNode::iterator::iterator():
-	ptr(NULL) { }
+RBTree<T, TreeCompare>::RBTreeNode::iterator::iterator(void):
+	ptr(NULL),
+	isEnd(true) {}
 
 template<typename T, typename TreeCompare>
-RBTree<T, TreeCompare>::RBTreeNode::iterator::iterator(RBTreeNode *node):
-	ptr(node) {}
+RBTree<T, TreeCompare>::RBTreeNode::iterator::iterator(RBTreeNode *node, bool isEnd):
+	ptr(node),
+	isEnd(isEnd) {}
 
 template<typename T, typename TreeCompare>
 RBTree<T, TreeCompare>::RBTreeNode::iterator::iterator(iterator const &obj)
@@ -31,6 +33,7 @@ template<typename T, typename TreeCompare>
 typename RBTree<T, TreeCompare>::RBTreeNode::iterator &RBTree<T, TreeCompare>::RBTreeNode::iterator::operator=(iterator const &obj)
 {
 	this->ptr = obj.ptr;
+	this->isEnd = obj.isEnd;
 	return (*this);
 }
 
@@ -52,18 +55,23 @@ typename RBTree<T, TreeCompare>::RBTreeNode::iterator &RBTree<T, TreeCompare>::R
 	RBTree<T, TreeCompare>::RBTreeNode	*curNode;
 	RBTree<T, TreeCompare>::RBTreeNode	*oldVisitedNode;
 
-	if (this->ptr->right)
+	if (this->isEnd)
+		this->isEnd = false;
+	else if (this->ptr->right)
 		this->ptr = this->ptr->right->getMinNode();
 	else
 	{
 		curNode = this->ptr;
 		oldVisitedNode = NULL;
 		while (curNode && (curNode->left != oldVisitedNode || !oldVisitedNode))
-	 	 {
+		{
 			oldVisitedNode = curNode;
 			curNode = curNode->parent;
 		}
-		this->ptr = curNode;
+		if (curNode == NULL)
+			this->isEnd = true;
+		else
+			this->ptr = curNode;
 	}
 	return (*this);
 }
@@ -84,7 +92,9 @@ typename RBTree<T, TreeCompare>::RBTreeNode::iterator	&RBTree<T, TreeCompare>::R
 	RBTree<T, TreeCompare>::RBTreeNode	*curNode;
 	RBTree<T, TreeCompare>::RBTreeNode	*oldVisitedNode;
 
-	if (this->ptr->left)
+	if (this->isEnd)
+		this->isEnd = false;
+	else if (this->ptr->left)
 		this->ptr = this->ptr->left->getMaxNode();
 	else
 	{
@@ -95,7 +105,10 @@ typename RBTree<T, TreeCompare>::RBTreeNode::iterator	&RBTree<T, TreeCompare>::R
 			oldVisitedNode = curNode;
 			curNode = curNode->parent;
 		}
-		this->ptr = curNode;
+		if (curNode == NULL)
+			this->isEnd = true;
+		else
+			this->ptr = curNode;
 	}
 	return (*this);
 }
@@ -113,7 +126,7 @@ typename RBTree<T, TreeCompare>::RBTreeNode::iterator	RBTree<T, TreeCompare>::RB
 template <typename T, typename TreeCompare>
 bool		RBTree<T, TreeCompare>::RBTreeNode::iterator::operator==(iterator const &it)
 {
-	return (this->ptr == it.ptr);
+	return (this->ptr == it.ptr && this->isEnd == it.isEnd);
 }
 
 template <typename T, typename TreeCompare>
@@ -138,10 +151,12 @@ RBTree<T, TreeCompare>::RBTreeNode::RBTreeNode(T value, enum color color):
 	color(color) { }
 
 template<typename T, typename TreeCompare>
-RBTree<T, TreeCompare>::RBTreeNode::RBTreeNode(RBTreeNode const &obj)
-{
-	*this = obj;
-}
+RBTree<T, TreeCompare>::RBTreeNode::RBTreeNode(RBTreeNode const &obj):
+	content(obj.content),
+	left(obj.left),
+	right(obj.right),
+	parent(obj.parent),
+	color(obj.color) { }
 
 template<typename T, typename TreeCompare>
 RBTree<T, TreeCompare>::RBTreeNode::~RBTreeNode(void)
@@ -150,7 +165,7 @@ RBTree<T, TreeCompare>::RBTreeNode::~RBTreeNode(void)
 }
 
 template<typename T, typename TreeCompare>
-bool	RBTree<T, TreeCompare>::RBTreeNode::operator=(RBTreeNode const &obj)
+typename RBTree<T, TreeCompare>::RBTreeNode	&RBTree<T, TreeCompare>::RBTreeNode::operator=(RBTreeNode const &obj)
 {
 	this->content = obj.content;
 	this->left = obj.left;
@@ -306,7 +321,8 @@ RBTree<T, TreeCompare>::RBTree(TreeCompare _comp):
 template<typename T, typename TreeCompare>
 RBTree<T, TreeCompare>::~RBTree(void)
 {
-	this->_root->deleteTree();
+	if (this->_root)
+		this->_root->deleteTree();
 }
 
 template<typename T, typename TreeCompare>
@@ -319,7 +335,11 @@ template<typename T, typename TreeCompare>
 RBTree<T, TreeCompare>	&RBTree<T, TreeCompare>::operator=(RBTree const &obj)
 {
 	this->_size = obj._size;
-	this->_root = new RBTreeNode(this->_root);
+	if (obj._root)
+		this->_root = new RBTreeNode(*obj._root);
+	else
+		this->_root = NULL;
+	return (*this);
 }
 
 template<typename T, typename TreeCompare>

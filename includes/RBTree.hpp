@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:42:49 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/20 14:12:56 by jmaia            ###   ###               */
+/*   Updated: 2022/12/20 16:55:10 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ class	RBTree
 				RBTreeNode(RBTreeNode const &obj);
 				~RBTreeNode(void);
 
-				bool	operator=(RBTreeNode const &obj);
+				RBTreeNode	&operator=(RBTreeNode const &obj);
 
 				RBTreeNode	*getUncle(void);
 				bool		isLeftChild(void);
@@ -54,6 +54,7 @@ class	RBTree
 				{
 					private:
 						RBTreeNode	*ptr;
+						bool		isEnd;
 					public:
 						typedef std::ptrdiff_t difference_type;
 						typedef T value_type;
@@ -62,7 +63,7 @@ class	RBTree
 						typedef std::bidirectional_iterator_tag iterator_category;
 
 						iterator();
-						iterator(RBTreeNode *node);
+						iterator(RBTreeNode *node, bool isEnd);
 						iterator(iterator const &obj);
 						~iterator();
 
