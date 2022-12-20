@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/20 14:16:14 by jmaia            ###   ###               */
+/*   Updated: 2022/12/20 15:19:35 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,19 @@ typename RBTree<T, TreeCompare>::RBTreeNode::iterator &RBTree<T, TreeCompare>::R
 	RBTree<T, TreeCompare>::RBTreeNode	*curNode;
 	RBTree<T, TreeCompare>::RBTreeNode	*oldVisitedNode;
 
-	oldVisitedNode = NULL;
-	curNode = this->ptr;
-	while (curNode && (!curNode->right || curNode->right == oldVisitedNode))
-	{
-		oldVisitedNode = curNode;
-		curNode = curNode->parent;
-	}
-	if (curNode == this->ptr)
-		this->ptr = curNode->right->getMinNode();
+	if (this->ptr->right)
+		this->ptr = this->ptr->right->getMinNode();
 	else
+	{
+		curNode = this->ptr;
+		oldVisitedNode = NULL;
+		while (curNode && (curNode->left != oldVisitedNode || !oldVisitedNode))
+	 	 {
+			oldVisitedNode = curNode;
+			curNode = curNode->parent;
+		}
 		this->ptr = curNode;
+	}
 	return (*this);
 }
 
@@ -82,17 +84,19 @@ typename RBTree<T, TreeCompare>::RBTreeNode::iterator	&RBTree<T, TreeCompare>::R
 	RBTree<T, TreeCompare>::RBTreeNode	*curNode;
 	RBTree<T, TreeCompare>::RBTreeNode	*oldVisitedNode;
 
-	oldVisitedNode = NULL;
-	curNode = this->ptr;
-	while (curNode && (!curNode->left || curNode->left == oldVisitedNode))
-	{
-		oldVisitedNode = curNode;
-		curNode = curNode->parent;
-	}
-	if (curNode == this->ptr)
-		this->ptr = curNode->left->getMaxNode();
+	if (this->ptr->left)
+		this->ptr = this->ptr->left->getMaxNode();
 	else
+	{
+		curNode = this->ptr;
+		oldVisitedNode = NULL;
+		while (curNode && (curNode->right != oldVisitedNode || !oldVisitedNode))
+	 	 {
+			oldVisitedNode = curNode;
+			curNode = curNode->parent;
+		}
 		this->ptr = curNode;
+	}
 	return (*this);
 }
 
