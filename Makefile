@@ -1,5 +1,5 @@
 CXX			=	c++
-CXXFLAGS	=	-Wall -Werror -Wextra -fsanitize=address -std=c++98
+CXXFLAGS	=	-Wall -Werror -Wextra -fsanitize=address -std=c++98 -g3
 INCLUDE		=	-I includes/
 
 all		:	tests
@@ -30,7 +30,7 @@ test_map_ft: build/ tests/test_map.cpp
 	$(CXX) $(CXXFLAGS) -MMD -MF build/test_map_ft.d $(INCLUDE) -fdiagnostics-color=always -D FT tests/test_map.cpp -o test_map_ft
 
 test_map_std: tests/test_vector.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -fdiagnostics-color=always tests/test_map.cpp -o test_nmap_std
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -fdiagnostics-color=always tests/test_map.cpp -o test_map_std
 
 test_map: test_map_ft test_map_std
 	bash -c "diff <(./test_map_ft 2>&1) <(./test_map_std 2>&1)"

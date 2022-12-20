@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:42:49 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/20 13:59:56 by jmaia            ###   ###               */
+/*   Updated: 2022/12/20 14:12:56 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ class	RBTree
 				void		rightRotate(void);
 				RBTreeNode	*getMinNode();
 				RBTreeNode	*getMaxNode();
+				void		deleteTree();
 
 				class iterator
 				{
@@ -81,7 +82,7 @@ class	RBTree
 	private:
 		size_t		_size;
 		RBTreeNode	*_root;
-//		TreeCompare	_comp;
+		TreeCompare	_comp;
 
 		RBTree();
 		RBTreeNode	*put(T elem);
@@ -90,7 +91,6 @@ class	RBTree
 		void		transplant(RBTreeNode *oldNode, RBTreeNode *newNode);
 		void		applyDeleteFix(RBTreeNode *node);
 	public:
-		TreeCompare	_comp;
 		RBTree(TreeCompare _comp);
 		~RBTree(void);
 		RBTree(RBTree const &obj);

@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/11 18:19:44 by jmaia            ###   ###               */
+/*   Updated: 2022/12/20 14:16:14 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,6 +284,16 @@ typename RBTree<T, TreeCompare>::RBTreeNode	*RBTree<T, TreeCompare>::RBTreeNode:
 }
 
 template<typename T, typename TreeCompare>
+void RBTree<T, TreeCompare>::RBTreeNode::deleteTree()
+{
+	if (this->left)
+		this->left->deleteTree();
+	if (this->right)
+		this->right->deleteTree();
+	delete this;
+}
+
+template<typename T, typename TreeCompare>
 RBTree<T, TreeCompare>::RBTree(TreeCompare _comp):
 	_size(0),
 	_root(NULL),
@@ -292,7 +302,7 @@ RBTree<T, TreeCompare>::RBTree(TreeCompare _comp):
 template<typename T, typename TreeCompare>
 RBTree<T, TreeCompare>::~RBTree(void)
 {
-	delete this->_root;
+	this->_root->deleteTree();
 }
 
 template<typename T, typename TreeCompare>

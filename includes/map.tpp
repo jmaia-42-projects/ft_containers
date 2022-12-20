@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/11 18:20:42 by jmaia            ###   ###               */
+/*   Updated: 2022/12/20 14:15:47 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ map<Key, T, Compare, Allocator>::map(const map &other)
 }
 
 template<class Key, class T, class Compare, class Allocator>
-map<Key, T, Compare, Allocator>::~map() { }
+map<Key, T, Compare, Allocator>::~map() {}
 
 template<class Key, class T, class Compare, class Allocator>
 map<Key, T, Compare, Allocator> &map<Key, T, Compare, Allocator>::operator=(const map &other)

@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:22:17 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/20 13:59:45 by jmaia            ###   ###               */
+/*   Updated: 2022/12/20 14:06:27 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,8 @@ namespace ft
 		private:
 			Allocator							_allocator;
 			Compare								_compare;
-//			RBTree<value_type, value_compare>	_tree;
-		public:
 			RBTree<value_type, value_compare>	_tree;
+		public:
 			map();
 			explicit map(const Compare &comp, const Allocator &alloc = Allocator());
 			template<class InputIt>
@@ -148,6 +147,8 @@ namespace ft
 
 	void swap(ft::map<Key,T,Compare,Alloc>& lhs,
 			   ft::map<Key,T,Compare,Alloc>& rhs );
+
+# include "map.tpp"
 }
 
 #endif
