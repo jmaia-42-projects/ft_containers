@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/20 16:49:09 by jmaia            ###   ###               */
+/*   Updated: 2022/12/28 16:07:56 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ map<Key, T, Compare, Allocator> &map<Key, T, Compare, Allocator>::operator=(cons
 {
 	this->_allocator = other._allocator;
 	this->_compare = other._compare;
-	this->_tree = other._tree;
+	this->_tree.empty();
+	for (map<Key, T, Compare, Allocator>::iterator it = other.begin(); it != other.end(); it++)
+		this->insert(*it);
 	return (*this);
 }
 
@@ -100,7 +102,7 @@ typename map<Key, T, Compare, Allocator>::const_iterator map<Key, T, Compare, Al
 {
 	if (this->_tree._getSize() == 0)
 		return (iterator());
-	return (iterator(this->_root->getMinNode(), false));
+	return (iterator(this->_tree._getRoot()->getMinNode(), false));
 }
 
 template<class Key, class T, class Compare, class Allocator>

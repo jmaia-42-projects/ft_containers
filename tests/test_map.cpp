@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/20 16:47:04 by jmaia            ###   ###               */
+/*   Updated: 2022/12/28 16:09:54 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,85 @@ int	main(void)
 		}
 
 		for (ft::map<std::string, std::string>::reverse_iterator it = map3.rbegin(); it != map3.rend(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	std::cout << "Testing assignation" << std::endl;
+	{
+		std::cout << "Test 1" << std::endl;
+		ft::map<std::string, std::string>	map;
+		ft::map<std::string, std::string>	map2;
+
+		for (ft::map<std::string, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		map = map2;
+		for (ft::map<std::string, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<std::string, std::string>::iterator it = map2.begin(); it != map2.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	{
+		std::cout << "Test 2" << std::endl;
+		ft::pair<std::string, std::string> data[4];
+
+		data[0] = ft::make_pair("Salut les copains", "ca va ?");
+		data[1] = ft::make_pair("Salins", "ca va ?");
+		data[2] = ft::make_pair("Salut lpains", "?");
+		data[3] = ft::make_pair("S", "ca v");
+		ft::map<std::string, std::string>	map;
+		ft::map<std::string, std::string>	map2(data, data + 4);
+
+		for (ft::map<std::string, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		map = map2;
+		for (ft::map<std::string, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<std::string, std::string>::iterator it = map2.begin(); it != map2.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	{
+		std::cout << "Test 3" << std::endl;
+		ft::pair<std::string, std::string> data[4];
+
+		data[0] = ft::make_pair("Salut les copains", "ca va ?");
+		data[1] = ft::make_pair("Salins", "ca va ?");
+		data[2] = ft::make_pair("Salut lpains", "?");
+		data[3] = ft::make_pair("S", "ca v");
+		ft::map<std::string, std::string>	map;
+		ft::map<std::string, std::string>	map2(data, data + 4);
+
+		for (ft::map<std::string, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		map2 = map;
+		for (ft::map<std::string, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<std::string, std::string>::iterator it = map2.begin(); it != map2.end(); it++)
 		{
 			std::cout << it->first << " - " << it->second << std::endl;
 			std::cout << (*it).first << " - " << (*it).second << std::endl;

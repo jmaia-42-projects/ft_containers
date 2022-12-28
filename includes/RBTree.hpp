@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:42:49 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/20 16:55:10 by jmaia            ###   ###               */
+/*   Updated: 2022/12/28 16:06:10 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,10 @@ class	RBTree
 		bool		_remove(T elem);
 		template<typename K>
 		RBTreeNode	*_get(K key);
-		RBTreeNode	*_getRoot(void);
+		RBTreeNode	*_getRoot(void) const;
 		template<typename K>
 		bool		_contains(K key);
+		void		empty(void);
 };
 
 template<typename T, typename TreeCompare>

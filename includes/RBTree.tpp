@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/20 17:03:52 by jmaia            ###   ###               */
+/*   Updated: 2022/12/28 16:07:45 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -648,7 +648,7 @@ typename RBTree<T, TreeCompare>::RBTreeNode	*RBTree<T, TreeCompare>::_get(K key)
 }
 
 template<typename T, typename TreeCompare>
-typename RBTree<T, TreeCompare>::RBTreeNode	*RBTree<T, TreeCompare>::_getRoot(void)
+typename RBTree<T, TreeCompare>::RBTreeNode	*RBTree<T, TreeCompare>::_getRoot(void) const
 {
 	return (this->_root);
 }
@@ -658,6 +658,17 @@ template<typename K>
 bool	RBTree<T, TreeCompare>::_contains(K key)
 {
 	return (this->_get(key) != NULL);
+}
+
+template<typename T, typename TreeCompare>
+void	RBTree<T, TreeCompare>::empty(void)
+{
+	if (this->_root)
+	{
+		this->_root->deleteTree();
+		this->_root = NULL;
+		this->_size = 0;
+	}
 }
 
 template<typename T, typename TreeCompare>
