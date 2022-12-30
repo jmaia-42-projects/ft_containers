@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/28 16:07:45 by jmaia            ###   ###               */
+/*   Updated: 2022/12/30 12:37:13 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -673,7 +673,7 @@ void	RBTree<T, TreeCompare>::empty(void)
 
 template<typename T, typename TreeCompare>
 bool operator==(const RBTree<T, TreeCompare> &lhs,
-			 const RBTree<T, TreeCompare> &rhs) // TODO
+			 const RBTree<T, TreeCompare> &rhs)
 {
 	return !(lhs < rhs) && !(rhs < lhs);
 }
