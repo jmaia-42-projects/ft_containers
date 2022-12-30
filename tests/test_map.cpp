@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/28 16:09:54 by jmaia            ###   ###               */
+/*   Updated: 2022/12/30 12:36:16 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,120 @@ int	main(void)
 		{
 			std::cout << it->first << " - " << it->second << std::endl;
 			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	std::cout << "Testing at()" << std::endl;
+	{
+		ft::pair<std::string, std::string> data[4];
+
+		data[0] = ft::make_pair("Salut les copains", "ca va ?");
+		data[1] = ft::make_pair("Salins", "ca va ? 2");
+		data[2] = ft::make_pair("Salut lpains", "?");
+		data[3] = ft::make_pair("S", "ca v");
+		ft::map<std::string, std::string>	map(data, data + 4);
+
+		try
+		{
+			std::cout << map.at("Salut les copains") << std::endl;
+			std::cout << map.at("Salins") << std::endl;
+			std::cout << map.at("Salut lpains") << std::endl;
+			std::cout << map.at("S") << std::endl;
+		}
+		catch (std::out_of_range &e)
+		{
+			std::cout << "Index out of range ! This must not appear !" << std::endl;
+		}
+		try
+		{
+			std::cout << map.at("pouet") << std::endl;
+		}
+		catch (std::out_of_range &e)
+		{
+			std::cout << "Index out of range ! This must appear !" << std::endl;
+		}
+		try
+		{
+			std::cout << map.at("") << std::endl;
+		}
+		catch (std::out_of_range &e)
+		{
+			std::cout << "Index out of range ! This must appear !" << std::endl;
+		}
+	}
+	std::cout << "Testing at() with numbers" << std::endl;
+	{
+		ft::pair<int, int> data[4];
+
+		data[0] = ft::make_pair(0, 2);
+		data[1] = ft::make_pair(5, 502);
+		data[2] = ft::make_pair(-3, 12);
+		data[3] = ft::make_pair(33, -4);
+		ft::map<int, int>	map(data, data + 4);
+
+		try
+		{
+			std::cout << map.at(0) << std::endl;
+			std::cout << map.at(5) << std::endl;
+			std::cout << map.at(-3) << std::endl;
+			std::cout << map.at(33) << std::endl;
+		}
+		catch (std::out_of_range &e)
+		{
+			std::cout << "Index out of range ! This must not appear !" << std::endl;
+		}
+		try
+		{
+			std::cout << map.at(23) << std::endl;
+		}
+		catch (std::out_of_range &e)
+		{
+			std::cout << "Index out of range ! This must appear !" << std::endl;
+		}
+		try
+		{
+			std::cout << map.at(22) << std::endl;
+		}
+		catch (std::out_of_range &e)
+		{
+			std::cout << "Index out of range ! This must appear !" << std::endl;
+		}
+	}
+	std::cout << "Testing at() with mixed" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string>	map(data, data + 4);
+
+		try
+		{
+			std::cout << map.at(0) << std::endl;
+			std::cout << map.at(5) << std::endl;
+			std::cout << map.at(-3) << std::endl;
+			std::cout << map.at(33) << std::endl;
+		}
+		catch (std::out_of_range &e)
+		{
+			std::cout << "Index out of range ! This must not appear !" << std::endl;
+		}
+		try
+		{
+			std::cout << map.at(23) << std::endl;
+		}
+		catch (std::out_of_range &e)
+		{
+			std::cout << "Index out of range ! This must appear !" << std::endl;
+		}
+		try
+		{
+			std::cout << map.at(22) << std::endl;
+		}
+		catch (std::out_of_range &e)
+		{
+			std::cout << "Index out of range ! This must appear !" << std::endl;
 		}
 	}
 }
