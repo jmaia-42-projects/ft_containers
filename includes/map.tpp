@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/28 16:07:56 by jmaia            ###   ###               */
+/*   Updated: 2022/12/30 12:49:10 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,10 @@ T &map<Key, T, Compare, Allocator>::at(const Key &key)
 template<class Key, class T, class Compare, class Allocator>
 T const &map<Key, T, Compare, Allocator>::at(const Key &key) const
 {
-	typename RBTree<ft::pair<Key, T>, value_compare>::RBTreeNode	*node;
+	typename RBTree<value_type, value_compare>::RBTreeNode	*node;
+	value_type	junk(key, T());
 
-	node = _get(key);
+	node = this->_tree._get(junk);
 	if (!node)
 		throw std::out_of_range("Out of range !");
 	return (node->content.second);

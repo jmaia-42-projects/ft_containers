@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/30 12:37:13 by jmaia            ###   ###               */
+/*   Updated: 2022/12/30 12:46:53 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -617,7 +617,7 @@ void	RBTree<T, TreeCompare>::transplant(RBTree<T, TreeCompare>::RBTreeNode *oldN
 
 template<typename T, typename TreeCompare>
 template<typename K>
-typename RBTree<T, TreeCompare>::RBTreeNode	*RBTree<T, TreeCompare>::_get(K key)
+typename RBTree<T, TreeCompare>::RBTreeNode	*RBTree<T, TreeCompare>::_get(K key) const
 {
 	RBTree<T, TreeCompare>::RBTreeNode	*current;
 	bool					isFound;
