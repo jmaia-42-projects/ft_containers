@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/30 12:49:10 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 10:47:52 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ map<Key, T, Compare, Allocator> &map<Key, T, Compare, Allocator>::operator=(cons
 	this->_allocator = other._allocator;
 	this->_compare = other._compare;
 	this->_tree.empty();
-	for (map<Key, T, Compare, Allocator>::iterator it = other.begin(); it != other.end(); it++)
+	for (map<Key, T, Compare, Allocator>::const_iterator it = other.begin(); it != other.end(); it++)
 		this->insert(*it);
 	return (*this);
 }
@@ -102,8 +102,8 @@ template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::const_iterator map<Key, T, Compare, Allocator>::begin() const
 {
 	if (this->_tree._getSize() == 0)
-		return (iterator());
-	return (iterator(this->_tree._getRoot()->getMinNode(), false));
+		return (const_iterator());
+	return (const_iterator(this->_tree._getRoot()->getMinNode(), false));
 }
 
 template<class Key, class T, class Compare, class Allocator>
@@ -118,8 +118,8 @@ template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::const_iterator map<Key, T, Compare, Allocator>::end() const
 {
 	if (this->_tree._getSize() == 0)
-		return (iterator());
-	return (iterator(this->_tree._getRoot()->getMaxNode(), true));
+		return (const_iterator());
+	return (const_iterator(this->_tree._getRoot()->getMaxNode(), true));
 }
 
 template<class Key, class T, class Compare, class Allocator>

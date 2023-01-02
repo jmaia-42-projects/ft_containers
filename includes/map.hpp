@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:22:17 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/28 15:56:31 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 10:38:20 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ namespace ft
 			typedef typename Allocator::pointer pointer;
 			typedef typename Allocator::const_pointer const_pointer;
 			typedef typename RBTree<value_type, value_compare >::RBTreeNode::iterator iterator;
-			typedef typename RBTree<value_type, value_compare >::RBTreeNode::iterator const const_iterator;
+			typedef typename RBTree<value_type, value_compare >::RBTreeNode::const_iterator const_iterator;
 			typedef ft::reverse_iterator<iterator> reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 		private:

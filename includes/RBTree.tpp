@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/30 12:46:53 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 10:59:30 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typename RBTree<T, TreeCompare>::RBTreeNode::iterator	&RBTree<T, TreeCompare>::R
 		curNode = this->ptr;
 		oldVisitedNode = NULL;
 		while (curNode && (curNode->right != oldVisitedNode || !oldVisitedNode))
-	 	 {
+		{
 			oldVisitedNode = curNode;
 			curNode = curNode->parent;
 		}
@@ -123,16 +123,117 @@ typename RBTree<T, TreeCompare>::RBTreeNode::iterator	RBTree<T, TreeCompare>::RB
 	return (tmp);
 }
 
-template <typename T, typename TreeCompare>
-bool		RBTree<T, TreeCompare>::RBTreeNode::iterator::operator==(iterator const &it)
+template<typename T, typename TreeCompare>
+RBTree<T, TreeCompare>::RBTreeNode::const_iterator::const_iterator(void):
+	ptr(NULL),
+	isEnd(true) {}
+
+template<typename T, typename TreeCompare>
+RBTree<T, TreeCompare>::RBTreeNode::const_iterator::const_iterator(RBTreeNode const *node, bool isEnd):
+	ptr(node),
+	isEnd(isEnd) {}
+
+template<typename T, typename TreeCompare>
+RBTree<T, TreeCompare>::RBTreeNode::const_iterator::const_iterator(const_iterator const &obj)
 {
-	return (this->ptr == it.ptr && this->isEnd == it.isEnd);
+	*this = obj;
+}
+
+template<typename T, typename TreeCompare>
+RBTree<T, TreeCompare>::RBTreeNode::const_iterator::~const_iterator() {}
+
+template<typename T, typename TreeCompare>
+typename RBTree<T, TreeCompare>::RBTreeNode::const_iterator &RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator=(const_iterator const &obj)
+{
+	this->ptr = obj.ptr;
+	this->isEnd = obj.isEnd;
+	return (*this);
+}
+
+template<typename T, typename TreeCompare>
+typename RBTree<T, TreeCompare>::RBTreeNode::const_iterator::reference RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator*()
+{
+	return (this->ptr->content);
+}
+
+template<typename T, typename TreeCompare>
+typename RBTree<T, TreeCompare>::RBTreeNode::const_iterator::pointer RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator->()
+{
+	return (&this->ptr->content);
+}
+
+template<typename T, typename TreeCompare>
+typename RBTree<T, TreeCompare>::RBTreeNode::const_iterator &RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator++()
+{
+	RBTree<T, TreeCompare>::RBTreeNode const	*curNode;
+	RBTree<T, TreeCompare>::RBTreeNode const	*oldVisitedNode;
+
+	if (this->isEnd)
+		this->isEnd = false;
+	else if (this->ptr->right)
+		this->ptr = this->ptr->right->getMinNode();
+	else
+	{
+		curNode = this->ptr;
+		oldVisitedNode = NULL;
+		while (curNode && (curNode->left != oldVisitedNode || !oldVisitedNode))
+		{
+			oldVisitedNode = curNode;
+			curNode = curNode->parent;
+		}
+		if (curNode == NULL)
+			this->isEnd = true;
+		else
+			this->ptr = curNode;
+	}
+	return (*this);
 }
 
 template <typename T, typename TreeCompare>
-bool		RBTree<T, TreeCompare>::RBTreeNode::iterator::operator!=(iterator const &it)
+typename RBTree<T, TreeCompare>::RBTreeNode::const_iterator	RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator++(int)
 {
-	return (!(*this == it));
+	const_iterator tmp;
+
+	tmp = *this;
+	++*this;
+	return (tmp);
+}
+
+template <typename T, typename TreeCompare>
+typename RBTree<T, TreeCompare>::RBTreeNode::const_iterator	&RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator--()
+{
+	RBTree<T, TreeCompare>::RBTreeNode const	*curNode;
+	RBTree<T, TreeCompare>::RBTreeNode const	*oldVisitedNode;
+
+	if (this->isEnd)
+		this->isEnd = false;
+	else if (this->ptr->left)
+		this->ptr = this->ptr->left->getMaxNode();
+	else
+	{
+		curNode = this->ptr;
+		oldVisitedNode = NULL;
+		while (curNode && (curNode->right != oldVisitedNode || !oldVisitedNode))
+		{
+			oldVisitedNode = curNode;
+			curNode = curNode->parent;
+		}
+		if (curNode == NULL)
+			this->isEnd = true;
+		else
+			this->ptr = curNode;
+	}
+	return (*this);
+}
+
+template <typename T, typename TreeCompare>
+typename RBTree<T, TreeCompare>::RBTreeNode::const_iterator	RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator--(int)
+{
+	const_iterator tmp;
+
+	tmp = *this;
+	--*this;
+	return (tmp);
 }
 
 template<typename T, typename TreeCompare>
@@ -717,4 +818,28 @@ template<typename T, typename TreeCompare>
 void swap(RBTree<T, TreeCompare>& lhs, RBTree<T, TreeCompare>& rhs )
 {
 	lhs.swap(rhs);
+}
+
+template <typename T, typename TreeCompare>
+bool	RBTree<T, TreeCompare>::RBTreeNode::iterator::operator==(iterator const &rhs) const
+{
+	return (this->ptr == rhs.ptr && this->isEnd == rhs.isEnd);
+}
+
+template <typename T, typename TreeCompare>
+bool	RBTree<T, TreeCompare>::RBTreeNode::iterator::operator!=(iterator const &rhs) const
+{
+	return (!(*this == rhs));
+}
+
+template <typename T, typename TreeCompare>
+bool	RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator==(const_iterator const &rhs) const
+{
+	return (this->ptr == rhs.ptr && this->isEnd == rhs.isEnd);
+}
+
+template <typename T, typename TreeCompare>
+bool	RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator!=(const_iterator const &rhs) const
+{
+	return (!(*this == rhs));
 }

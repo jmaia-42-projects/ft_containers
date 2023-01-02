@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:42:49 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/30 12:46:40 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 10:45:35 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,39 @@ class	RBTree
 						iterator	operator++(int);
 						iterator	&operator--();
 						iterator	operator--(int);
-						bool		operator==(iterator const &it);
-						bool		operator!=(iterator const &it);
+
+						bool	operator==(iterator const &rhs) const;
+						bool	operator!=(iterator const &rhs) const;
+				};
+
+				class const_iterator
+				{
+					private:
+						RBTreeNode const	*ptr;
+						bool				isEnd;
+					public:
+						typedef std::ptrdiff_t difference_type;
+						typedef T const value_type;
+						typedef T const * pointer;
+						typedef T const & reference;
+						typedef std::bidirectional_iterator_tag iterator_category;
+
+						const_iterator();
+						const_iterator(RBTreeNode const *node, bool isEnd);
+						const_iterator(const_iterator const &obj);
+						~const_iterator();
+
+						const_iterator &operator=(const_iterator const &obj);
+
+						reference	operator*();
+						pointer		operator->();
+						const_iterator	&operator++();
+						const_iterator	operator++(int);
+						const_iterator	&operator--();
+						const_iterator	operator--(int);
+
+						bool	operator==(const_iterator const &rhs) const;
+						bool	operator!=(const_iterator const &rhs) const;
 				};
 			friend class RBTree<T, TreeCompare>;
 		};
