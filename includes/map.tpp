@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/02 10:47:52 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 11:09:02 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ typename map<Key, T, Compare, Allocator>::reverse_iterator map<Key, T, Compare, 
 template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::const_reverse_iterator map<Key, T, Compare, Allocator>::rend() const
 {
-	return (reverse_iterator(iterator(this->begin())));
+	return (const_reverse_iterator(const_iterator(this->begin())));
 }
 
 template<class Key, class T, class Compare, class Allocator>

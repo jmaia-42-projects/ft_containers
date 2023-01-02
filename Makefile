@@ -23,7 +23,7 @@ test_vector_ft: build/ tests/test_vector.cpp
 test_vector_std: tests/test_vector.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -fdiagnostics-color=always tests/test_vector.cpp -o test_vector_std
 
-test_vector: test_vector_ft test_vector_std
+test_vector: test_vector_std test_vector_ft
 	bash -c "diff <(./test_vector_ft 2>&1) <(./test_vector_std 2>&1)"
 
 test_map_ft: build/ tests/test_map.cpp
@@ -34,7 +34,7 @@ test_map_ft: build/ tests/test_map.cpp
 test_map_std: tests/test_map.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -fdiagnostics-color=always tests/test_map.cpp -o test_map_std
 
-test_map: test_map_ft test_map_std
+test_map: test_map_std test_map_ft
 	bash -c "diff <(./test_map_ft 2>&1) <(./test_map_std 2>&1)"
 
 tests: test_vector test_map

@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/30 12:53:16 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 11:05:26 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -478,6 +478,50 @@ int	main(void)
 	{
 		ft::map<int, std::string> const map;
 		for (ft::map<int, std::string>::const_iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+		}
+	}
+	std::cout << "Testing rbegin() iterator" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string> map(data, data + 4);
+		for (ft::map<int, std::string>::reverse_iterator it = map.rbegin(); it != map.rend(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+		}
+	}
+	std::cout << "Testing rbegin() iterator with empty map" << std::endl;
+	{
+		ft::map<int, std::string> map;
+		for (ft::map<int, std::string>::reverse_iterator it = map.rbegin(); it != map.rend(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+		}
+	}
+	std::cout << "Testing rbegin() const iterator" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string> const map(data, data + 4);
+		for (ft::map<int, std::string>::const_reverse_iterator it = map.rbegin(); it != map.rend(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+		}
+	}
+	std::cout << "Testing rbegin() const iterator with empty map" << std::endl;
+	{
+		ft::map<int, std::string> const map;
+		for (ft::map<int, std::string>::const_reverse_iterator it = map.rbegin(); it != map.rend(); it++)
 		{
 			std::cout << it->first << " - " << it->second << std::endl;
 		}
