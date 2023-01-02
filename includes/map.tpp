@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/02 12:39:47 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 13:22:18 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ typename map<Key, T, Compare, Allocator>::iterator map<Key, T, Compare, Allocato
 {
 	(void) pos;
 	this->_tree._insert(value);
+	return (iterator(this->_tree._get(value), false));
 }
 
 template<class Key, class T, class Compare, class Allocator>
