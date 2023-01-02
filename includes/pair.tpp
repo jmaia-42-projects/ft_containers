@@ -11,7 +11,9 @@
 /* ************************************************************************** */
 
 template<typename T1, typename T2>
-pair<T1, T2>::pair(void) { }
+pair<T1, T2>::pair(void):
+	first(T1()),
+	second(T2()) { }
 template<typename T1, typename T2>
 pair<T1, T2>::pair(const T1 &x, const T2 &y): first(x), second(y) {}
 template<typename T1, typename T2>

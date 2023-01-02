@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/02 11:05:26 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 11:28:42 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -525,5 +525,73 @@ int	main(void)
 		{
 			std::cout << it->first << " - " << it->second << std::endl;
 		}
+	}
+	std::cout << "Testing empty() and size() with empty map" << std::endl;
+	{
+		ft::map<int, std::string> map;
+		std::cout << map.empty() << map.size() << std::endl;
+	}
+	std::cout << "Testing empty() and size() with map with one element" << std::endl;
+	{
+		ft::map<int, std::string> map;
+
+		map.insert(ft::make_pair(0, "salut"));
+		std::cout << map.empty() << map.size() << std::endl;
+	}
+	std::cout << "testing empty() and size() with map with many elements" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+
+		ft::map<int, std::string> map(data, data + 4);
+		map.insert(ft::make_pair(1, "salut"));
+		std::cout << map.empty() << map.size() << std::endl;
+	}
+	std::cout << "testing empty() and size() with map with many elements inserted and removed" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+
+		ft::map<int, std::string> map(data, data + 4);
+		std::cout << map.empty() << map.size() << std::endl;
+		map.insert(ft::make_pair(1, "salut"));
+		std::cout << map.empty() << map.size() << std::endl;
+
+		ft::pair<int, std::string> data2[4];
+		data2[0] = ft::make_pair(12, "pouet");
+		data2[1] = ft::make_pair(-2, "salut");
+		data2[2] = ft::make_pair(15, "youpi");
+		data2[3] = ft::make_pair(1, "top");
+		map.insert(data2, data2 + 4);
+		std::cout << map.empty() << map.size() << std::endl;
+		map.erase(5);
+		std::cout << map.empty() << map.size() << std::endl;
+		map.erase(232);
+		std::cout << map.empty() << map.size() << std::endl;
+		map.erase(1);
+		std::cout << map.empty() << map.size() << std::endl;
+		ft::map<int, std::string>::iterator beg = map.begin();
+		ft::map<int, std::string>::iterator end = map.end();
+		end--;
+		end--;
+		end--;
+		map.erase(beg, end);
+		std::cout << map.empty() << map.size() << std::endl;
+		map.erase(map.begin(), map.end());
+		std::cout << map.empty() << map.size() << std::endl;
+	}
+	{
+		ft::map<int, std::string> map;
+
+		map.insert(ft::make_pair(0, "salut"));
+		std::cout << (map.max_size() > 0) << std::endl; // Not useful to compare this to std one
 	}
 }

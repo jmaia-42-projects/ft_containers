@@ -149,13 +149,13 @@ typename map<Key, T, Compare, Allocator>::const_reverse_iterator map<Key, T, Com
 template<class Key, class T, class Compare, class Allocator>
 bool map<Key, T, Compare, Allocator>::empty() const
 {
-	return (this->_size == 0);
+	return (this->_tree._getSize() == 0);
 }
 
 template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::size_type map<Key, T, Compare, Allocator>::size() const
 {
-	return (this->_size);
+	return (this->_tree._getSize());
 }
 
 template<class Key, class T, class Compare, class Allocator>
@@ -192,27 +192,37 @@ template<class Key, class T, class Compare, class Allocator>
 template<class InputIt>
 void map<Key, T, Compare, Allocator>::insert(InputIt first, InputIt last)
 {
-	for (InputIt it = first; first != last; it++)
+	for (InputIt it = first; it != last; it++)
 		this->insert(*it);
 }
 
 template<class Key, class T, class Compare, class Allocator>
 void map<Key, T, Compare, Allocator>::erase(iterator pos)
 {
-	this->_remove(pos->content->first);
+	this->_tree._remove(*pos);
 }
 
 template<class Key, class T, class Compare, class Allocator>
 void map<Key, T, Compare, Allocator>::erase(iterator first, iterator last)
 {
-	for (iterator it = first; first != last; it++)
-		this->_remove(it->content->first);
+	iterator	next;
+	iterator	cur;
+
+	next = first;
+	while (next != last)
+	{
+		cur = next;
+		next++;
+		this->erase(cur);
+	}
 }
 
 template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::size_type map<Key, T, Compare, Allocator>::erase(const Key &key)
 {
-	return (this->_remove(key));
+	value_type	junk(key, T());
+
+	return (this->_tree._remove(junk));
 }	
 
 template<class Key, class T, class Compare, class Allocator>
