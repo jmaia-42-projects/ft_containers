@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/02 12:30:01 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 12:39:47 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,7 @@ typename map<Key, T, Compare, Allocator>::size_type map<Key, T, Compare, Allocat
 template<class Key, class T, class Compare, class Allocator>
 void map<Key, T, Compare, Allocator>::clear()
 {
-	while (this->_size > 0)
-		this->_remove(this->_root->content);
+	this->_tree.empty();
 }
 
 template<class Key, class T, class Compare, class Allocator>
