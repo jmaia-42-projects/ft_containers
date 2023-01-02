@@ -6,12 +6,13 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/02 13:22:40 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 13:40:07 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
+#include <set>
 
 #ifdef FT
 # include "map.hpp"
@@ -729,6 +730,34 @@ int	main(void)
 		it++;
 		it++;
 		map.insert(it, ft::make_pair(2, "plop"));
+		for (ft::map<int, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	std::cout << "Testing insert(InputIt, InputIt)" << std::endl;
+	{
+		ft::map<int, std::string>	map;
+
+		ft::pair<int, std::string> data[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		map.insert(data, data + 4);
+		for (ft::map<int, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		ft::pair<int, std::string> data2[4];
+		data2[0] = ft::make_pair(-4, "pouet");
+		data2[1] = ft::make_pair(-10, "salut");
+		data2[2] = ft::make_pair(-24, "youpi");
+		data2[3] = ft::make_pair(-1, "top");
+		std::set<ft::pair<int, std::string> > map2(data2, data2 + 4);
+		map.insert(map2.begin(), map2.end());
 		for (ft::map<int, std::string>::iterator it = map.begin(); it != map.end(); it++)
 		{
 			std::cout << it->first << " - " << it->second << std::endl;
