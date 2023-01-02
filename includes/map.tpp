@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/02 11:09:02 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 12:30:01 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,13 +197,13 @@ void map<Key, T, Compare, Allocator>::insert(InputIt first, InputIt last)
 }
 
 template<class Key, class T, class Compare, class Allocator>
-typename map<Key, T, Compare, Allocator>::iterator map<Key, T, Compare, Allocator>::erase(iterator pos)
+void map<Key, T, Compare, Allocator>::erase(iterator pos)
 {
 	this->_remove(pos->content->first);
 }
 
 template<class Key, class T, class Compare, class Allocator>
-typename map<Key, T, Compare, Allocator>::iterator map<Key, T, Compare, Allocator>::erase(iterator first, iterator last)
+void map<Key, T, Compare, Allocator>::erase(iterator first, iterator last)
 {
 	for (iterator it = first; first != last; it++)
 		this->_remove(it->content->first);

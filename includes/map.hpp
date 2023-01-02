@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:22:17 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/02 10:38:20 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 11:52:09 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ namespace ft
 			iterator insert(iterator pos, const value_type &value);
 			template<class InputIt>
 			void insert(InputIt first, InputIt last);
-			iterator erase(iterator pos);
-			iterator erase(iterator first, iterator last);
+			void erase(iterator pos);
+			void erase(iterator first, iterator last);
 			size_type erase(const Key &key);
 			void swap(map &other);
 
