@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 13:28:51 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 15:03:50 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,19 +234,36 @@ void map<Key, T, Compare, Allocator>::swap(map<Key, T, Compare, Allocator> &othe
 template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::size_type map<Key, T, Compare, Allocator>::count(const Key &key) const
 {
-	return (this->_contains(key));
+	value_type	junk(key, T());
+
+	return (this->_tree._contains(junk));
 }
 
 template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::iterator map<Key, T, Compare, Allocator>::find(const Key &key)
 {
-	return (iterator(this->_get(key)));
+	value_type	junk(key, T());
+	typename RBTree<value_type, value_compare>::RBTreeNode	*elem;
+
+	elem = this->_tree._get(junk);
+	if (elem == NULL)
+		return this->end();
+	else
+		return (iterator(elem, false));
 }
 
 template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::const_iterator map<Key, T, Compare, Allocator>::find(const Key &key) const
 {
-	return (iterator(this->_get(key)));
+	value_type	junk(key, T());
+	typename RBTree<value_type, value_compare>::RBTreeNode	*elem;
+
+	elem = this->_tree._get(junk);
+	if (elem == NULL)
+		return this->end();
+	else
+		return (const_iterator(elem, false));
+	return (const_iterator(this->_tree._get(junk), false));
 }
 
 template<class Key, class T, class Compare, class Allocator>

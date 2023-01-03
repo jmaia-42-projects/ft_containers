@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 13:29:11 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 14:41:10 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -756,7 +756,7 @@ typename RBTree<T, TreeCompare>::RBTreeNode	*RBTree<T, TreeCompare>::_getRoot(vo
 
 template<typename T, typename TreeCompare>
 template<typename K>
-bool	RBTree<T, TreeCompare>::_contains(K key)
+bool	RBTree<T, TreeCompare>::_contains(K key) const
 {
 	return (this->_get(key) != NULL);
 }

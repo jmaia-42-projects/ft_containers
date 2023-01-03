@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:42:49 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 13:29:13 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 14:41:00 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ class	RBTree
 		RBTreeNode	*_get(K key) const;
 		RBTreeNode	*_getRoot(void) const;
 		template<typename K>
-		bool		_contains(K key);
+		bool		_contains(K key) const;
 		void		empty(void);
 		void		swap(RBTree &other);
 };

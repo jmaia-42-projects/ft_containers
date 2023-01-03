@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 14:29:23 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 15:03:27 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1007,6 +1007,97 @@ int	main(void)
 			std::cout << (*it).first << " - " << (*it).second << std::endl;
 		}
 		for (ft::map<int, std::string>::iterator it = map2.begin(); it != map2.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	std::cout << "Testing count" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string>	map;
+		std::cout << map.count(0) << std::endl;
+		std::cout << map.count(5) << std::endl;
+		std::cout << map.count(-1) << std::endl;
+		for (ft::map<int, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	std::cout << "testing find" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string>	map;
+		for (ft::map<int, std::string>::iterator it = map.find(0); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		map.insert(data, data + 4);
+		for (ft::map<int, std::string>::iterator it = map.find(0); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::iterator it = map.find(5); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::iterator it = map.find(-3); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::iterator it = map.find(33); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::iterator it = map.find(12); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	std::cout << "testing const find" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string> const map(data, data + 4);
+		for (ft::map<int, std::string>::const_iterator it = map.find(0); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::const_iterator it = map.find(5); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::const_iterator it = map.find(-3); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::const_iterator it = map.find(33); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::const_iterator it = map.find(12); it != map.end(); it++)
 		{
 			std::cout << it->first << " - " << it->second << std::endl;
 			std::cout << (*it).first << " - " << (*it).second << std::endl;
