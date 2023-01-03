@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:42:49 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 23:22:54 by jmaia            ###   ###               */
+/*   Updated: 2023/01/04 00:11:40 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,46 @@ class	RBTree
 				RBTreeNode	*getMaxNode();
 				void		deleteTree();
 
+				class iterator;
+
+				class const_iterator
+				{
+					private:
+						RBTreeNode const	*ptr;
+						bool				isEnd;
+					public:
+						typedef std::ptrdiff_t difference_type;
+						typedef T const value_type;
+						typedef T const * pointer;
+						typedef T const & reference;
+						typedef std::bidirectional_iterator_tag iterator_category;
+
+						const_iterator();
+						const_iterator(RBTreeNode const *node, bool isEnd);
+						const_iterator(const_iterator const &obj);
+						const_iterator(iterator const &obj);
+						~const_iterator();
+
+						const_iterator &operator=(const_iterator const &obj);
+
+						reference	operator*() const;
+						pointer		operator->() const;
+						const_iterator	&operator++();
+						const_iterator	operator++(int);
+						const_iterator	&operator--();
+						const_iterator	operator--(int);
+
+						bool	operator==(const_iterator const &rhs) const;
+						bool	operator!=(const_iterator const &rhs) const;
+				};
+
 				class iterator
 				{
 					private:
 						RBTreeNode	*ptr;
 						bool		isEnd;
+
+						friend class const_iterator;
 					public:
 						typedef std::ptrdiff_t difference_type;
 						typedef T value_type;
@@ -80,35 +115,6 @@ class	RBTree
 						bool	operator!=(iterator const &rhs) const;
 				};
 
-				class const_iterator
-				{
-					private:
-						RBTreeNode const	*ptr;
-						bool				isEnd;
-					public:
-						typedef std::ptrdiff_t difference_type;
-						typedef T const value_type;
-						typedef T const * pointer;
-						typedef T const & reference;
-						typedef std::bidirectional_iterator_tag iterator_category;
-
-						const_iterator();
-						const_iterator(RBTreeNode const *node, bool isEnd);
-						const_iterator(const_iterator const &obj);
-						~const_iterator();
-
-						const_iterator &operator=(const_iterator const &obj);
-
-						reference	operator*() const;
-						pointer		operator->() const;
-						const_iterator	&operator++();
-						const_iterator	operator++(int);
-						const_iterator	&operator--();
-						const_iterator	operator--(int);
-
-						bool	operator==(const_iterator const &rhs) const;
-						bool	operator!=(const_iterator const &rhs) const;
-				};
 			friend class RBTree<T, TreeCompare>;
 		};
 	private:

@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 23:23:28 by jmaia            ###   ###               */
+/*   Updated: 2023/01/04 00:07:50 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,11 @@ RBTree<T, TreeCompare>::RBTreeNode::const_iterator::const_iterator(const_iterato
 {
 	*this = obj;
 }
+
+template<typename T, typename TreeCompare>
+RBTree<T, TreeCompare>::RBTreeNode::const_iterator::const_iterator(iterator const &obj):
+	ptr(obj.ptr),
+	isEnd(obj.isEnd) { }
 
 template<typename T, typename TreeCompare>
 RBTree<T, TreeCompare>::RBTreeNode::const_iterator::~const_iterator() {}

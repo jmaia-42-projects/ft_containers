@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 23:52:37 by jmaia            ###   ###               */
+/*   Updated: 2023/01/04 00:13:42 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1427,6 +1427,21 @@ int	main(void)
 			std::cout << (*it).first << " - " << (*it).second << std::endl;
 		}
 		for (ft::map<int, std::string>::iterator it = map2.begin(); it != map2.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	std::cout << "Testing conversion from iterator to const_iterator" << std::endl;
+	{
+		ft::pair<std::string, std::string> data[4];
+
+		data[0] = ft::make_pair("Salut les copains", "ca va ?");
+		data[1] = ft::make_pair("Salins", "ca va ?");
+		data[2] = ft::make_pair("Salut lpains", "?");
+		data[3] = ft::make_pair("S", "ca v");
+		ft::map<std::string, std::string>	map(data, data + 4);
+		for (ft::map<std::string, std::string>::const_iterator it = map.begin(); it != map.end(); it++)
 		{
 			std::cout << it->first << " - " << it->second << std::endl;
 			std::cout << (*it).first << " - " << (*it).second << std::endl;
