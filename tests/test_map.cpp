@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 18:55:11 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 18:56:44 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1210,5 +1210,12 @@ int	main(void)
 	{
 		ft::map<int, std::string> const map;
 		std::cout << (map.upper_bound(34) == map.end()) << std::endl;
+	}
+	std::cout << "key_comp and value_comp test" << std::endl;
+	{
+		ft::map<int, std::string> const map;
+
+		map.key_comp();
+		map.value_comp();
 	}
 }
