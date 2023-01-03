@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 23:17:16 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 23:52:37 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1114,8 +1114,11 @@ int	main(void)
 		ft::pair<ft::map<int, std::string>::iterator, ft::map<int, std::string>::iterator> pair = map.equal_range(0);
 		map.insert(data, data + 4);
 		pair = map.equal_range(0);
+		std::cout << "(" << pair.first->first << "-" << pair.first->second << ")" << " - (" << pair.second->first << " - " << pair.second->second << std::endl;
 		pair = map.equal_range(5);
+		std::cout << "(" << pair.first->first << "-" << pair.first->second << ")" << " - (" << pair.second->first << " - " << pair.second->second << std::endl;
 		pair = map.equal_range(-1);
+		std::cout << "(" << pair.first->first << "-" << pair.first->second << ")" << " - (" << pair.second->first << " - " << pair.second->second << std::endl;
 	}
 	std::cout << "Testing const equal_range" << std::endl;
 	{
@@ -1128,10 +1131,11 @@ int	main(void)
 		ft::pair<ft::map<int, std::string>::iterator, ft::map<int, std::string>::iterator> pair = map.equal_range(0);
 		map.insert(data, data + 4);
 		pair = map.equal_range(0);
-		std::cout << pair.first->first << " - " << pair.first->second << std::endl;
+		std::cout << "(" << pair.first->first << "-" << pair.first->second << ")" << " - (" << pair.second->first << " - " << pair.second->second << std::endl;
 		pair = map.equal_range(5);
-		std::cout << pair.first->first << " - " << pair.first->second << std::endl;
+		std::cout << "(" << pair.first->first << "-" << pair.first->second << ")" << " - (" << pair.second->first << " - " << pair.second->second << std::endl;
 		pair = map.equal_range(-1);
+		std::cout << "(" << pair.first->first << "-" << pair.first->second << ")" << " - (" << pair.second->first << " - " << pair.second->second << std::endl;
 	}
 	std::cout << "Testing lower bound" << std::endl;
 	{

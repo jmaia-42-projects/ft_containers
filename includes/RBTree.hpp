@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:42:49 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 22:44:50 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 23:22:54 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ class	RBTree
 
 						iterator &operator=(iterator const &obj);
 
-						reference	operator*();
-						pointer		operator->();
+						reference	operator*() const;
+						pointer		operator->() const;
 						iterator	&operator++();
 						iterator	operator++(int);
 						iterator	&operator--();
@@ -99,8 +99,8 @@ class	RBTree
 
 						const_iterator &operator=(const_iterator const &obj);
 
-						reference	operator*();
-						pointer		operator->();
+						reference	operator*() const;
+						pointer		operator->() const;
 						const_iterator	&operator++();
 						const_iterator	operator++(int);
 						const_iterator	&operator--();

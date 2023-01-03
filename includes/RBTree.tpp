@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 14:41:10 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 23:23:28 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ typename RBTree<T, TreeCompare>::RBTreeNode::iterator &RBTree<T, TreeCompare>::R
 }
 
 template<typename T, typename TreeCompare>
-typename RBTree<T, TreeCompare>::RBTreeNode::iterator::reference RBTree<T, TreeCompare>::RBTreeNode::iterator::operator*()
+typename RBTree<T, TreeCompare>::RBTreeNode::iterator::reference RBTree<T, TreeCompare>::RBTreeNode::iterator::operator*() const
 {
 	return (this->ptr->content);
 }
 
 template<typename T, typename TreeCompare>
-typename RBTree<T, TreeCompare>::RBTreeNode::iterator::pointer RBTree<T, TreeCompare>::RBTreeNode::iterator::operator->()
+typename RBTree<T, TreeCompare>::RBTreeNode::iterator::pointer RBTree<T, TreeCompare>::RBTreeNode::iterator::operator->() const
 {
 	return (&this->ptr->content);
 }
@@ -151,13 +151,13 @@ typename RBTree<T, TreeCompare>::RBTreeNode::const_iterator &RBTree<T, TreeCompa
 }
 
 template<typename T, typename TreeCompare>
-typename RBTree<T, TreeCompare>::RBTreeNode::const_iterator::reference RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator*()
+typename RBTree<T, TreeCompare>::RBTreeNode::const_iterator::reference RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator*() const
 {
 	return (this->ptr->content);
 }
 
 template<typename T, typename TreeCompare>
-typename RBTree<T, TreeCompare>::RBTreeNode::const_iterator::pointer RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator->()
+typename RBTree<T, TreeCompare>::RBTreeNode::const_iterator::pointer RBTree<T, TreeCompare>::RBTreeNode::const_iterator::operator->() const
 {
 	return (&this->ptr->content);
 }

@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 23:11:05 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 23:49:18 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,19 +269,13 @@ typename map<Key, T, Compare, Allocator>::const_iterator map<Key, T, Compare, Al
 template<class Key, class T, class Compare, class Allocator>
 ft::pair<typename map<Key, T, Compare, Allocator>::iterator, typename map<Key, T, Compare, Allocator>::iterator> map<Key, T, Compare, Allocator>::equal_range(const Key &key)
 {
-	iterator	it;
-
-	it = this->find(key);
-	return (ft::pair<iterator, iterator>(it, it));
+	return (ft::make_pair(this->lower_bound(key), this->upper_bound(key)));
 }
 
 template<class Key, class T, class Compare, class Allocator>
 ft::pair<typename map<Key, T, Compare, Allocator>::const_iterator, typename map<Key, T, Compare, Allocator>::const_iterator> map<Key, T, Compare, Allocator>::equal_range(const Key &key) const
 {
-	iterator	it;
-
-	it = this->find(key);
-	return (ft::pair<const_iterator, const_iterator>(it, it));
+	return (ft::make_pair(this->lower_bound(key), this->upper_bound(key)));
 }
 
 template<class Key, class T, class Compare, class Allocator>
