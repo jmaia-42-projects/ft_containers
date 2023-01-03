@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:22:17 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/02 11:52:09 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 23:11:08 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ namespace ft
                  const ft::map<Key,T,Compare,Alloc>& rhs );
 
 	template< class Key, class T, class Compare, class Alloc >
-
 	void swap(ft::map<Key,T,Compare,Alloc>& lhs,
 			   ft::map<Key,T,Compare,Alloc>& rhs );
 

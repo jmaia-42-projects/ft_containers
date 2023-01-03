@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 18:56:44 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 23:14:31 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1217,5 +1217,88 @@ int	main(void)
 
 		map.key_comp();
 		map.value_comp();
+	}
+	std::cout << "test operators" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		ft::pair<int, std::string> data2[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		data2[0] = ft::make_pair(0, "pouet");
+		data2[1] = ft::make_pair(5, "salut");
+		data2[2] = ft::make_pair(-3, "youpi");
+		data2[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string>	map(data, data + 4);
+		ft::map<int, std::string>	map2(data2, data2 + 4);
+		std::cout << (map == map2) << std::endl;
+		std::cout << (map != map2) << std::endl;
+		std::cout << (map < map2) << std::endl;
+		std::cout << (map <= map2) << std::endl;
+		std::cout << (map > map2) << std::endl;
+		std::cout << (map >= map2) << std::endl;
+	}
+	std::cout << "test operators differents" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		ft::pair<int, std::string> data2[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		data2[0] = ft::make_pair(0, "pouet");
+		data2[1] = ft::make_pair(5, "salut");
+		data2[2] = ft::make_pair(-3, "youpi");
+		ft::map<int, std::string>	map(data, data + 4);
+		ft::map<int, std::string>	map2(data2, data2 + 3);
+		std::cout << (map == map2) << std::endl;
+		std::cout << (map != map2) << std::endl;
+		std::cout << (map < map2) << std::endl;
+		std::cout << (map <= map2) << std::endl;
+		std::cout << (map > map2) << std::endl;
+		std::cout << (map >= map2) << std::endl;
+	}
+	std::cout << "test operators differents same size" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		ft::pair<int, std::string> data2[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		data2[0] = ft::make_pair(0, "pouet");
+		data2[1] = ft::make_pair(5, "salut");
+		data2[2] = ft::make_pair(-3, "youpi");
+		data2[3] = ft::make_pair(34, "top");
+		ft::map<int, std::string>	map(data, data + 4);
+		ft::map<int, std::string>	map2(data2, data2 + 4);
+		std::cout << (map == map2) << std::endl;
+		std::cout << (map != map2) << std::endl;
+		std::cout << (map < map2) << std::endl;
+		std::cout << (map <= map2) << std::endl;
+		std::cout << (map > map2) << std::endl;
+		std::cout << (map >= map2) << std::endl;
+	}
+	std::cout << "test operators differents same keys" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		ft::pair<int, std::string> data2[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		data2[0] = ft::make_pair(0, "pouet");
+		data2[1] = ft::make_pair(5, "salut");
+		data2[2] = ft::make_pair(-3, "youpi");
+		data2[3] = ft::make_pair(33, "coucou");
+		ft::map<int, std::string>	map(data, data + 4);
+		ft::map<int, std::string>	map2(data2, data2 + 4);
+		std::cout << (map == map2) << std::endl;
+		std::cout << (map != map2) << std::endl;
+		std::cout << (map < map2) << std::endl;
+		std::cout << (map <= map2) << std::endl;
+		std::cout << (map > map2) << std::endl;
+		std::cout << (map >= map2) << std::endl;
 	}
 }
