@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/02 13:22:18 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 13:28:51 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,15 +228,7 @@ typename map<Key, T, Compare, Allocator>::size_type map<Key, T, Compare, Allocat
 template<class Key, class T, class Compare, class Allocator>
 void map<Key, T, Compare, Allocator>::swap(map<Key, T, Compare, Allocator> &other)
 {
-	typename RBTree<ft::pair<Key, T>, value_compare>::RBTreeNode	*root_tmp;
-	size_t		size_tmp;
-
-	root_tmp = this->_root;
-	size_tmp = this->_size;
-	this->_root = other._root;
-	this->_size = other._size;
-	other._root = root_tmp;
-	other._size = size_tmp;
+	this->_tree.swap(other._tree);
 }
 
 template<class Key, class T, class Compare, class Allocator>

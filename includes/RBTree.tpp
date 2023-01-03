@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/02 10:59:30 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 13:29:11 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -770,6 +770,20 @@ void	RBTree<T, TreeCompare>::empty(void)
 		this->_root = NULL;
 		this->_size = 0;
 	}
+}
+
+template<typename T, typename TreeCompare>
+void	RBTree<T, TreeCompare>::swap(RBTree<T, TreeCompare> &other)
+{
+	RBTreeNode	*root_tmp;
+	size_t		size_tmp;
+
+	root_tmp = this->_root;
+	size_tmp = this->_size;
+	this->_root = other._root;
+	this->_size = other._size;
+	other._root = root_tmp;
+	other._size = size_tmp;
 }
 
 template<typename T, typename TreeCompare>

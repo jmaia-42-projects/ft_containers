@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 13:11:19 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 14:29:23 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -880,6 +880,133 @@ int	main(void)
 		}
 		std::cout << map.erase(-3) << std::endl;
 		for (ft::map<int, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	std::cout << "Testing swap" << std::endl;
+	{
+		// Swap must preserve iterators
+		ft::map<int, std::string>	map;
+		ft::map<int, std::string>	map2;
+
+		ft::pair<int, std::string> data[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		map.insert(data, data + 4);
+		ft::map<int, std::string>::iterator begin1 = map.begin();
+		ft::map<int, std::string>::iterator end1 = map.end();
+		end1--;
+		map.swap(map2);
+		for (ft::map<int, std::string>::iterator it = begin1; it != end1; it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::iterator it = map2.begin(); it != map2.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	std::cout << "Testing swap with map filled and empty" << std::endl;
+	{
+		// Swap must preserve iterators
+		ft::map<int, std::string>	map;
+		ft::map<int, std::string>	map2;
+
+		ft::pair<int, std::string> data[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		map.insert(data, data + 4);
+		ft::map<int, std::string>::iterator begin1 = map.begin();
+		ft::map<int, std::string>::iterator end1 = map.end();
+		end1--;
+		map.swap(map2);
+		for (ft::map<int, std::string>::iterator it = begin1; it != end1; it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::iterator it = map2.begin(); it != map2.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	std::cout << "Testing swap with 2 map empty" << std::endl;
+	{
+		ft::map<int, std::string>	map;
+		ft::map<int, std::string>	map2;
+
+		map.swap(map2);
+		for (ft::map<int, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::iterator it = map2.begin(); it != map2.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+	}
+	std::cout << "Testing swap with 2 map filled" << std::endl;
+	{
+		// Swap must preserve iterators
+		ft::map<int, std::string>	map;
+		ft::map<int, std::string>	map2;
+
+		ft::pair<int, std::string> data[4];
+		ft::pair<int, std::string> data2[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		map.insert(data, data + 4);
+		data2[0] = ft::make_pair(-1, "hello");
+		data2[1] = ft::make_pair(12, "c'est genial ceci");
+		data2[2] = ft::make_pair(43, "yeah");
+		data2[3] = ft::make_pair(-5, "amazing");
+		map2.insert(data2, data2 + 4);
+		ft::map<int, std::string>::iterator begin1 = map.begin();
+		ft::map<int, std::string>::iterator end1 = map.end();
+		ft::map<int, std::string>::iterator begin2 = map2.begin();
+		ft::map<int, std::string>::iterator end2 = map2.end();
+		end1--;
+		end2--;
+		map.swap(map2);
+		for (ft::map<int, std::string>::iterator it = begin1; it != end1; it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::iterator it = begin2; it != end2; it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << it->first << " - " << it->second << std::endl;
+			std::cout << (*it).first << " - " << (*it).second << std::endl;
+		}
+		for (ft::map<int, std::string>::iterator it = map2.begin(); it != map2.end(); it++)
 		{
 			std::cout << it->first << " - " << it->second << std::endl;
 			std::cout << (*it).first << " - " << (*it).second << std::endl;

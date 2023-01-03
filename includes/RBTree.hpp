@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:42:49 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/02 10:45:35 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 13:29:13 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ class	RBTree
 		template<typename K>
 		bool		_contains(K key);
 		void		empty(void);
+		void		swap(RBTree &other);
 };
 
 template<typename T, typename TreeCompare>
