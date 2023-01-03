@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 15:03:27 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 15:44:38 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1102,5 +1102,35 @@ int	main(void)
 			std::cout << it->first << " - " << it->second << std::endl;
 			std::cout << (*it).first << " - " << (*it).second << std::endl;
 		}
+	}
+	std::cout << "Testing equal_range" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string>	map;
+		ft::pair<ft::map<int, std::string>::iterator, ft::map<int, std::string>::iterator> pair = map.equal_range(0);
+		map.insert(data, data + 4);
+		pair = map.equal_range(0);
+		pair = map.equal_range(5);
+		pair = map.equal_range(-1);
+	}
+	std::cout << "Testing const equal_range" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string>	map;
+		ft::pair<ft::map<int, std::string>::iterator, ft::map<int, std::string>::iterator> pair = map.equal_range(0);
+		map.insert(data, data + 4);
+		pair = map.equal_range(0);
+		std::cout << pair.first->first << " - " << pair.first->second << std::endl;
+		pair = map.equal_range(5);
+		std::cout << pair.first->first << " - " << pair.first->second << std::endl;
+		pair = map.equal_range(-1);
 	}
 }
