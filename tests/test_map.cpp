@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 15:44:38 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 18:55:11 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1132,5 +1132,83 @@ int	main(void)
 		pair = map.equal_range(5);
 		std::cout << pair.first->first << " - " << pair.first->second << std::endl;
 		pair = map.equal_range(-1);
+	}
+	std::cout << "Testing lower bound" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string>	map(data, data + 4);
+		for (int i = -5; i < 34; i++)
+		{
+			std::cout << map.lower_bound(i)->first << std::endl;
+		}
+		std::cout << (map.lower_bound(34) == map.end()) << std::endl;
+	}
+	std::cout << "Testing lower bound empty" << std::endl;
+	{
+		ft::map<int, std::string>	map;
+		std::cout << (map.lower_bound(34) == map.end()) << std::endl;
+	}
+	std::cout << "Testing const lower bound" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string> const map(data, data + 4);
+		for (int i = -5; i < 34; i++)
+		{
+			std::cout << map.lower_bound(i)->first << std::endl;
+		}
+		std::cout << (map.lower_bound(34) == map.end()) << std::endl;
+	}
+	std::cout << "Testing const lower bound empty" << std::endl;
+	{
+		ft::map<int, std::string> const map;
+		std::cout << (map.lower_bound(33) == map.end()) << std::endl;
+	}
+	std::cout << "Testing upper bound" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string>	map(data, data + 4);
+		for (int i = -3; i < 33; i++)
+		{
+			std::cout << map.upper_bound(i)->first << std::endl;
+		}
+		std::cout << (map.upper_bound(33) == map.end()) << std::endl;
+		std::cout << (map.upper_bound(34) == map.end()) << std::endl;
+	}
+	std::cout << "Testing upper bound empty" << std::endl;
+	{
+		ft::map<int, std::string>	map;
+		std::cout << (map.upper_bound(34) == map.end()) << std::endl;
+	}
+	std::cout << "Testing const upper bound" << std::endl;
+	{
+		ft::pair<int, std::string> data[4];
+		data[0] = ft::make_pair(0, "pouet");
+		data[1] = ft::make_pair(5, "salut");
+		data[2] = ft::make_pair(-3, "youpi");
+		data[3] = ft::make_pair(33, "top");
+		ft::map<int, std::string> const map(data, data + 4);
+		for (int i = -3; i < 33; i++)
+		{
+			std::cout << map.upper_bound(i)->first << std::endl;
+		}
+		std::cout << (map.upper_bound(33) == map.end()) << std::endl;
+		std::cout << (map.upper_bound(34) == map.end()) << std::endl;
+	}
+	std::cout << "Testing const upper bound empty" << std::endl;
+	{
+		ft::map<int, std::string> const map;
+		std::cout << (map.upper_bound(34) == map.end()) << std::endl;
 	}
 }

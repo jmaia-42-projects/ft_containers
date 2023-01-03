@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 15:03:50 by jmaia            ###   ###               */
+/*   Updated: 2023/01/03 18:49:54 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,12 +288,19 @@ template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::iterator map<Key, T, Compare, Allocator>::lower_bound(const Key &key)
 {
 	iterator	it;
+	bool		found;
 
+	found = false;
 	for (it = this->begin(); it != this->end(); it++)
 	{
-		if (this->_compare(key, *it) >= 0)
+		if (!this->_compare(it->first, key))
+		{
+			found = true;
 			break;
+		}
 	}
+	if (!found)
+		it = this->end();
 	return (it);
 }
 
@@ -301,25 +308,39 @@ template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::const_iterator map<Key, T, Compare, Allocator>::lower_bound(const Key &key) const
 {
 	const_iterator	it;
+	bool			found;
 
+	found = false;
 	for (it = this->begin(); it != this->end(); it++)
 	{
-		if (this->_compare(key, *it) >= 0)
+		if (!this->_compare(it->first, key))
+		{
+			found = true;
 			break;
+		}
 	}
+	if (!found)
+		it = this->end();
 	return (it);
 }
 
 template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::iterator map<Key, T, Compare, Allocator>::upper_bound(const Key &key)
 {
-	const_iterator	it;
+	iterator	it;
+	bool		found;
 
-	for (it = this->rbegin(); it != this->rend(); it++)
+	found = false;
+	for (it = this->begin(); it != this->end(); it++)
 	{
-		if (this->_compare(key, *it) <= 0)
+		if (this->_compare(key, it->first))
+		{
+			found = true;
 			break;
+		}
 	}
+	if (!found)
+		it = this->end();
 	return (it);
 }
 
@@ -327,12 +348,19 @@ template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::const_iterator map<Key, T, Compare, Allocator>::upper_bound(const Key &key) const
 {
 	const_iterator	it;
+	bool			found;
 
-	for (it = this->rbegin(); it != this->rend(); it++)
+	found = false;
+	for (it = this->begin(); it != this->end(); it++)
 	{
-		if (this->_compare(key, *it) <= 0)
+		if (this->_compare(key, it->first))
+		{
+			found = true;
 			break;
+		}
 	}
+	if (!found)
+		it = this->end();
 	return (it);
 }
 
