@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/04 00:07:50 by jmaia            ###   ###               */
+/*   Updated: 2023/01/04 00:34:03 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -842,7 +842,7 @@ void swap(RBTree<T, TreeCompare>& lhs, RBTree<T, TreeCompare>& rhs )
 template <typename T, typename TreeCompare>
 bool	RBTree<T, TreeCompare>::RBTreeNode::iterator::operator==(iterator const &rhs) const
 {
-	return (this->ptr == rhs.ptr && this->isEnd == rhs.isEnd);
+	return ((this->ptr == rhs.ptr || this->isEnd == true) && this->isEnd == rhs.isEnd);
 }
 
 template <typename T, typename TreeCompare>
