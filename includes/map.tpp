@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:18:18 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 23:49:18 by jmaia            ###   ###               */
+/*   Updated: 2023/01/04 01:39:38 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@ template<class Key, class T, class Compare, class Allocator>
 map<Key, T, Compare, Allocator>::map():
 	_allocator(Allocator()),
 	_compare(Compare()),
-	_tree(map<Key, T, Compare, Allocator>::value_compare(_compare)) {}
+	_tree(map<Key, T, Compare, Allocator>::value_compare(_compare), _allocator) {}
 
 template<class Key, class T, class Compare, class Allocator>
 map<Key, T, Compare, Allocator>::map(const Compare &comp, const Allocator &alloc):
 	_allocator(alloc),
 	_compare(comp),
-	_tree(map<Key, T, Compare, Allocator>::value_compare(_compare)) {}
+	_tree(map<Key, T, Compare, Allocator>::value_compare(_compare), _allocator) {}
 
 template<class Key, class T, class Compare, class Allocator>
 template<class InputIt>
 map<Key, T, Compare, Allocator>::map(InputIt first, InputIt last, const Compare &comp, const Allocator &alloc):
 	_allocator(alloc),
 	_compare(comp),
-	_tree(map<Key, T, Compare, Allocator>::value_compare(_compare))
+	_tree(map<Key, T, Compare, Allocator>::value_compare(_compare), _allocator)
 {
 	for (InputIt it = first; it != last; it++)
 		this->insert(*it);
@@ -35,7 +35,7 @@ map<Key, T, Compare, Allocator>::map(InputIt first, InputIt last, const Compare 
 
 template<class Key, class T, class Compare, class Allocator>
 map<Key, T, Compare, Allocator>::map(const map &other):
-	_tree(map<Key, T, Compare, Allocator>::value_compare(_compare))
+	_tree(map<Key, T, Compare, Allocator>::value_compare(_compare), _allocator)
 {
 	*this = other;
 }
@@ -63,7 +63,7 @@ typename map<Key, T, Compare, Allocator>::allocator_type map<Key, T, Compare, Al
 template<class Key, class T, class Compare, class Allocator>
 T &map<Key, T, Compare, Allocator>::at(const Key &key)
 {
-	typename RBTree<value_type, value_compare>::RBTreeNode	*node;
+	typename RBTree<value_type, value_compare, Allocator>::RBTreeNode	*node;
 	value_type	junk(key, T());
 
 	node = this->_tree._get(junk);
@@ -75,7 +75,7 @@ T &map<Key, T, Compare, Allocator>::at(const Key &key)
 template<class Key, class T, class Compare, class Allocator>
 T const &map<Key, T, Compare, Allocator>::at(const Key &key) const
 {
-	typename RBTree<value_type, value_compare>::RBTreeNode	*node;
+	typename RBTree<value_type, value_compare, Allocator>::RBTreeNode	*node;
 	value_type	junk(key, T());
 
 	node = this->_tree._get(junk);
@@ -243,7 +243,7 @@ template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::iterator map<Key, T, Compare, Allocator>::find(const Key &key)
 {
 	value_type	junk(key, T());
-	typename RBTree<value_type, value_compare>::RBTreeNode	*elem;
+	typename RBTree<value_type, value_compare, Allocator>::RBTreeNode	*elem;
 
 	elem = this->_tree._get(junk);
 	if (elem == NULL)
@@ -256,7 +256,7 @@ template<class Key, class T, class Compare, class Allocator>
 typename map<Key, T, Compare, Allocator>::const_iterator map<Key, T, Compare, Allocator>::find(const Key &key) const
 {
 	value_type	junk(key, T());
-	typename RBTree<value_type, value_compare>::RBTreeNode	*elem;
+	typename RBTree<value_type, value_compare, Allocator>::RBTreeNode	*elem;
 
 	elem = this->_tree._get(junk);
 	if (elem == NULL)

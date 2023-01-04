@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:42:49 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/04 00:11:40 by jmaia            ###   ###               */
+/*   Updated: 2023/01/04 01:54:10 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 # include "lexicographical_compare.hpp"
 
-template<typename T, typename TreeCompare>
+template<typename T, typename TreeCompare, typename Alloc>
 class	RBTree
 {
 	public:
@@ -33,8 +33,9 @@ class	RBTree
 				RBTreeNode	*right;
 				RBTreeNode	*parent;
 				enum color	color;
+				typename Alloc::template rebind<RBTreeNode>::other alloc;
 
-				RBTreeNode(T value, enum color color);
+				RBTreeNode(T value, enum color color, Alloc alloc);
 				RBTreeNode(RBTreeNode const &obj);
 				~RBTreeNode(void);
 
@@ -115,12 +116,13 @@ class	RBTree
 						bool	operator!=(iterator const &rhs) const;
 				};
 
-			friend class RBTree<T, TreeCompare>;
+			friend class RBTree<T, TreeCompare, Alloc>;
 		};
 	private:
-		size_t		_size;
-		RBTreeNode	*_root;
-		TreeCompare	_comp;
+		size_t								_size;
+		RBTreeNode							*_root;
+		TreeCompare							_comp;
+		typename Alloc::template rebind<RBTreeNode>::other	_alloc;
 
 		RBTree();
 		RBTreeNode	*put(T elem);
@@ -129,7 +131,7 @@ class	RBTree
 		void		transplant(RBTreeNode *oldNode, RBTreeNode *newNode);
 		void		applyDeleteFix(RBTreeNode *node);
 	public:
-		RBTree(TreeCompare _comp);
+		RBTree(TreeCompare _comp, Alloc alloc);
 		~RBTree(void);
 		RBTree(RBTree const &obj);
 
@@ -147,32 +149,32 @@ class	RBTree
 		void		swap(RBTree &other);
 };
 
-template<typename T, typename TreeCompare>
-bool operator==(const RBTree<T, TreeCompare> &lhs,
-			 const RBTree<T, TreeCompare> &rhs);
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator==(const RBTree<T, TreeCompare, Alloc> &lhs,
+			 const RBTree<T, TreeCompare, Alloc> &rhs);
 
-template<typename T, typename TreeCompare>
-bool operator!=( const RBTree<T, TreeCompare>& lhs,
-			 const RBTree<T, TreeCompare>& rhs );
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator!=( const RBTree<T, TreeCompare, Alloc>& lhs,
+			 const RBTree<T, TreeCompare, Alloc>& rhs );
 
-template<typename T, typename TreeCompare>
-bool operator<( const RBTree<T, TreeCompare>& lhs,
-			const RBTree<T, TreeCompare>& rhs );
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator<( const RBTree<T, TreeCompare, Alloc>& lhs,
+			const RBTree<T, TreeCompare, Alloc>& rhs );
 
-template<typename T, typename TreeCompare>
-bool operator<=( const RBTree<T, TreeCompare>& lhs,
-			 const RBTree<T, TreeCompare>& rhs );
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator<=( const RBTree<T, TreeCompare, Alloc>& lhs,
+			 const RBTree<T, TreeCompare, Alloc>& rhs );
 
-template<typename T, typename TreeCompare>
-bool operator>( const RBTree<T, TreeCompare>& lhs,
-			const RBTree<T, TreeCompare>& rhs );
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator>( const RBTree<T, TreeCompare, Alloc>& lhs,
+			const RBTree<T, TreeCompare, Alloc>& rhs );
 
-template<typename T, typename TreeCompare>
-bool operator>=( const RBTree<T, TreeCompare>& lhs,
-			 const RBTree<T, TreeCompare>& rhs );
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator>=( const RBTree<T, TreeCompare, Alloc>& lhs,
+			 const RBTree<T, TreeCompare, Alloc>& rhs );
 
-template<typename T, typename TreeCompare>
-void swap(RBTree<T, TreeCompare>& lhs, RBTree<T, TreeCompare>& rhs );
+template<typename T, typename TreeCompare, typename Alloc>
+void swap(RBTree<T, TreeCompare, Alloc>& lhs, RBTree<T, TreeCompare, Alloc>& rhs );
 
 # include "RBTree.tpp"
 

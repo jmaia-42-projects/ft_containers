@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:22:17 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/03 23:11:08 by jmaia            ###   ###               */
+/*   Updated: 2023/01/04 01:32:46 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ namespace ft
 			typedef const value_type& const_reference;
 			typedef typename Allocator::pointer pointer;
 			typedef typename Allocator::const_pointer const_pointer;
-			typedef typename RBTree<value_type, value_compare >::RBTreeNode::iterator iterator;
-			typedef typename RBTree<value_type, value_compare >::RBTreeNode::const_iterator const_iterator;
+			typedef typename RBTree<value_type, value_compare, Allocator>::RBTreeNode::iterator iterator;
+			typedef typename RBTree<value_type, value_compare, Allocator>::RBTreeNode::const_iterator const_iterator;
 			typedef ft::reverse_iterator<iterator> reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 		private:
-			Allocator							_allocator;
-			Compare								_compare;
-			RBTree<value_type, value_compare>	_tree;
+			Allocator										_allocator;
+			Compare											_compare;
+			RBTree<value_type, value_compare, Allocator>	_tree;
 		public:
 			map();
 			explicit map(const Compare &comp, const Allocator &alloc = Allocator());
