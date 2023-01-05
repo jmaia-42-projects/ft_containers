@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:42:49 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/04 01:54:10 by jmaia            ###   ###               */
+/*   Updated: 2023/01/05 13:23:31 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ class	RBTree
 					private:
 						RBTreeNode const	*ptr;
 						bool				isEnd;
+						friend class iterator;
+
 					public:
 						typedef std::ptrdiff_t difference_type;
 						typedef T const value_type;
@@ -112,8 +114,8 @@ class	RBTree
 						iterator	&operator--();
 						iterator	operator--(int);
 
-						bool	operator==(iterator const &rhs) const;
-						bool	operator!=(iterator const &rhs) const;
+						bool	operator==(const_iterator const &rhs) const;
+						bool	operator!=(const_iterator const &rhs) const;
 				};
 
 			friend class RBTree<T, TreeCompare, Alloc>;
