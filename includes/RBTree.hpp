@@ -1,9 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   RBTree.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/09 15:42:49 by jmaia             #+#    #+#             */
+/*   Updated: 2023/01/04 01:54:10 by jmaia            ###   ###               */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RB_TREE_HPP
 # define RB_TREE_HPP
 
 # include <cstdlib>
 
-template<typename T>
+# include "lexicographical_compare.hpp"
+
+template<typename T, typename TreeCompare, typename Alloc>
 class	RBTree
 {
 	public:
@@ -19,19 +33,13 @@ class	RBTree
 				RBTreeNode	*right;
 				RBTreeNode	*parent;
 				enum color	color;
+				typename Alloc::template rebind<RBTreeNode>::other alloc;
 
-				RBTreeNode(T value, enum color color);
+				RBTreeNode(T value, enum color color, Alloc alloc);
 				RBTreeNode(RBTreeNode const &obj);
 				~RBTreeNode(void);
 
-				bool	operator=(RBTreeNode const &obj);
-
-				bool	operator==(RBTreeNode const &obj);
-				bool	operator<(RBTreeNode const &obj);
-				bool	operator<=(RBTreeNode const &obj);
-				bool	operator>(RBTreeNode const &obj);
-				bool	operator>=(RBTreeNode const &obj);
-				bool	operator!=(RBTreeNode const &obj);
+				RBTreeNode	&operator=(RBTreeNode const &obj);
 
 				RBTreeNode	*getUncle(void);
 				bool		isLeftChild(void);
@@ -40,34 +48,133 @@ class	RBTree
 				void		leftRotate(void);
 				void		rightRotate(void);
 				RBTreeNode	*getMinNode();
-			friend class RBTree<T>;
+				RBTreeNode	*getMaxNode();
+				void		deleteTree();
+
+				class iterator;
+
+				class const_iterator
+				{
+					private:
+						RBTreeNode const	*ptr;
+						bool				isEnd;
+					public:
+						typedef std::ptrdiff_t difference_type;
+						typedef T const value_type;
+						typedef T const * pointer;
+						typedef T const & reference;
+						typedef std::bidirectional_iterator_tag iterator_category;
+
+						const_iterator();
+						const_iterator(RBTreeNode const *node, bool isEnd);
+						const_iterator(const_iterator const &obj);
+						const_iterator(iterator const &obj);
+						~const_iterator();
+
+						const_iterator &operator=(const_iterator const &obj);
+
+						reference	operator*() const;
+						pointer		operator->() const;
+						const_iterator	&operator++();
+						const_iterator	operator++(int);
+						const_iterator	&operator--();
+						const_iterator	operator--(int);
+
+						bool	operator==(const_iterator const &rhs) const;
+						bool	operator!=(const_iterator const &rhs) const;
+				};
+
+				class iterator
+				{
+					private:
+						RBTreeNode	*ptr;
+						bool		isEnd;
+
+						friend class const_iterator;
+					public:
+						typedef std::ptrdiff_t difference_type;
+						typedef T value_type;
+						typedef T* pointer;
+						typedef T& reference;
+						typedef std::bidirectional_iterator_tag iterator_category;
+
+						iterator();
+						iterator(RBTreeNode *node, bool isEnd);
+						iterator(iterator const &obj);
+						~iterator();
+
+						iterator &operator=(iterator const &obj);
+
+						reference	operator*() const;
+						pointer		operator->() const;
+						iterator	&operator++();
+						iterator	operator++(int);
+						iterator	&operator--();
+						iterator	operator--(int);
+
+						bool	operator==(iterator const &rhs) const;
+						bool	operator!=(iterator const &rhs) const;
+				};
+
+			friend class RBTree<T, TreeCompare, Alloc>;
 		};
 	private:
-		size_t		_size;
-		RBTreeNode	*_root;
+		size_t								_size;
+		RBTreeNode							*_root;
+		TreeCompare							_comp;
+		typename Alloc::template rebind<RBTreeNode>::other	_alloc;
 
+		RBTree();
 		RBTreeNode	*put(T elem);
 		void		fixRBTree(RBTreeNode *node);
 		void		fixRoot(void);
 		void		transplant(RBTreeNode *oldNode, RBTreeNode *newNode);
 		void		applyDeleteFix(RBTreeNode *node);
-	protected:
-		RBTree(void);
+	public:
+		RBTree(TreeCompare _comp, Alloc alloc);
 		~RBTree(void);
 		RBTree(RBTree const &obj);
 
 		RBTree	&operator=(RBTree const &obj);
 
-		size_t		getSize(void) const;
-		bool		insert(T elem);
-		bool		remove(T elem);
-		T			contains(void);
+		size_t		_getSize(void) const;
+		bool		_insert(T elem);
+		bool		_remove(T elem);
 		template<typename K>
-		RBTreeNode	*get(K key);
+		RBTreeNode	*_get(K key) const;
+		RBTreeNode	*_getRoot(void) const;
 		template<typename K>
-		bool		contains(K key);
-
+		bool		_contains(K key) const;
+		void		empty(void);
+		void		swap(RBTree &other);
 };
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator==(const RBTree<T, TreeCompare, Alloc> &lhs,
+			 const RBTree<T, TreeCompare, Alloc> &rhs);
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator!=( const RBTree<T, TreeCompare, Alloc>& lhs,
+			 const RBTree<T, TreeCompare, Alloc>& rhs );
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator<( const RBTree<T, TreeCompare, Alloc>& lhs,
+			const RBTree<T, TreeCompare, Alloc>& rhs );
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator<=( const RBTree<T, TreeCompare, Alloc>& lhs,
+			 const RBTree<T, TreeCompare, Alloc>& rhs );
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator>( const RBTree<T, TreeCompare, Alloc>& lhs,
+			const RBTree<T, TreeCompare, Alloc>& rhs );
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator>=( const RBTree<T, TreeCompare, Alloc>& lhs,
+			 const RBTree<T, TreeCompare, Alloc>& rhs );
+
+template<typename T, typename TreeCompare, typename Alloc>
+void swap(RBTree<T, TreeCompare, Alloc>& lhs, RBTree<T, TreeCompare, Alloc>& rhs );
 
 # include "RBTree.tpp"
 

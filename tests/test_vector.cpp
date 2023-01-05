@@ -6,9 +6,13 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 11:54:56 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/30 10:55:01 by jmaia            ###   ###               */
+/*   Updated: 2023/01/04 01:22:50 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
+
+/* Random tests
+ * Check if allocation is done with allocator
+ * */
 
 #ifdef FT
 # include "vector.hpp"

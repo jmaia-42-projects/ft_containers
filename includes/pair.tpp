@@ -6,20 +6,26 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:30:57 by jmaia             #+#    #+#             */
-/*   Updated: 2022/11/21 12:55:05 by jmaia            ###   ###               */
+/*   Updated: 2023/01/02 11:45:24 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
 template<typename T1, typename T2>
-pair<T1, T2>::pair(void) { }
+pair<T1, T2>::pair(void):
+	first(T1()),
+	second(T2()) { }
 template<typename T1, typename T2>
 pair<T1, T2>::pair(const T1 &x, const T2 &y): first(x), second(y) {}
 template<typename T1, typename T2>
 template<typename U1, typename U2>
-pair<T1, T2>::pair(const pair<U1, U2> &p)
-{
-	*this = p;
-}
+pair<T1, T2>::pair(const pair<U1, U2> &p):
+	first(p.first),
+	second(p.second) {}
+
+template<typename T1, typename T2>
+pair<T1, T2>::pair(const pair<T1, T2> &p):
+	first(p.first),
+	second(p.second) {}
 
 template<typename T1, typename T2>
 pair<T1, T2> &pair<T1, T2>::operator=(const pair<T1, T2>& other)

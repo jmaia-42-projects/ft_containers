@@ -6,82 +6,319 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2022/12/09 14:14:22 by jmaia            ###   ###               */
+/*   Updated: 2023/01/04 01:54:28 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
-template<typename T>
-RBTree<T>::RBTreeNode::RBTreeNode():
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::iterator(void):
+	ptr(NULL),
+	isEnd(true) {}
+
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::iterator(RBTreeNode *node, bool isEnd):
+	ptr(node),
+	isEnd(isEnd) {}
+
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::iterator(iterator const &obj)
+{
+	*this = obj;
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::~iterator() {}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator &RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator=(iterator const &obj)
+{
+	this->ptr = obj.ptr;
+	this->isEnd = obj.isEnd;
+	return (*this);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::reference RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator*() const
+{
+	return (this->ptr->content);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::pointer RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator->() const
+{
+	return (&this->ptr->content);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator &RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator++()
+{
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*curNode;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*oldVisitedNode;
+
+	if (this->isEnd)
+		this->isEnd = false;
+	else if (this->ptr->right)
+		this->ptr = this->ptr->right->getMinNode();
+	else
+	{
+		curNode = this->ptr;
+		oldVisitedNode = NULL;
+		while (curNode && (curNode->left != oldVisitedNode || !oldVisitedNode))
+		{
+			oldVisitedNode = curNode;
+			curNode = curNode->parent;
+		}
+		if (curNode == NULL)
+			this->isEnd = true;
+		else
+			this->ptr = curNode;
+	}
+	return (*this);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator	RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator++(int)
+{
+	iterator tmp;
+
+	tmp = *this;
+	++*this;
+	return (tmp);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator	&RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator--()
+{
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*curNode;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*oldVisitedNode;
+
+	if (this->isEnd)
+		this->isEnd = false;
+	else if (this->ptr->left)
+		this->ptr = this->ptr->left->getMaxNode();
+	else
+	{
+		curNode = this->ptr;
+		oldVisitedNode = NULL;
+		while (curNode && (curNode->right != oldVisitedNode || !oldVisitedNode))
+		{
+			oldVisitedNode = curNode;
+			curNode = curNode->parent;
+		}
+		if (curNode == NULL)
+			this->isEnd = true;
+		else
+			this->ptr = curNode;
+	}
+	return (*this);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator	RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator--(int)
+{
+	iterator tmp;
+
+	tmp = *this;
+	--*this;
+	return (tmp);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::const_iterator(void):
+	ptr(NULL),
+	isEnd(true) {}
+
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::const_iterator(RBTreeNode const *node, bool isEnd):
+	ptr(node),
+	isEnd(isEnd) {}
+
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::const_iterator(const_iterator const &obj)
+{
+	*this = obj;
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::const_iterator(iterator const &obj):
+	ptr(obj.ptr),
+	isEnd(obj.isEnd) { }
+
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::~const_iterator() {}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator &RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::operator=(const_iterator const &obj)
+{
+	this->ptr = obj.ptr;
+	this->isEnd = obj.isEnd;
+	return (*this);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::reference RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::operator*() const
+{
+	return (this->ptr->content);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::pointer RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::operator->() const
+{
+	return (&this->ptr->content);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator &RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::operator++()
+{
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode const	*curNode;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode const	*oldVisitedNode;
+
+	if (this->isEnd)
+		this->isEnd = false;
+	else if (this->ptr->right)
+		this->ptr = this->ptr->right->getMinNode();
+	else
+	{
+		curNode = this->ptr;
+		oldVisitedNode = NULL;
+		while (curNode && (curNode->left != oldVisitedNode || !oldVisitedNode))
+		{
+			oldVisitedNode = curNode;
+			curNode = curNode->parent;
+		}
+		if (curNode == NULL)
+			this->isEnd = true;
+		else
+			this->ptr = curNode;
+	}
+	return (*this);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator	RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::operator++(int)
+{
+	const_iterator tmp;
+
+	tmp = *this;
+	++*this;
+	return (tmp);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator	&RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::operator--()
+{
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode const	*curNode;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode const	*oldVisitedNode;
+
+	if (this->isEnd)
+		this->isEnd = false;
+	else if (this->ptr->left)
+		this->ptr = this->ptr->left->getMaxNode();
+	else
+	{
+		curNode = this->ptr;
+		oldVisitedNode = NULL;
+		while (curNode && (curNode->right != oldVisitedNode || !oldVisitedNode))
+		{
+			oldVisitedNode = curNode;
+			curNode = curNode->parent;
+		}
+		if (curNode == NULL)
+			this->isEnd = true;
+		else
+			this->ptr = curNode;
+	}
+	return (*this);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator	RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::operator--(int)
+{
+	const_iterator tmp;
+
+	tmp = *this;
+	--*this;
+	return (tmp);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::RBTreeNode():
 	left(NULL),
 	right(NULL),
 	parent(NULL),
 	color(RBTreeNode::BLACK) { }
 
-template<typename T>
-RBTree<T>::RBTreeNode::RBTreeNode(T value, enum color color):
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::RBTreeNode(T value, enum color color, Alloc alloc):
 	content(value),
 	left(NULL),
 	right(NULL),
 	parent(NULL),
-	color(color) { }
+	color(color),
+	alloc(alloc) { }
 
-template<typename T>
-RBTree<T>::RBTreeNode::RBTreeNode(RBTreeNode const &obj)
-{
-	*this = obj;
-}
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::RBTreeNode(RBTreeNode const &obj):
+	content(obj.content),
+	left(obj.left),
+	right(obj.right),
+	parent(obj.parent),
+	color(obj.color),
+	alloc(obj.alloc) { }
 
-template<typename T>
-RBTree<T>::RBTreeNode::~RBTreeNode(void) { }
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTreeNode::~RBTreeNode(void) { }
 
-template<typename T>
-bool	RBTree<T>::RBTreeNode::operator=(RBTreeNode const &obj)
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode	&RBTree<T, TreeCompare, Alloc>::RBTreeNode::operator=(RBTreeNode const &obj)
 {
 	this->content = obj.content;
 	this->left = obj.left;
 	this->right = obj.right;
 	this->parent = obj.parent;
 	this->color = obj.color;
+	this->alloc = obj.alloc;
+	return (*this);
 }
 
-template<typename T>
-bool	RBTree<T>::RBTreeNode::operator==(RBTreeNode const &obj)
-{
-	return (this->content == obj.content);
-}
+//template<typename T, typename TreeCompare, typename Alloc>
+//bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::operator==(RBTreeNode const &obj)
+//{
+//	return (this->content == obj.content);
+//}
+//
+//template<typename T, typename TreeCompare, typename Alloc>
+//bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::operator<(RBTreeNode const &obj)
+//{
+//	return (this->content < obj.content);
+//}
+//
+//template<typename T, typename TreeCompare, typename Alloc>
+//bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::operator<=(RBTreeNode const &obj)
+//{
+//	return (*this == obj || *this < obj);
+//}
+//
+//template<typename T, typename TreeCompare, typename Alloc>
+//bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::operator>(RBTreeNode const &obj)
+//{
+//	return (!(*this < obj) && !(*this == obj));
+//}
+//
+//template<typename T, typename TreeCompare, typename Alloc>
+//bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::operator>=(RBTreeNode const &obj)
+//{
+//	return (*this > obj || *this == obj);
+//}
+//
+//template<typename T, typename TreeCompare, typename Alloc>
+//bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::operator!=(RBTreeNode const &obj)
+//{
+//	return (!(*this == obj));
+//}
 
-template<typename T>
-bool	RBTree<T>::RBTreeNode::operator<(RBTreeNode const &obj)
-{
-	return (this->content < obj.content);
-}
-
-template<typename T>
-bool	RBTree<T>::RBTreeNode::operator<=(RBTreeNode const &obj)
-{
-	return (*this == obj || *this < obj);
-}
-
-template<typename T>
-bool	RBTree<T>::RBTreeNode::operator>(RBTreeNode const &obj)
-{
-	return (!(*this < obj) && !(*this == obj));
-}
-
-template<typename T>
-bool	RBTree<T>::RBTreeNode::operator>=(RBTreeNode const &obj)
-{
-	return (*this > obj || *this == obj);
-}
-
-template<typename T>
-bool	RBTree<T>::RBTreeNode::operator!=(RBTreeNode const &obj)
-{
-	return (!(*this == obj));
-}
-
-template<typename T>
-typename RBTree<T>::RBTreeNode *RBTree<T>::RBTreeNode::getUncle(void)
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode *RBTree<T, TreeCompare, Alloc>::RBTreeNode::getUncle(void)
 {
 	if (!this->parent || !this->parent->parent)
 		return (NULL);
@@ -91,28 +328,28 @@ typename RBTree<T>::RBTreeNode *RBTree<T>::RBTreeNode::getUncle(void)
 		return (this->parent->parent->left);
 }
 
-template<typename T>
-bool	RBTree<T>::RBTreeNode::isLeftChild(void)
+template<typename T, typename TreeCompare, typename Alloc>
+bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::isLeftChild(void)
 {
 	return (this->parent && this == this->parent->left);
 }
 
-template<typename T>
-bool	RBTree<T>::RBTreeNode::isRightChild(void)
+template<typename T, typename TreeCompare, typename Alloc>
+bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::isRightChild(void)
 {
 	return (this->parent && this == this->parent->right);
 }
 
-template<typename T>
-void	RBTree<T>::RBTreeNode::switchColor(void)
+template<typename T, typename TreeCompare, typename Alloc>
+void	RBTree<T, TreeCompare, Alloc>::RBTreeNode::switchColor(void)
 {
 	this->color = this->color == BLACK ? RED : BLACK;
 }
 
-template<typename T>
-void	RBTree<T>::RBTreeNode::leftRotate(void)
+template<typename T, typename TreeCompare, typename Alloc>
+void	RBTree<T, TreeCompare, Alloc>::RBTreeNode::leftRotate(void)
 {
-	RBTree<T>::RBTreeNode	*oldRight;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*oldRight;
 
 	if (!this->right)
 		return ;
@@ -129,10 +366,10 @@ void	RBTree<T>::RBTreeNode::leftRotate(void)
 	oldRight->left = this;
 }
 
-template<typename T>
-void	RBTree<T>::RBTreeNode::rightRotate(void)
+template<typename T, typename TreeCompare, typename Alloc>
+void	RBTree<T, TreeCompare, Alloc>::RBTreeNode::rightRotate(void)
 {
-	RBTree<T>::RBTreeNode	*oldLeft;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*oldLeft;
 
 	if (!this->left)
 		return ;
@@ -149,10 +386,10 @@ void	RBTree<T>::RBTreeNode::rightRotate(void)
 	oldLeft->right = this;
 }
 
-template<typename T>
-typename RBTree<T>::RBTreeNode	*RBTree<T>::RBTreeNode::getMinNode()
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode	*RBTree<T, TreeCompare, Alloc>::RBTreeNode::getMinNode()
 {
-	RBTree<T>::RBTreeNode	*current;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*current;
 
 	current = this;
 	while (current->left)
@@ -160,44 +397,77 @@ typename RBTree<T>::RBTreeNode	*RBTree<T>::RBTreeNode::getMinNode()
 	return (current);
 }
 
-template<typename T>
-RBTree<T>::RBTree(void):
-	_size(0),
-	_root(NULL) { }
-
-template<typename T>
-RBTree<T>::~RBTree(void)
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode	*RBTree<T, TreeCompare, Alloc>::RBTreeNode::getMaxNode()
 {
-	delete this->_root;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*current;
+
+	current = this;
+	while (current->right)
+		current = current->right;
+	return (current);
 }
 
-template<typename T>
-RBTree<T>::RBTree(RBTree const &obj)
+template<typename T, typename TreeCompare, typename Alloc>
+void RBTree<T, TreeCompare, Alloc>::RBTreeNode::deleteTree()
+{
+	if (this->left)
+		this->left->deleteTree();
+	if (this->right)
+		this->right->deleteTree();
+	this->alloc.destroy(this);
+	this->alloc.deallocate(this, 1);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTree(TreeCompare _comp, Alloc alloc):
+	_size(0),
+	_root(NULL),
+	_comp(_comp),
+	_alloc(alloc) { }
+
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::~RBTree(void)
+{
+	if (this->_root)
+		this->_root->deleteTree();
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>::RBTree(RBTree const &obj)
 {
 	*this = obj;
 }
 
-template<typename T>
-RBTree<T>	&RBTree<T>::operator=(RBTree const &obj)
+template<typename T, typename TreeCompare, typename Alloc>
+RBTree<T, TreeCompare, Alloc>	&RBTree<T, TreeCompare, Alloc>::operator=(RBTree const &obj)
 {
 	this->_size = obj._size;
-	this->_root = new RBTreeNode(this->_root);
+	if (obj._root)
+	{
+		this->_root = _alloc.allocate(1);
+		_alloc.construct(this->_root, *obj._root);
+	}
+	else
+		this->_root = NULL;
+	return (*this);
 }
 
-template<typename T>
-size_t	RBTree<T>::getSize(void) const
+template<typename T, typename TreeCompare, typename Alloc>
+size_t	RBTree<T, TreeCompare, Alloc>::_getSize(void) const
 {
 	return (this->_size);
 }
 
-template<typename T>
-bool	RBTree<T>::insert(T elem)
+template<typename T, typename TreeCompare, typename Alloc>
+bool	RBTree<T, TreeCompare, Alloc>::_insert(T elem)
 {
 	RBTreeNode	*node;
 
 	if (!this->_root)
 	{
-		this->_root = new RBTreeNode(elem, RBTreeNode::BLACK);
+		this->_root = _alloc.allocate(1);
+		_alloc.construct(this->_root, RBTreeNode(elem, RBTreeNode::BLACK, this->_alloc));
 		this->_size++;
 		return (true);
 	}
@@ -208,32 +478,37 @@ bool	RBTree<T>::insert(T elem)
 	return (true);
 }
 
-template<typename T>
-typename RBTree<T>::RBTreeNode	*RBTree<T>::put(T elem)
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode	*RBTree<T, TreeCompare, Alloc>::put(T elem)
 {
-	RBTree<T>::RBTreeNode	*node;
-	RBTree<T>::RBTreeNode	*curParent;
-	bool					parentFound;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*node;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*curParent;
+	bool								parentFound;
+	int									order;
 
-	node = new RBTree<T>::RBTreeNode(elem, RBTreeNode::RED);
+	node = _alloc.allocate(1);
+	_alloc.construct(node, RBTreeNode(elem, RBTreeNode::RED, this->_alloc));
 	curParent = this->_root;
 	parentFound = false;
 	while (!parentFound)
 	{
-		if (*node == *curParent)
+		order = this->_comp(node->content, curParent->content) * -1
+				+ this->_comp(curParent->content, node->content);
+		if (order == 0)
 		{
-			delete node;
+			node->alloc.destroy(node);
+			node->alloc.deallocate(node, 1);
 			return (NULL);
 		}
-		if (*node < *curParent && curParent->left)
+		if (order < 0 && curParent->left)
 			curParent = curParent->left;
-		else if (*node > *curParent && curParent->right)
+		else if (order > 0 && curParent->right)
 			curParent = curParent->right;
 		else
 			parentFound = true;
 	}
 	node->parent = curParent;
-	if (*node < *curParent)
+	if (order < 0)
 		curParent->left = node;
 	else
 		curParent->right = node;
@@ -241,10 +516,10 @@ typename RBTree<T>::RBTreeNode	*RBTree<T>::put(T elem)
 	return (node);
 }
 
-template<typename T>
-void	RBTree<T>::fixRBTree(RBTree<T>::RBTreeNode *node)
+template<typename T, typename TreeCompare, typename Alloc>
+void	RBTree<T, TreeCompare, Alloc>::fixRBTree(RBTree<T, TreeCompare, Alloc>::RBTreeNode *node)
 {
-	RBTree<T>::RBTreeNode	*uncle;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*uncle;
 
 	while (node->parent && node->parent->color == RBTreeNode::RED)
 	{
@@ -286,10 +561,10 @@ void	RBTree<T>::fixRBTree(RBTree<T>::RBTreeNode *node)
 	this->_root->color = RBTreeNode::BLACK;
 }
 
-template<typename T>
-void	RBTree<T>::fixRoot(void)
+template<typename T, typename TreeCompare, typename Alloc>
+void	RBTree<T, TreeCompare, Alloc>::fixRoot(void)
 {
-	RBTree<T>::RBTreeNode	*newRoot;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*newRoot;
 
 	newRoot = this->_root;
 	while (newRoot->parent)
@@ -297,20 +572,20 @@ void	RBTree<T>::fixRoot(void)
 	this->_root = newRoot;
 }
 
-template<typename T>
-bool	RBTree<T>::remove(T elem)
+template<typename T, typename TreeCompare, typename Alloc>
+bool	RBTree<T, TreeCompare, Alloc>::_remove(T elem)
 {
-	RBTree<T>::RBTreeNode	*node;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*node;
 	RBTreeNode				sentinel;
 
 	if (!this->_root)
 		return (false);
-	node = this->get(elem);
+	node = this->_get(elem);
 	if (!node)
 		return (false);
 
-	RBTree<T>::RBTreeNode			*replacingNode;
-	enum RBTree<T>::RBTreeNode::color impactingColor = node->color;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode			*replacingNode;
+	enum RBTree<T, TreeCompare, Alloc>::RBTreeNode::color impactingColor = node->color;
 	sentinel.parent = NULL;
 	if (!node->left && !node->right)
 	{
@@ -358,15 +633,16 @@ bool	RBTree<T>::remove(T elem)
 		sentinel.parent->left = NULL;
 	else if (sentinel.isRightChild())
 		sentinel.parent->right = NULL;
-	delete node;
+	node->alloc.destroy(node);
+	node->alloc.deallocate(node, 1);
 	this->_size--;
 	return (true);
 }
 
-template<typename T>
-void	RBTree<T>::applyDeleteFix(RBTree<T>::RBTreeNode *node)
+template<typename T, typename TreeCompare, typename Alloc>
+void	RBTree<T, TreeCompare, Alloc>::applyDeleteFix(RBTree<T, TreeCompare, Alloc>::RBTreeNode *node)
 {
-	RBTree<T>::RBTreeNode *sibling;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode *sibling;
 
 	while (node != this->_root && node->color == RBTreeNode::BLACK)
 	{
@@ -391,8 +667,6 @@ void	RBTree<T>::applyDeleteFix(RBTree<T>::RBTreeNode *node)
 				{
 					if (sibling->left)
 						sibling->left->color = RBTreeNode::BLACK;
-					else
-						std::cout << "HELLO, If this message appears, the if is useful !" << std::endl;
 					sibling->color = RBTreeNode::RED;
 					sibling->rightRotate();
 					sibling = node->parent->right;
@@ -427,8 +701,6 @@ void	RBTree<T>::applyDeleteFix(RBTree<T>::RBTreeNode *node)
 				{
 					if (sibling->right)
 						sibling->right->color = RBTreeNode::BLACK;
-					else
-						std::cout << "HELLO, If this message appears, the if is useful !" << std::endl;
 					sibling->color = RBTreeNode::RED;
 					sibling->leftRotate();
 					sibling = node->parent->left;
@@ -446,8 +718,8 @@ void	RBTree<T>::applyDeleteFix(RBTree<T>::RBTreeNode *node)
 	node->color = RBTreeNode::BLACK;
 }
 
-template<typename T>
-void	RBTree<T>::transplant(RBTree<T>::RBTreeNode *oldNode, RBTree<T>::RBTreeNode *newNode)
+template<typename T, typename TreeCompare, typename Alloc>
+void	RBTree<T, TreeCompare, Alloc>::transplant(RBTree<T, TreeCompare, Alloc>::RBTreeNode *oldNode, RBTree<T, TreeCompare, Alloc>::RBTreeNode *newNode)
 {
 	if (!oldNode->parent)
 		this->_root = newNode;
@@ -458,13 +730,14 @@ void	RBTree<T>::transplant(RBTree<T>::RBTreeNode *oldNode, RBTree<T>::RBTreeNode
 	newNode->parent = oldNode->parent;
 }
 
-template<typename T>
+template<typename T, typename TreeCompare, typename Alloc>
 template<typename K>
-typename RBTree<T>::RBTreeNode	*RBTree<T>::get(K key)
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode	*RBTree<T, TreeCompare, Alloc>::_get(K key) const
 {
-	RBTree<T>::RBTreeNode	*current;
+	RBTree<T, TreeCompare, Alloc>::RBTreeNode	*current;
 	bool					isFound;
 	bool					areLeavesReached;
+	int						order;
 
 	if (!this->_root)
 		return (NULL);
@@ -473,11 +746,13 @@ typename RBTree<T>::RBTreeNode	*RBTree<T>::get(K key)
 	areLeavesReached = false;
 	while (!isFound && !areLeavesReached)
 	{
-		if (key == current->content)
+		order = this->_comp(key, current->content) * -1
+				+ this->_comp(current->content, key);
+		if (order == 0)
 			isFound = true;
-		else if (key < current->content && current->left)
+		else if (order < 0 && current->left)
 			current = current->left;
-		else if (key > current->content && current->right)
+		else if (order > 0 && current->right)
 			current = current->right;
 		else
 			areLeavesReached = true;
@@ -487,9 +762,112 @@ typename RBTree<T>::RBTreeNode	*RBTree<T>::get(K key)
 	return (current);
 }
 
-template<typename T>
-template<typename K>
-bool	RBTree<T>::contains(K key)
+template<typename T, typename TreeCompare, typename Alloc>
+typename RBTree<T, TreeCompare, Alloc>::RBTreeNode	*RBTree<T, TreeCompare, Alloc>::_getRoot(void) const
 {
-	return (this->get(key) != NULL);
+	return (this->_root);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+template<typename K>
+bool	RBTree<T, TreeCompare, Alloc>::_contains(K key) const
+{
+	return (this->_get(key) != NULL);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+void	RBTree<T, TreeCompare, Alloc>::empty(void)
+{
+	if (this->_root)
+	{
+		this->_root->deleteTree();
+		this->_root = NULL;
+		this->_size = 0;
+	}
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+void	RBTree<T, TreeCompare, Alloc>::swap(RBTree<T, TreeCompare, Alloc> &other)
+{
+	RBTreeNode	*root_tmp;
+	size_t		size_tmp;
+
+	root_tmp = this->_root;
+	size_tmp = this->_size;
+	this->_root = other._root;
+	this->_size = other._size;
+	other._root = root_tmp;
+	other._size = size_tmp;
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator==(const RBTree<T, TreeCompare, Alloc> &lhs,
+			 const RBTree<T, TreeCompare, Alloc> &rhs)
+{
+	return !(lhs < rhs) && !(rhs < lhs);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator!=( const RBTree<T, TreeCompare, Alloc>& lhs,
+			 const RBTree<T, TreeCompare, Alloc>& rhs )
+{
+	return !(lhs == rhs);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator<( const RBTree<T, TreeCompare, Alloc>& lhs,
+			const RBTree<T, TreeCompare, Alloc>& rhs)
+{
+	return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator<=( const RBTree<T, TreeCompare, Alloc>& lhs,
+			 const RBTree<T, TreeCompare, Alloc>& rhs )
+{
+	return (lhs == rhs) || (lhs < rhs);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator>( const RBTree<T, TreeCompare, Alloc>& lhs,
+			const RBTree<T, TreeCompare, Alloc>& rhs )
+{
+	return !(lhs <= rhs);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool operator>=( const RBTree<T, TreeCompare, Alloc>& lhs,
+			 const RBTree<T, TreeCompare, Alloc>& rhs )
+{
+	return (lhs > rhs) || (lhs == rhs);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+void swap(RBTree<T, TreeCompare, Alloc>& lhs, RBTree<T, TreeCompare, Alloc>& rhs )
+{
+	lhs.swap(rhs);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator==(iterator const &rhs) const
+{
+	return ((this->ptr == rhs.ptr || this->isEnd == true) && this->isEnd == rhs.isEnd);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator!=(iterator const &rhs) const
+{
+	return (!(*this == rhs));
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::operator==(const_iterator const &rhs) const
+{
+	return (this->ptr == rhs.ptr && this->isEnd == rhs.isEnd);
+}
+
+template<typename T, typename TreeCompare, typename Alloc>
+bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::operator!=(const_iterator const &rhs) const
+{
+	return (!(*this == rhs));
 }
