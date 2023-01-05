@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:14:36 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/04 01:54:28 by jmaia            ###   ###               */
+/*   Updated: 2023/01/05 14:23:40 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -849,13 +849,13 @@ void swap(RBTree<T, TreeCompare, Alloc>& lhs, RBTree<T, TreeCompare, Alloc>& rhs
 }
 
 template<typename T, typename TreeCompare, typename Alloc>
-bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator==(iterator const &rhs) const
+bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator==(const_iterator const &rhs) const
 {
 	return ((this->ptr == rhs.ptr || this->isEnd == true) && this->isEnd == rhs.isEnd);
 }
 
 template<typename T, typename TreeCompare, typename Alloc>
-bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator!=(iterator const &rhs) const
+bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator!=(const_iterator const &rhs) const
 {
 	return (!(*this == rhs));
 }
@@ -863,7 +863,7 @@ bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::iterator::operator!=(iterator co
 template<typename T, typename TreeCompare, typename Alloc>
 bool	RBTree<T, TreeCompare, Alloc>::RBTreeNode::const_iterator::operator==(const_iterator const &rhs) const
 {
-	return (this->ptr == rhs.ptr && this->isEnd == rhs.isEnd);
+	return ((this->ptr == rhs.ptr || this->isEnd == true) && this->isEnd == rhs.isEnd);
 }
 
 template<typename T, typename TreeCompare, typename Alloc>
