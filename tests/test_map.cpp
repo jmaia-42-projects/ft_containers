@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/04 01:22:43 by jmaia            ###   ###               */
+/*   Updated: 2023/01/05 17:33:39 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,38 @@ int	main(void)
 		}
 
 		my_map.get_allocator();
+	}
+	/* Testing member types */
+	{
+		ft::map<int, std::string>::key_type	key_type = 5;
+		ft::map<int, std::string>::mapped_type mapped_type = "pouet";
+		ft::map<int, std::string>::value_type value_type = ft::make_pair(4, "super");
+		ft::map<int, std::string>::key_compare key_compare;
+		ft::map<int, std::string>::value_compare *value_compare;
+		ft::map<int, std::string>::allocator_type allocator_type;
+		ft::map<int, std::string>::reference ref = value_type;
+		ft::map<int, std::string>::const_reference const_ref = value_type;
+		ft::map<int, std::string>::pointer ptr = &value_type;
+		ft::map<int, std::string>::const_pointer const_ptr = &value_type;
+		ft::map<int, std::string>::iterator it;
+		ft::map<int, std::string>::const_iterator const_it;
+		ft::map<int, std::string>::reverse_iterator rit;
+		ft::map<int, std::string>::const_reverse_iterator const_rit;
+		ft::map<int, std::string>::difference_type diff_type = -3;
+		ft::map<int, std::string>::size_type size_type = 4;
+
+
+		std::cout << key_type << std::endl;
+		std::cout << mapped_type << std::endl;
+		std::cout << value_type.first << "-" << value_type.second << std::endl;
+		std::cout << ref.first << "-" << ref.second << std::endl;
+		std::cout << const_ref.first << "-" << const_ref.second << std::endl;
+		std::cout << ptr->first << "-" << ptr->second << std::endl;
+		std::cout << const_ptr->first << "-" << const_ptr->second << std::endl;
+		std::cout << diff_type << std::endl;
+		std::cout << size_type << std::endl;
+		(void) key_compare;
+		(void) value_compare;
 	}
 	std::cout << "Testing constructors" << std::endl;
 	{

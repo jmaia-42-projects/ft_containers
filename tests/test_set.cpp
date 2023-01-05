@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/05 01:22:19 by jmaia            ###   ###               */
+/*   Updated: 2023/01/05 17:38:23 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,36 @@ int	main(void)
 		{
 			std::cout << *it << std::endl;
 		}
+	}
+	/* Testing member types */
+	{
+		ft::set<std::string>::key_type	key_type = "oh";
+		ft::set<std::string>::value_type value_type = "yeah";
+		ft::set<std::string>::key_compare key_compare;
+		ft::set<std::string>::value_compare *value_compare;
+		ft::set<std::string>::allocator_type allocator_type;
+		ft::set<std::string>::reference ref = value_type;
+		ft::set<std::string>::const_reference const_ref = value_type;
+		ft::set<std::string>::pointer ptr = &value_type;
+		ft::set<std::string>::const_pointer const_ptr = &value_type;
+		ft::set<std::string>::iterator it;
+		ft::set<std::string>::const_iterator const_it;
+		ft::set<std::string>::reverse_iterator rit;
+		ft::set<std::string>::const_reverse_iterator const_rit;
+		ft::set<std::string>::difference_type diff_type = -3;
+		ft::set<std::string>::size_type size_type = 4;
+
+
+		std::cout << key_type << std::endl;
+		std::cout << value_type << std::endl;
+		std::cout << ref << std::endl;
+		std::cout << const_ref << std::endl;
+		std::cout << *ptr << std::endl;
+		std::cout << *const_ptr << std::endl;
+		std::cout << diff_type << std::endl;
+		std::cout << size_type << std::endl;
+		(void) key_compare;
+		(void) value_compare;
 	}
 	std::cout << "Testing constructors" << std::endl;
 	{

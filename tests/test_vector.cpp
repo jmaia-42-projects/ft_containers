@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 11:54:56 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/05 15:16:28 by jmaia            ###   ###               */
+/*   Updated: 2023/01/05 16:01:33 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(void)
 		std::cout << v.front() << std::endl;
 		std::cout << v.back() << std::endl;
 	}
-	/* Testing member types */
+	std::cout << "Testing member types" << std::endl;
 	{
 		ft::vector<int>::value_type				value_type = 5;
 		ft::vector<int>::allocator_type 		allocator_type = std::allocator<int>();
@@ -80,8 +80,52 @@ int	main(void)
 		ft::vector<int>::const_iterator			const_it;
 		ft::vector<int>::reverse_iterator		rit;
 		ft::vector<int>::const_reverse_iterator	const_rit;
-		ft::vector<int>::difference_type		diff;
-		ft::vector<int>::size_type				size;
+		ft::vector<int>::difference_type		diff = -4;
+		ft::vector<int>::size_type				size = 3;
+
+		std::cout << value_type << std::endl;
+		std::cout << reference << std::endl;
+		std::cout << const_reference << std::endl;
+		std::cout << *ptr << std::endl;
+		std::cout << *const_ptr << std::endl;
+		std::cout << diff << std::endl;
+		std::cout << size << std::endl;
+
+		(void) value_type;
+		(void) allocator_type;
+		(void) reference;
+		(void) const_reference;
+		(void) ptr;
+		(void) const_ptr;
+		(void) it;
+		(void) const_it;
+		(void) rit;
+		(void) const_rit;
+		(void) diff;
+		(void) size;
+	}
+	std::cout << "Testing member types with string" << std::endl;
+	{
+		ft::vector<std::string>::value_type				value_type = "5";
+		ft::vector<std::string>::allocator_type 		allocator_type = std::allocator<std::string>();
+		ft::vector<std::string>::reference				reference = value_type;
+		ft::vector<std::string>::const_reference		const_reference = value_type;
+		ft::vector<std::string>::pointer				ptr = &value_type;
+		ft::vector<std::string>::const_pointer			const_ptr = &value_type;
+		ft::vector<std::string>::iterator				it;
+		ft::vector<std::string>::const_iterator			const_it;
+		ft::vector<std::string>::reverse_iterator		rit;
+		ft::vector<std::string>::const_reverse_iterator	const_rit;
+		ft::vector<std::string>::difference_type		diff = -4;
+		ft::vector<std::string>::size_type				size = 3;
+
+		std::cout << value_type << std::endl;
+		std::cout << reference << std::endl;
+		std::cout << const_reference << std::endl;
+		std::cout << *ptr << std::endl;
+		std::cout << *const_ptr << std::endl;
+		std::cout << diff << std::endl;
+		std::cout << size << std::endl;
 
 		(void) value_type;
 		(void) allocator_type;
