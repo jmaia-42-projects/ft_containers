@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 11:54:56 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/04 01:22:50 by jmaia            ###   ###               */
+/*   Updated: 2023/01/05 15:16:28 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,34 @@ int	main(void)
 			std::cout << *it << std::endl;
 		std::cout << v.front() << std::endl;
 		std::cout << v.back() << std::endl;
+	}
+	/* Testing member types */
+	{
+		ft::vector<int>::value_type				value_type = 5;
+		ft::vector<int>::allocator_type 		allocator_type = std::allocator<int>();
+		ft::vector<int>::reference				reference = value_type;
+		ft::vector<int>::const_reference		const_reference = value_type;
+		ft::vector<int>::pointer				ptr = &value_type;
+		ft::vector<int>::const_pointer			const_ptr = &value_type;
+		ft::vector<int>::iterator				it;
+		ft::vector<int>::const_iterator			const_it;
+		ft::vector<int>::reverse_iterator		rit;
+		ft::vector<int>::const_reverse_iterator	const_rit;
+		ft::vector<int>::difference_type		diff;
+		ft::vector<int>::size_type				size;
+
+		(void) value_type;
+		(void) allocator_type;
+		(void) reference;
+		(void) const_reference;
+		(void) ptr;
+		(void) const_ptr;
+		(void) it;
+		(void) const_it;
+		(void) rit;
+		(void) const_rit;
+		(void) diff;
+		(void) size;
 	}
 	/* Assign on empty */
 	{
