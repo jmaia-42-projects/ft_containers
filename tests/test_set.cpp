@@ -6,7 +6,7 @@
 /*   By: jmaia <jmaia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 14:01:39 by jmaia             #+#    #+#             */
-/*   Updated: 2023/01/05 17:38:23 by jmaia            ###   ###               */
+/*   Updated: 2023/01/05 17:42:07 by jmaia            ###   ###               */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int	main(void)
 		ft::set<std::string>::const_reverse_iterator const_rit;
 		ft::set<std::string>::difference_type diff_type = -3;
 		ft::set<std::string>::size_type size_type = 4;
-
-
 		std::cout << key_type << std::endl;
 		std::cout << value_type << std::endl;
 		std::cout << ref << std::endl;
