@@ -15,7 +15,7 @@ re		:	fclean all
 build/	:
 	mkdir -p build/
 
-test_vector_ft: build/ tests/test_vector.cpp
+test_vector_ft: tests/test_vector.cpp | build/
 	$(CXX) $(CXXFLAGS) -MMD -MF build/test_vector_ft.d $(INCLUDE) -D FT tests/test_vector.cpp -o test_vector_ft
 
 -include build/test_vector_ft.d
@@ -26,18 +26,18 @@ test_vector_std: tests/test_vector.cpp
 test_vector: test_vector_std test_vector_ft
 	bash -c "diff <(./test_vector_ft 2>&1) <(./test_vector_std 2>&1)"
 
-test_map_ft: build/ tests/test_map.cpp
+test_map_ft: tests/test_map.cpp | build/
 	$(CXX) $(CXXFLAGS) -MMD -MF build/test_map_ft.d $(INCLUDE) -D FT tests/test_map.cpp -o test_map_ft
 
 -include build/test_map_ft.d
 
 test_map_std: tests/test_map.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -fdiagnostics-color=always tests/test_map.cpp -o test_map_std
+	$(CXX) $(CXXFLAGS) $(INCLUDE) tests/test_map.cpp -o test_map_std
 
 test_map: test_map_std test_map_ft
 	bash -c "diff <(./test_map_ft 2>&1) <(./test_map_std 2>&1)"
 
-test_set_ft: build/ tests/test_set.cpp
+test_set_ft: tests/test_set.cpp | build/
 	$(CXX) $(CXXFLAGS) -MMD -MF build/test_set_ft.d $(INCLUDE) -D FT tests/test_set.cpp -o test_set_ft
 
 -include build/test_set_ft.d
@@ -48,7 +48,7 @@ test_set_std: tests/test_set.cpp
 test_set: test_set_std test_set_ft
 	bash -c "diff <(./test_set_ft 2>&1) <(./test_set_std 2>&1)"
 
-test_stack_ft: build/ tests/test_stack.cpp
+test_stack_ft: tests/test_stack.cpp | build/
 	$(CXX) $(CXXFLAGS) -MMD -MF build/test_stack_ft.d $(INCLUDE) -D FT tests/test_stack.cpp -o test_stack_ft
 
 -include build/test_stack_ft.d
